@@ -66,7 +66,6 @@ public enum EInventoryMaterial {
 		return size*2;
 	}
 	public float r(){
-		//System.out.println(rVal);
 		return (rVal)/255f;
 	}
 	public float g(){

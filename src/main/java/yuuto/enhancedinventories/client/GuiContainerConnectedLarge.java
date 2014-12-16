@@ -65,7 +65,6 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 	int getStartingRow(){
 		int maxRows = (int)Math.ceil(container.playerInvStart/9d);
 		maxRows -= 6;
-		//System.out.println("maxRows = "+maxRows);
 		double precent = ((double)scroll - minScroll)/((double)maxScroll-minScroll);
 		int row = (int)Math.round(maxRows*precent);
 		return row;
@@ -73,14 +72,10 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 	@Override
 	protected int drawSlots(int mX, int mY, int k1){
     	int startSlot = getStartingRow()*9;
-    	//System.out.println("Starting at slot "+startSlot);
-    	//System.out.println("playerInvStart = "+startSlot);
-    	//System.out.println("playerInvStart = "+(startSlot+54));
     	int offset = getStartingRow()*18;
     	for (int s = 0; s < 54; s++)
         {
             int i1 = startSlot+s;
-    		//System.out.println(i1);
     		if(i1 >= container.playerInvStart)
     			break;
     		Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
@@ -267,7 +262,6 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 		int plStart = container.playerInvStart;
 		for (int k = 0; k < 54; k++){
 			int i1 = startSlot+k;
-    		//System.out.println(i1);
     		if(i1 >= plStart)
     			break;
     		Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);

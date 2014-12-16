@@ -53,7 +53,6 @@ public enum EWoodType {
 		return meta;
 	}
 	public boolean matches(ItemStack target){
-		System.out.println("checkingMatch");
 		ItemStack woodStack = getPlanksStack();
 		if(woodStack == null)
 			return false;
@@ -65,7 +64,6 @@ public enum EWoodType {
 	public ItemStack getPlanksStack(){
 		ItemStack ret = GameRegistry.findItemStack(modId, itemId, 1);
 		if(ret == null){
-			System.out.println("no stack found");
 			return null;
 		}
 		ret = new ItemStack(ret.getItem(), 1, meta);

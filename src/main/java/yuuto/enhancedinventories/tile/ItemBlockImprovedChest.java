@@ -107,7 +107,6 @@ public class ItemBlockImprovedChest extends ModItemBlockMulti{
         }
         else if(!((BlockImprovedChest)field_150939_a).canPlaceBlockAt(stack, world, x, y, z))
         {
-        	System.out.println("cannnot place block at");
         	return false;
         }
         else if (world.canPlaceEntityOnSide(this.field_150939_a, x, y, z, false, p_77648_7_, p_77648_2_, stack))

@@ -29,7 +29,6 @@ public class GuiHandler implements IGuiHandler{
 		if(!(tile instanceof TileConnectiveInventory))
 			return null;
 		TileConnectiveInventory inv = (TileConnectiveInventory)tile;
-		System.out.println(inv.getType().toString());
 		if(inv.getSizeInventory() <= 54){
 			return new ContainerConnected(inv, player);
 		}

@@ -379,7 +379,6 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
         if (worldObj == null) return;
         numUsingPlayers++;
         worldObj.addBlockEvent(xCoord, yCoord, zCoord, this.getBlockType(), 1, numUsingPlayers);
-        //System.out.println("is trapped chest ? = "+this.)
         worldObj.notifyBlockChange(xCoord, yCoord, zCoord, getBlockType());
     }
 
@@ -472,8 +471,6 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     		connectTo(inv, dir);
     		break;
     	}
-    	if(this.partnerTile != null)
-    		System.out.println("connected");
     }
     
     @Override

@@ -226,7 +226,6 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         	ForgeDirection d = chest.getPartnerDir();
         	GL11.glTranslatef(-d.offsetX, -d.offsetY, -d.offsetZ);
         }
-        //System.out.println("oriented "+chest.getPartnerDir().toString());
         
         GL11.glRotatef((float)short1, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);

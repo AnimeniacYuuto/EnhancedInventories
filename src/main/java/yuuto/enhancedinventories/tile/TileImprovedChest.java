@@ -168,7 +168,6 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		}
 	}
 	public boolean mergeStack(ISidedInventory src, int srcSlot, ISidedInventory target){
-		System.out.println("merging");
 		ItemStack stack = src.getStackInSlot(srcSlot);
 		int[] slots = target.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal());
 		for(int i = 0; i < slots.length; i++){

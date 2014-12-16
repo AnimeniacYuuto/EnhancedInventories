@@ -58,10 +58,8 @@ public class ProxyCommon implements IProxy {
 	}
 	
 	public void registerRecipes(BlockImprovedChest improvedChest){
-		System.out.println("loading recipes");
 		WoodTypes.init();
 		ArrayList<EWoodType> woodTypes = WoodTypes.getWoodTypes();
-		System.out.println("loading recipes for "+woodTypes.size()+" woodtypes");
 		for(int i = 0; i < woodTypes.size(); i++){
 			GameRegistry.addRecipe(new RecipeImprovedChest(0, new ItemStack(improvedChest, 1, 0), new Object[]{
 				"sps", "pwp", "sps", 's', "cobblestone", 'p', woodTypes.get(i).getPlanksStack(),
@@ -70,8 +68,6 @@ public class ProxyCommon implements IProxy {
 		}
 		OreDictionary.registerOre("obsidian", Blocks.obsidian);
 		for(EInventoryMaterial mat : EInventoryMaterial.values()){
-			if(mat.getTier() == 4)
-				System.out.println("registering tier 4 chest");
 			ItemStack stack = new ItemStack(improvedChest, 1, mat.ordinal());
 			switch(mat.getTier()){
 			case 0:

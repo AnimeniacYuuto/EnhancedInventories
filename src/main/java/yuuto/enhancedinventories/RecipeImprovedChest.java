@@ -27,7 +27,6 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 	public RecipeImprovedChest(int subType, ItemStack result, Object[] recipe) {
 		super(result, recipe);
 		this.subType = subType;
-		//System.out.println("createdRecipe");
 	}
 	
 	@Override

@@ -200,7 +200,6 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     	}
     	if(chests > 1)
     		return false;
-    	System.out.println("no partnered Chests found");
     	return true;
     }
 
@@ -228,10 +227,8 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     @Override
     public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
     {
-    	System.out.println("getting Weakpower");
     	TileImprovedChest chest = (TileImprovedChest)p_149709_1_.getTileEntity(p_149709_2_, p_149709_3_, p_149709_4_);
     	if(!chest.redstone){
-    		System.out.println("not a redstone chest");
     		return 0;
     	}
     	int i1 = chest.getTotalUsingPlayers();

@@ -21,7 +21,6 @@ public class WoodTypes {
 	
 
 	public static void init(){
-		System.out.println("initializing woodTypes");
 		ArrayList<String> loadedMods = new ArrayList<String>();
 		loadedMods.add("minecraft");
 		
