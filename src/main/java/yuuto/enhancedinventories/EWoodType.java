@@ -84,7 +84,8 @@ public enum EWoodType {
 	
 	@Override
 	public String toString(){
-		String ret = super.toString();
+		return super.toString();
+		/*String ret = super.toString();
 		String[] strings = ret.split("_");
 		ret = "";
 		for(int i = 0; i < strings.length; i++){
@@ -95,7 +96,7 @@ public enum EWoodType {
 				ret+= " ";
 		}
 		
-		return ret;
+		return ret;*/
 	}
 	
 }

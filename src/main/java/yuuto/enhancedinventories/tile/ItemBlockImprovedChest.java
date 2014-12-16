@@ -15,6 +15,7 @@ package yuuto.enhancedinventories.tile;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -35,17 +36,17 @@ public class ItemBlockImprovedChest extends ModItemBlockMulti{
 	public void addInformation(ItemStack stack, EntityPlayer player, List results, boolean bool){
 		super.addInformation(stack, player, results, bool);
 		if(stack.hasTagCompound()){
-			results.add(ColorHelper.WOOL_NAMES[stack.getTagCompound().getInteger("wool")].toString());
-			results.add(EWoodType.values()[stack.getTagCompound().getInteger("wood")].toString());
+			results.add(I18n.format(ColorHelper.WOOL_NAMES[stack.getTagCompound().getInteger("wool")]));
+			results.add(I18n.format("woodType."+EWoodType.values()[stack.getTagCompound().getInteger("wood")].toString()));
 			if(stack.getTagCompound().getBoolean("hopper"))
-				results.add("Hopper");
+				results.add(I18n.format("upgrade.hopper"));
 			if(stack.getTagCompound().getBoolean("redstone"))
-				results.add("Trapped");
+				results.add(I18n.format("upgrade.redstone"));
 			if(stack.getTagCompound().getBoolean("alt"))
-				results.add("Alternate");
+				results.add(I18n.format("upgrade.alt"));
 			if(stack.getTagCompound().getInteger("wool") == 6 &&
 					true)
-				results.add("Pink Power");
+				results.add(I18n.format("easterEgg.pink"));
 		}else{
 			results.add(ColorHelper.WOOL_NAMES[0].toString());
 			results.add(EWoodType.OAK.toString());

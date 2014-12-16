@@ -12,6 +12,8 @@
  ******************************************************************************/
 package yuuto.enhancedinventories;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -19,6 +21,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.yuutolib.IMod;
@@ -31,6 +35,16 @@ public class EnhancedInventories implements IMod{
 	
 	@SidedProxy(clientSide = "yuuto.enhancedinventories.proxy.ProxyClient", serverSide = "yuuto.enhancedinventories.proxy.ProxyCommon")
 	public static ProxyCommon proxy;
+	
+	public static CreativeTabs tab = new CreativeTabs("EnhancedInventories"){
+
+		@Override
+		@SideOnly(Side.CLIENT)
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(improvedChest);
+		}
+		
+	};
 	
 	public static final BlockImprovedChest improvedChest = new BlockImprovedChest();
 	

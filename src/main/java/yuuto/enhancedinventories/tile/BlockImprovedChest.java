@@ -44,7 +44,7 @@ import yuuto.yuutolib.block.tile.IRotatable;
 public class BlockImprovedChest extends BlockConnectiveInventory{
 
 	public BlockImprovedChest() {
-		super(Material.wood, CreativeTabs.tabDecorations, "improvedchests", "improvedChest", 
+		super(Material.wood, EnhancedInventories.tab, "EnhancedInventories", "improvedChest", 
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
 				".Silver", ".Bronze", ".Steel",
@@ -107,9 +107,24 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setByte("wood", (byte)rand.nextInt(6));
     	nbt.setByte("wool", (byte) rand.nextInt(16));
+    	NBTTagCompound h = (NBTTagCompound)nbt.copy();
+    	h.setBoolean("hopper", true);
+    	NBTTagCompound r = (NBTTagCompound)nbt.copy();
+    	r.setBoolean("redstone", true);
+    	NBTTagCompound a = (NBTTagCompound)nbt.copy();
+    	a.setBoolean("alt", true);
     	for (int ix = 0; ix < subNames.length; ix++) {
     		ItemStack stack = new ItemStack(this, 1, ix);
     		stack.setTagCompound((NBTTagCompound)nbt.copy());
+			subItems.add(stack);
+			stack = stack.copy();
+			stack.setTagCompound((NBTTagCompound)h.copy());
+			subItems.add(stack);
+			stack = stack.copy();
+			stack.setTagCompound((NBTTagCompound)r.copy());
+			subItems.add(stack);
+			stack = stack.copy();
+			stack.setTagCompound((NBTTagCompound)a.copy());
 			subItems.add(stack);
 		}
     	

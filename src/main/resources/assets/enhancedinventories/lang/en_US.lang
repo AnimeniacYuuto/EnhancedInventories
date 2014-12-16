@@ -1,0 +1,45 @@
+itemGroup.EnhancedInventories=Enhanced Inventories
+
+tile.EnhancedInventories:improvedChest.Stone.name=Improved Stone Chest
+tile.EnhancedInventories:improvedChest.Iron.name=Improved Iron Chest
+tile.EnhancedInventories:improvedChest.Gold.name=Improved Gold Chest
+tile.EnhancedInventories:improvedChest.Diamond.name=Improved Diamond Chest
+tile.EnhancedInventories:improvedChest.Emerald.name=Improved Emerald Chest
+tile.EnhancedInventories:improvedChest.Obsidian.name=Improved Obsidian Chest
+
+tile.EnhancedInventories:improvedChest.Copper.name=Improved Copper Chest
+tile.EnhancedInventories:improvedChest.Tin.name=Improved Tin Chest
+tile.EnhancedInventories:improvedChest.Silver.name=Improved Silver Chest
+tile.EnhancedInventories:improvedChest.Bronze.name=Improved Bronze Chest
+tile.EnhancedInventories:improvedChest.Steel.name=Improved Steel Chest
+tile.EnhancedInventories:improvedChest.Platinum.name=Improved Platinum Chest
+
+color.wool.White=White
+color.wool.Orange=Orange
+color.wool.Magenta=Magenta
+color.wool.LightBlue=Light Blue
+color.wool.Yellow=Yellow
+color.wool.Lime=Lime
+color.wool.Pink=Pink
+color.wool.Gray=Gray
+color.wool.LightGray=Light Gray 
+color.wool.Cyan=Cyan
+color.wool.Purple=Purple
+color.wool.Blue=Blue
+color.wool.Brown=Brown
+color.wool.Green=Green
+color.wool.Red=Red
+color.wool.Black=Black
+
+woodType.OAK=Oak
+woodType.SPRUCE=Spruce
+woodType.BIRCH=Birch
+woodType.JUNGLE=Jungle
+woodType.ACACIA=Acacia
+woodType.DARK_OAK=Dark Oak
+
+upgrade.hopper=Hopper
+upgrade.redstone=Trapped
+upgrade.alt=Alternate
+
+easterEgg.pink=Pink Power

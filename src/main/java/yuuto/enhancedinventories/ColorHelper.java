@@ -38,10 +38,10 @@ public class ColorHelper {
 		BROWN, GREEN, RED, BLACK
 	};
 	public static final String[] WOOL_NAMES = new String[]{
-		"White", "Orange", "Magenta", "Light Blue", 
-		"Yellow", "Lime", "Pink", "Gray", 
-		"Light Gray", "Cyan", "Purple", "Blue",
-		"Brown", "Green", "Red", "Black"
+		"color.wool.White", "color.wool.Orange", "color.wool.Magenta", "color.wool.LightBlue", 
+		"color.wool.Yellow", "color.wool.Lime", "color.wool.Pink", "color.wool.Gray", 
+		"color.wool.LightGray", "color.wool.Cyan", "color.wool.Purple", "color.wool.Blue",
+		"color.wool.Brown", "color.wool.Green", "color.wool.Red", "color.wool.Black"
 	};
 
 }
