@@ -1,0 +1,16 @@
+[
+{
+  "modid": "EnhancedInventories",
+  "name": "Enhanced Inventories",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Yuuto"],
+  "credits": "CPW, Doku, Dokucraft Team",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

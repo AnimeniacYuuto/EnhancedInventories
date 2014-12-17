@@ -48,8 +48,8 @@ public class ItemBlockImprovedChest extends ModItemBlockMulti{
 					true)
 				results.add(I18n.format("easterEgg.pink"));
 		}else{
-			results.add(ColorHelper.WOOL_NAMES[0].toString());
-			results.add(EWoodType.OAK.toString());
+			results.add(I18n.format(ColorHelper.WOOL_NAMES[0]));
+			results.add(I18n.format("woodType."+EWoodType.OAK.toString()));
 		}
 	}
 	

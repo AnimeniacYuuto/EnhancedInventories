@@ -37,13 +37,13 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 	private static ModelChest modelSingleChest = new ModelChest();
     private static ModelChest modelDoubleChest = new ModelLargeChest();
 	
-    static ResourceLocation singleChestFrame = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestFrame.png");
-    static ResourceLocation singleChestFrameObsidian = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestFrameObsidian.png");
-    static ResourceLocation singleChestWool = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestWool.png");;
+    static ResourceLocation singleChestFrame = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrame.png");
+    static ResourceLocation singleChestFrameObsidian = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrameObsidian.png");
+    static ResourceLocation singleChestWool = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestWool.png");;
     
-    static ResourceLocation doubleChestFrame = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleChestFrame.png");
-    static ResourceLocation doubleChestFrameObsidian = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleChestFrameObsidian.png");
-    static ResourceLocation doubleChestWool = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleChestWool.png");
+    static ResourceLocation doubleChestFrame = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestFrame.png");
+    static ResourceLocation doubleChestFrameObsidian = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestFrameObsidian.png");
+    static ResourceLocation doubleChestWool = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestWool.png");
     
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x,

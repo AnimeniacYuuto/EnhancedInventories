@@ -317,7 +317,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
         this.ticksSinceSync++;
         prevLidAngle = lidAngle;
         float f = 0.1F;
-        if (getTotalUsingPlayers() > 0 && lidAngle == 0.0F)
+        if (getTotalUsingPlayers() > 0 && lidAngle == 0.0F && (this.partnerTile == null || this.getTopSides().contains(partnerDir)))
         {
             double d = (double) xCoord + 0.5D;
             double d1 = (double) zCoord + 0.5D;
@@ -339,7 +339,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
                 lidAngle = 1.0F;
             }
             float f2 = 0.5F;
-            if (lidAngle < f2 && f1 >= f2)
+            if (lidAngle < f2 && f1 >= f2 && (this.partnerTile == null || this.getTopSides().contains(partnerDir)))
             {
                 double d2 = (double) xCoord + 0.5D;
                 double d3 = (double) zCoord + 0.5D;

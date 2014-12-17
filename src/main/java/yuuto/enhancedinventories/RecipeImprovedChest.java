@@ -52,7 +52,10 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 				continue;
 			if(var1.getStackInSlot(i).getItem() != Item.getItemFromBlock(EnhancedInventories.improvedChest))
 				continue;
-			ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
+			if(var1.getStackInSlot(i).hasTagCompound())
+				ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
+			else
+				ret.setTagCompound(generateNBT());
 		}
 		ret.getTagCompound().setBoolean("redstone", true);
 		return ret;
@@ -73,12 +76,18 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 			ret.getTagCompound().setBoolean("redstone", false);
 			return ret;
 		}
-		ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
+		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())
+			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
+		else
+			ret.setTagCompound(generateNBT());
 		return ret;
 	}
 	public ItemStack getHopperResult(InventoryCrafting var1){
 		ItemStack ret = super.getCraftingResult(var1);
-		ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
+		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())
+			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
+		else
+			ret.setTagCompound(generateNBT());
 		ret.getTagCompound().setBoolean("hopper", true);
 		return ret;
 	}
@@ -87,10 +96,25 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 		for(int i = 0; i < var1.getSizeInventory(); i++){
 			if(var1.getStackInSlot(i) == null)
 				continue;
-			ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
+			if(var1.getStackInSlot(i).hasTagCompound())
+				ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
+			else
+				ret.setTagCompound(generateNBT());
 		}
 		ret.getTagCompound().setBoolean("alt", !ret.getTagCompound().getBoolean("alt"));
 		return ret;
+	}
+	
+	
+	public NBTTagCompound generateNBT(){
+		NBTTagCompound nbt = new NBTTagCompound();
+		
+		nbt.setByte("wood", (byte)0);
+		nbt.setByte("wool", (byte)0);
+		nbt.setBoolean("hopper", false);
+		nbt.setBoolean("alt", false);
+		nbt.setBoolean("redstone", false);
+		return nbt;
 	}
 
 }

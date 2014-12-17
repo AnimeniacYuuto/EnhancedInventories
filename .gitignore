@@ -30,3 +30,4 @@ gradlew.bat
 logs/fml-junk-earlystartup.log
 logs/latest.log
 gradle.properties
+src/api

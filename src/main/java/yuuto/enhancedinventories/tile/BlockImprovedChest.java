@@ -97,7 +97,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     @Override
     public int getRenderType()
     {
-        return 22;
+        return -1;
     }
     
     @Override

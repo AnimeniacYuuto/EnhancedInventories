@@ -22,6 +22,8 @@ import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -30,9 +32,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class RendererImprovedChestItem implements IItemRenderer{
 
 	private static ModelChest modelChest = new ModelChest();
-	static ResourceLocation singleChestFrame = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestFrame.png");
-    static ResourceLocation singleChestFrameObsidian = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestFrameObsidian.png");
-    static ResourceLocation singleChestWool = new ResourceLocation("enhancedinventories", "/textures/uvs/normalChestWool.png");;
+	static ResourceLocation singleChestFrame = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrame.png");
+    static ResourceLocation singleChestFrameObsidian = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrameObsidian.png");
+    static ResourceLocation singleChestWool = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestWool.png");;
 	static Minecraft mc = Minecraft.getMinecraft();
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -44,11 +46,31 @@ public class RendererImprovedChestItem implements IItemRenderer{
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
 			ItemRendererHelper helper) {
-		return true;
+		switch (type) {
+	      case ENTITY: {
+	        return (helper == ItemRendererHelper.ENTITY_BOBBING ||
+	                helper == ItemRendererHelper.ENTITY_ROTATION ||
+	                helper == ItemRendererHelper.BLOCK_3D);
+	      }
+	      case EQUIPPED: {
+	        return (helper == ItemRendererHelper.BLOCK_3D ||
+	                helper == ItemRendererHelper.EQUIPPED_BLOCK);
+	      }
+	      case EQUIPPED_FIRST_PERSON: {
+	        return (helper == ItemRendererHelper.EQUIPPED_BLOCK);
+	      }
+	      case INVENTORY: {
+	        return (helper == ItemRendererHelper.INVENTORY_BLOCK);
+	      }
+	      default: {
+	        return false;
+	      }
+	    }
 	}
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+		//GL11.glPushMatrix();
 		switch(type){
 		case ENTITY:
 			renderItem(item, 0f,0f,0f, 0);
@@ -74,7 +96,6 @@ public class RendererImprovedChestItem implements IItemRenderer{
 			break;
 		}
 	}
-	
 	public void renderItem(ItemStack item, float x, float y, float z, int pass){
 		int wood = 0;
 		int wool = 0;
@@ -101,9 +122,8 @@ public class RendererImprovedChestItem implements IItemRenderer{
         		mc.renderEngine.bindTexture(singleChestFrame);
         	break;
         }
-        
         GL11.glPushMatrix();
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        //GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         switch(pass){
         case 1:
         	Color c = ColorHelper.WOOL_COLORS[wool];
@@ -150,7 +170,7 @@ public class RendererImprovedChestItem implements IItemRenderer{
         //f1 = 1.0F - f1 * f1 * f1;
         //modelchest.chestLid.rotateAngleX = -(f1 * (float)Math.PI / 2.0F);
         modelChest.renderAll();
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        //GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 	}

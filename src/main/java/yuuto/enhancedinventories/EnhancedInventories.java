@@ -27,7 +27,7 @@ import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.0.a")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.1")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")
