@@ -40,8 +40,8 @@ public enum EWoodType {
 		this.meta = meta;
 		singleChestLoc = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestWood/"+modId+"/"+this.name().toLowerCase()+".png");
 		doubleChestLoc = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestWood/"+modId+"/"+this.name().toLowerCase()+".png");
-		singleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/normalLockerWood/"+this.toString().toLowerCase());
-		doubleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleLockerWood/"+this.toString().toLowerCase());
+		//singleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/normalLockerWood/"+this.toString().toLowerCase());
+		//doubleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleLockerWood/"+this.toString().toLowerCase());
 	}
 	public String getModID(){
 		return modId;
