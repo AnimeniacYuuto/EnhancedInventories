@@ -23,6 +23,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import yuuto.enhancedinventories.item.ItemFunctionUpgrade;
+import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.yuutolib.IMod;
@@ -47,6 +49,8 @@ public class EnhancedInventories implements IMod{
 	};
 	
 	public static final BlockImprovedChest improvedChest = new BlockImprovedChest();
+	public static final ItemSizeUpgrade sizeUpgrade = new ItemSizeUpgrade();
+	public static final ItemFunctionUpgrade functionUpgrade = new ItemFunctionUpgrade();
 	
 	@Override
 	@EventHandler

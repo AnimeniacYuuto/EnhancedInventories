@@ -27,6 +27,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.EInventoryMaterial;
+import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.gui.IConnectedContainer;
 import yuuto.yuutolib.block.tile.TileRotatable;
 
@@ -44,6 +45,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     protected TileConnectiveInventory partnerTile;
     
     boolean initialized = false;
+    boolean needsConnectionUpdate = false;
     
     public TileConnectiveInventory()
     {
@@ -73,6 +75,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	this.orientation = partnerTile.orientation;
     }
     public void disconnect(){
+    	System.out.println("Disconnecting");
     	partnerTile = null;
     	partnerDir = ForgeDirection.UNKNOWN;
     }
@@ -496,13 +499,20 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
     
+    public void markDirty(boolean connection){
+    	this.needsConnectionUpdate = true;
+    	markDirty();
+    }
+    
     @Override
     public Packet getDescriptionPacket()
     {
-		NBTTagCompound tagCompound = new NBTTagCompound();
+		System.out.println("Sending Packet");
+    	NBTTagCompound tagCompound = new NBTTagCompound();
 	    writeToNBT(tagCompound);
 	    tagCompound.setFloat("pkt.prevLidAngle", this.prevLidAngle);
 	    tagCompound.setFloat("pkt.lidAngle", this.lidAngle);
+	    tagCompound.setBoolean("pkt.needConUpdate", this.needsConnectionUpdate);
 	    return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tagCompound);
     }
 	
@@ -514,7 +524,28 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
 		readFromNBT(nbt);
 		this.prevLidAngle = nbt.getFloat("pkt.prevLidAngle");
 		this.lidAngle = nbt.getFloat("pkt.lidAngle");
+		if(nbt.getBoolean("pkt.needConUpdate"))
+			this.checkConnections();
 		this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
+    }
+    
+    public boolean canUpgrade(ItemStack stack){
+    	if(this.getTotalUsingPlayers() > 0)
+    		return false;
+    	if(stack.getItem() == EnhancedInventories.sizeUpgrade){
+    		return EInventoryMaterial.values()[stack.getItemDamage()+1].getTier() == this.getType().getTier()+1;
+    	}
+    	return false;
+    }
+    
+    public abstract TileConnectiveInventory getUpgradeTile(ItemStack stack);
+    
+    public void setContents(ItemStack[] origin){
+    	for(int i = 0; i < origin.length; i++){
+    		if(i > chestContents.length)
+    			break;
+    		chestContents[i] = origin[i];
+    	}
     }
 
 }

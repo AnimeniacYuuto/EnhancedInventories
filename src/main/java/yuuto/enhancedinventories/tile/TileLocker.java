@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.yuutolib.utill.InventoryWrapper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -25,17 +24,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileImprovedChest extends TileConnectiveInventory{
+public class TileLocker extends TileConnectiveInventory{
 	
 	public static ArrayList<ForgeDirection> conDirs = new ArrayList<ForgeDirection>();
 	static ArrayList<ForgeDirection> topDirs = new ArrayList<ForgeDirection>();
 	static{
-		conDirs.add(ForgeDirection.EAST);
-		conDirs.add(ForgeDirection.WEST);
-		conDirs.add(ForgeDirection.NORTH);
-		conDirs.add(ForgeDirection.SOUTH);
-		topDirs.add(ForgeDirection.EAST);
-		topDirs.add(ForgeDirection.SOUTH);
+		conDirs.add(ForgeDirection.UP);
+		conDirs.add(ForgeDirection.DOWN);
+		topDirs.add(ForgeDirection.DOWN);
 	}
 	
 	public int woodType = 0;
@@ -43,14 +39,15 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	public boolean hopper;
 	public boolean alt;
 	public boolean redstone;
+	public boolean reversed;
 	int timer = 20;
 	
-	public TileImprovedChest()
+	public TileLocker()
     {
         super();
     }
 
-    public TileImprovedChest(EInventoryMaterial type)
+    public TileLocker(EInventoryMaterial type)
     {
         super(type);
     }
@@ -63,6 +60,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
     	hopper = nbttagcompound.getBoolean("hopper");
     	alt = nbttagcompound.getBoolean("alt");
     	redstone = nbttagcompound.getBoolean("redstone");
+    	reversed = nbttagcompound.getBoolean("reversed");
     }
     
     @Override
@@ -73,6 +71,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
     	nbttagcompound.setBoolean("hopper", hopper);
     	nbttagcompound.setBoolean("alt", alt);
     	nbttagcompound.setBoolean("redstone", redstone);
+    	nbttagcompound.setBoolean("reversed", reversed);
     }
     @Override
 	public boolean isValidForConnection(ItemStack itemBlock) {
@@ -92,20 +91,20 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	}
     @Override
 	public boolean isValidForConnection(TileConnectiveInventory tile) {
-		if(!(tile instanceof TileImprovedChest))
+		if(!(tile instanceof TileLocker))
 			return false;
-		TileImprovedChest chest = (TileImprovedChest)tile;
-		if(chest.getType() != this.getType())
+		TileLocker locker = (TileLocker)tile;
+		if(locker.getType() != this.getType())
 			return false;
-		if(this.woodType != chest.woodType)
+		if(this.woodType != locker.woodType)
 			return false;
-		if(this.woolType != chest.woolType)
+		if(this.woolType != locker.woolType)
 			return false;
-		if(this.hopper != chest.hopper)
+		if(this.hopper != locker.hopper)
 			return false;
-		if(this.alt != chest.alt)
+		if(this.alt != locker.alt)
 			return false;
-		if(this.redstone != chest.redstone)
+		if(this.redstone != locker.redstone)
 			return false;
 		return true;
 	}
@@ -199,49 +198,6 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			return true;
 		}
 		return false;
-	}
-	
-	@Override
-	public TileImprovedChest getUpgradeTile(ItemStack stack){
-		if(stack.getItem() == EnhancedInventories.sizeUpgrade){
-			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
-			ret.woodType = this.woodType;
-			ret.woolType = this.woolType;
-			ret.alt = this.alt;
-			ret.hopper = this.hopper;
-			ret.redstone = this.redstone;
-			ret.setOrientation(this.orientation);
-			
-			if(ret.getType() == this.getType())
-				return this;
-			return ret;
-		}
-		if(stack.getItem() == EnhancedInventories.functionUpgrade){
-			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
-			ret.woodType = this.woodType;
-			ret.woolType = this.woolType;
-			ret.alt = this.alt;
-			ret.hopper = this.hopper;
-			ret.redstone = this.redstone;
-			ret.setOrientation(this.orientation);
-			
-			switch(stack.getItemDamage()){
-			case 0:
-				if(ret.hopper)
-					return this;
-				ret.hopper = true;
-				break;
-			case 1:
-				if(ret.redstone)
-					return this;
-				ret.redstone = true;
-				break;
-			default:
-				return this;
-			}
-			return ret;
-		}
-		return this;
 	}
 
 }
