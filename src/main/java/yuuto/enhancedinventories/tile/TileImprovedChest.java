@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
+import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.yuutolib.utill.InventoryWrapper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -198,6 +199,49 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public TileImprovedChest getUpgradeTile(ItemStack stack){
+		if(stack.getItem() == EnhancedInventories.sizeUpgrade){
+			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
+			ret.woodType = this.woodType;
+			ret.woolType = this.woolType;
+			ret.alt = this.alt;
+			ret.hopper = this.hopper;
+			ret.redstone = this.redstone;
+			ret.setOrientation(this.orientation);
+			
+			if(ret.getType() == this.getType())
+				return this;
+			return ret;
+		}
+		if(stack.getItem() == EnhancedInventories.functionUpgrade){
+			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
+			ret.woodType = this.woodType;
+			ret.woolType = this.woolType;
+			ret.alt = this.alt;
+			ret.hopper = this.hopper;
+			ret.redstone = this.redstone;
+			ret.setOrientation(this.orientation);
+			
+			switch(stack.getItemDamage()){
+			case 0:
+				if(ret.hopper)
+					return this;
+				ret.hopper = true;
+				break;
+			case 1:
+				if(ret.redstone)
+					return this;
+				ret.redstone = true;
+				break;
+			default:
+				return this;
+			}
+			return ret;
+		}
+		return this;
 	}
 
 }

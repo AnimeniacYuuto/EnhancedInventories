@@ -14,6 +14,8 @@ package yuuto.enhancedinventories.proxy;
 
 import java.util.ArrayList;
 
+import codechicken.nei.api.API;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -29,6 +31,8 @@ import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
 import yuuto.enhancedinventories.WoodTypes;
+import yuuto.enhancedinventories.client.GuiContainerConnected;
+import yuuto.enhancedinventories.client.GuiContainerConnectedLarge;
 import yuuto.enhancedinventories.gui.GuiHandler;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
@@ -43,7 +47,9 @@ public class ProxyCommon implements IProxy {
 		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest;
 		GameRegistry.registerBlock(improvedChest, ItemBlockImprovedChest.class, "improvedChest");
 		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
-		registerRecipes(improvedChest);
+		GameRegistry.registerItem(EnhancedInventories.sizeUpgrade, "sizeUpgrade");
+		GameRegistry.registerItem(EnhancedInventories.functionUpgrade, "functionUpgrade");
+		registerRecipes(improvedChest);		
 	}
 
 	@Override

@@ -12,11 +12,18 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.gui;
 
+
+import invtweaks.api.container.ChestContainer;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import yuuto.yuutolib.gui.ContainerAlt;
 
+@ChestContainer()
+@InventoryContainer(showOptions = true)
 public class ContainerConnectedLarge extends ContainerAlt implements IConnectedContainer{
 
 	public ContainerConnectedLarge(TileConnectiveInventory inventory,
@@ -45,5 +52,21 @@ public class ContainerConnectedLarge extends ContainerAlt implements IConnectedC
 			return;
 		inventory.closeInventory();
 	}
+	
+	@Override
+	public boolean func_94530_a(ItemStack p_94530_1_, Slot p_94530_2_)
+    {
+        return p_94530_2_.yDisplayPosition > 17;
+    }
+
+    /**
+     * Returns true if the player can "drag-spilt" items into this slot,. returns true by default. Called to
+     * check if the slot can be added to a list of Slots to split the held ItemStack across.
+     */
+    @Override
+	public boolean canDragIntoSlot(Slot p_94531_1_)
+    {
+        return p_94531_1_.inventory instanceof InventoryPlayer || p_94531_1_.yDisplayPosition > 17 && p_94531_1_.xDisplayPosition <= 124;
+    }
 
 }

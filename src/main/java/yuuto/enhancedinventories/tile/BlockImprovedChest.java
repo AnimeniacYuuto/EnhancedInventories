@@ -12,6 +12,7 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.tile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +31,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.MathHelper;
@@ -36,6 +39,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.ForgeEventFactory;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.yuutolib.block.ModBlockContainerMulti;
@@ -43,12 +47,15 @@ import yuuto.yuutolib.block.tile.IRotatable;
 
 public class BlockImprovedChest extends BlockConnectiveInventory{
 
+	private final Random random = new Random();
+	
 	public BlockImprovedChest() {
 		super(Material.wood, EnhancedInventories.tab, "EnhancedInventories", "improvedChest", 
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
 				".Silver", ".Bronze", ".Steel",
 				".Platinum");
+		this.setHardness(2.1f);
 	}	
 	
 	@Override
@@ -130,23 +137,46 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     	
     }
     @Override
+    public int damageDropped(int meta)
+    {
+        return meta;
+    }
+    
+    @Override
+    public void harvestBlock(World p_149636_1_, EntityPlayer player, int x, int y, int z, int p_149636_6_)
+    {
+    	//System.out.println("Distance: " +player.getDistance(x, y, z));
+    }
+    @Override
+    public void onBlockHarvested(World world, int x, int y, int z, int meta, EntityPlayer player) {
+    	if(player.capabilities.isCreativeMode)
+    		return;
+    	player.addStat(StatList.mineBlockStatArray[getIdFromBlock(this)], 1);
+        player.addExhaustion(0.025F);
+
+        harvesters.set(player);
+        int i1 = EnchantmentHelper.getFortuneModifier(player);
+        this.dropBlockAsItem(world, x, y, z, meta, i1);
+        harvesters.set(null);
+    }
+    @Override
     protected void dropBlockAsItem(World world, int x, int y, int z, ItemStack stack){
     	if (!world.isRemote && world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
         {
-    		TileEntity tile = world.getTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(x, y, z);
             if(tile instanceof TileImprovedChest){
+            	stack.setTagCompound(new NBTTagCompound());
             	stack.getTagCompound().setByte("wood", (byte)((TileImprovedChest)tile).woodType);
                 stack.getTagCompound().setByte("wool", (byte)((TileImprovedChest)tile).woolType);
                 stack.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
                 stack.getTagCompound().setBoolean("alt", ((TileImprovedChest)tile).alt);
                 stack.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
             }
-    		if (captureDrops.get())
+            if (captureDrops.get())
             {
                 capturedDrops.get().add(stack);
                 return;
             }
-            
             float f = 0.7F;
             double d0 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
             double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
@@ -155,6 +185,58 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
             entityitem.delayBeforeCanPickup = 10;
             world.spawnEntityInWorld(entityitem);
         }
+    }
+    
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block p_149749_5_, int meta)
+    {
+    	TileImprovedChest tileentitychest = (TileImprovedChest)world.getTileEntity(x, y, z);
+        
+    	if(tileentitychest.getPartner() != null){
+    		tileentitychest.getPartner().disconnect();
+    		tileentitychest.disconnect();
+    	}
+    	
+        if (tileentitychest != null)
+        {
+            for (int i1 = 0; i1 < tileentitychest.getSizeInventory(); ++i1)
+            {
+                ItemStack itemstack = tileentitychest.getStackInSlot(i1);
+
+                if (itemstack != null)
+                {
+                    float f = this.random.nextFloat() * 0.8F + 0.1F;
+                    float f1 = this.random.nextFloat() * 0.8F + 0.1F;
+                    EntityItem entityitem;
+
+                    for (float f2 = this.random.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; world.spawnEntityInWorld(entityitem))
+                    {
+                        int j1 = this.random.nextInt(21) + 10;
+
+                        if (j1 > itemstack.stackSize)
+                        {
+                            j1 = itemstack.stackSize;
+                        }
+
+                        itemstack.stackSize -= j1;
+                        entityitem = new EntityItem(world, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+                        float f3 = 0.05F;
+                        entityitem.motionX = (double)((float)this.random.nextGaussian() * f3);
+                        entityitem.motionY = (double)((float)this.random.nextGaussian() * f3 + 0.2F);
+                        entityitem.motionZ = (double)((float)this.random.nextGaussian() * f3);
+
+                        if (itemstack.hasTagCompound())
+                        {
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                        }
+                    }
+                }
+            }
+
+            world.func_147453_f(x, y, z, p_149749_5_);
+        }
+
+        super.breakBlock(world, x, y, z, p_149749_5_, meta);
     }
     
     @Override

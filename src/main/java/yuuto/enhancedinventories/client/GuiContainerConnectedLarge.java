@@ -12,8 +12,17 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.client;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.VisiblityData;
+import codechicken.nei.api.INEIGuiHandler;
+import codechicken.nei.api.TaggedInventoryArea;
+
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -27,7 +36,8 @@ import yuuto.enhancedinventories.gui.ContainerConnectedLarge;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import yuuto.yuutolib.gui.GuiContainerAlt;
 
-public class GuiContainerConnectedLarge extends GuiContainerAlt{
+@SuppressWarnings("unused")
+public class GuiContainerConnectedLarge extends GuiContainer{
 
 	static ResourceLocation texture = new ResourceLocation("enhancedinventories","textures/gui/scrolling_54.png");
 	static int minScroll = 18;
@@ -69,132 +79,6 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 		int row = (int)Math.round(maxRows*precent);
 		return row;
 	}
-	@Override
-	protected int drawSlots(int mX, int mY, int k1){
-    	int startSlot = getStartingRow()*9;
-    	int offset = getStartingRow()*18;
-    	for (int s = 0; s < 54; s++)
-        {
-            int i1 = startSlot+s;
-    		if(i1 >= container.playerInvStart)
-    			break;
-    		Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
-            this.drawSlotWithOffset(slot, offset);
-
-            if (this.isMouseOverSlot(slot, mX, mY+offset) && slot.func_111238_b())
-            {
-                this.theSlot = slot;
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glDisable(GL11.GL_DEPTH_TEST);
-                int j1 = slot.xDisplayPosition;
-                k1 = slot.yDisplayPosition-offset;
-                GL11.glColorMask(true, true, true, false);
-                this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
-                GL11.glColorMask(true, true, true, true);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_DEPTH_TEST);
-            }
-        }
-		for (int i1 = container.playerInvStart; i1 < container.playerInvEnd; ++i1)
-        {
-            Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
-            this.drawSlot(slot);
-
-            if (this.isMouseOverSlot(slot, mX, mY) && slot.func_111238_b())
-            {
-                this.theSlot = slot;
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glDisable(GL11.GL_DEPTH_TEST);
-                int j1 = slot.xDisplayPosition;
-                k1 = slot.yDisplayPosition;
-                GL11.glColorMask(true, true, true, false);
-                this.drawGradientRect(j1, k1, j1 + 16, k1 + 16, -2130706433, -2130706433);
-                GL11.glColorMask(true, true, true, true);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_DEPTH_TEST);
-            }
-        }
-    	return k1;
-    }
-	protected void drawSlotWithOffset(Slot slot, int yOffest)
-    {
-        int i = slot.xDisplayPosition;
-        int j = slot.yDisplayPosition-yOffest;
-        ItemStack itemstack = slot.getStack();
-        boolean flag = false;
-        boolean flag1 = slot == this.clickedSlot && this.draggedStack != null && !this.isRightMouseClick;
-        ItemStack itemstack1 = this.mc.thePlayer.inventory.getItemStack();
-        String s = null;
-
-        if (slot == this.clickedSlot && this.draggedStack != null && this.isRightMouseClick && itemstack != null)
-        {
-            itemstack = itemstack.copy();
-            itemstack.stackSize /= 2;
-        }
-        else if (this.field_147007_t && this.field_147008_s.contains(slot) && itemstack1 != null)
-        {
-            if (this.field_147008_s.size() == 1)
-            {
-                return;
-            }
-
-            if (Container.func_94527_a(slot, itemstack1, true) && this.inventorySlots.canDragIntoSlot(slot))
-            {
-                itemstack = itemstack1.copy();
-                flag = true;
-                Container.func_94525_a(this.field_147008_s, this.field_146987_F, itemstack, slot.getStack() == null ? 0 : slot.getStack().stackSize);
-
-                if (itemstack.stackSize > itemstack.getMaxStackSize())
-                {
-                    s = EnumChatFormatting.YELLOW + "" + itemstack.getMaxStackSize();
-                    itemstack.stackSize = itemstack.getMaxStackSize();
-                }
-
-                if (itemstack.stackSize > slot.getSlotStackLimit())
-                {
-                    s = EnumChatFormatting.YELLOW + "" + slot.getSlotStackLimit();
-                    itemstack.stackSize = slot.getSlotStackLimit();
-                }
-            }
-            else
-            {
-                this.field_147008_s.remove(slot);
-                this.fixStack();
-            }
-        }
-
-        this.zLevel = 100.0F;
-        itemRender.zLevel = 100.0F;
-
-        if (itemstack == null)
-        {
-            IIcon iicon = slot.getBackgroundIconIndex();
-
-            if (iicon != null)
-            {
-                GL11.glDisable(GL11.GL_LIGHTING);
-                this.mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-                this.drawTexturedModelRectFromIcon(i, j, iicon, 16, 16);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                flag1 = true;
-            }
-        }
-
-        if (!flag1)
-        {
-            if (flag)
-            {
-                drawRect(i, j, i + 16, j + 16, -2130706433);
-            }
-
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
-            itemRender.renderItemAndEffectIntoGUI(this.fontRendererObj, this.mc.getTextureManager(), itemstack, i, j);
-            itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, this.mc.getTextureManager(), itemstack, i, j, s);
-        }
-
-        itemRender.zLevel = 0.0F;
-        this.zLevel = 0.0F;
-    }
 
 	@Override
 	protected void mouseClicked(int mX, int mY, int button){
@@ -241,8 +125,29 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 		else if(scroll > maxScroll)
 			scroll = maxScroll;
 		
+		updateSlots();
+		
 		previousY = adjMY;
     }
+	
+	public void updateSlots(){
+		int startSlot = getStartingRow()*9;
+		int endSlot = startSlot + 54;
+		int x = 0;
+		int y = 18;
+		for(int i = 0; i < container.playerInvStart; i++){
+			if(i < startSlot || i >= endSlot){
+				((Slot)container.inventorySlots.get(i)).yDisplayPosition = -height;
+				continue;
+			}
+			((Slot)container.inventorySlots.get(i)).yDisplayPosition = y;
+			x++;
+			if(x >= 9){
+				x=0;
+				y+=18;
+			}
+		}
+	}
 	
 	@Override
 	protected void mouseMovedOrUp(int mX, int mY, int which){
@@ -252,32 +157,5 @@ public class GuiContainerConnectedLarge extends GuiContainerAlt{
 		}
 		scrolling = false;
 		previousY = scroll;
-    }
-	
-	@Override
-	protected Slot getSlotAtPosition(int x, int y)
-    {
-		int startSlot = getStartingRow()*9;
-		int offset = getStartingRow()*18;
-		int plStart = container.playerInvStart;
-		for (int k = 0; k < 54; k++){
-			int i1 = startSlot+k;
-    		if(i1 >= plStart)
-    			break;
-    		Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
-    		if (this.isMouseOverSlot(slot, x, y+offset))
-            {
-                return slot;
-            }
-        }
-		for (int i1 = plStart; i1 < container.playerInvEnd; i1++){
-			Slot slot = (Slot)this.inventorySlots.inventorySlots.get(i1);
-    		if (this.isMouseOverSlot(slot, x, y))
-            {
-                return slot;
-            }
-		}
-
-        return null;
     }
 }

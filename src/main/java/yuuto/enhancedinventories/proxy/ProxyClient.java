@@ -19,6 +19,7 @@ import yuuto.enhancedinventories.client.RendererImprovedChest;
 import yuuto.enhancedinventories.client.RendererImprovedChestItem;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ProxyClient extends ProxyCommon {
@@ -28,6 +29,10 @@ public class ProxyClient extends ProxyCommon {
 		super.preInit(event);
 		ClientRegistry.bindTileEntitySpecialRenderer(TileImprovedChest.class, new RendererImprovedChest());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnhancedInventories.improvedChest), new RendererImprovedChestItem());
+	}
+	
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
 	}
 
 }
