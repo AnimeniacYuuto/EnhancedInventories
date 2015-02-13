@@ -38,6 +38,12 @@ public class GuiContainerConnectedLarge extends GuiContainer{
 		this.ySize = 222;
 		this.xSize = 194;
 	}
+	
+	@Override
+	public void initGui(){
+		super.initGui();
+		updateSlots();
+	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mX, int mY) {
@@ -121,7 +127,7 @@ public class GuiContainerConnectedLarge extends GuiContainer{
 		int y = 18;
 		for(int i = 0; i < container.playerInvStart; i++){
 			if(i < startSlot || i >= endSlot){
-				((Slot)container.inventorySlots.get(i)).yDisplayPosition = -height;
+				((Slot)container.inventorySlots.get(i)).yDisplayPosition = -(height*2);
 				continue;
 			}
 			((Slot)container.inventorySlots.get(i)).yDisplayPosition = y;
