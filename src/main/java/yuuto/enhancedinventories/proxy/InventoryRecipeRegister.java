@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
+import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.tile.BlockConnectiveInventory;
@@ -16,7 +17,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class InventoryRecipeRegister {
 	
-	public static void registerRecipes(BlockImprovedChest improvedChest, BlockLocker locker){
+	public static void registerRecipes(){
+		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest; 
+		BlockLocker locker = EnhancedInventories.locker;
+		BlockImprovedChest improvedSortingChest = EnhancedInventories.improvedSortingChest; 
+		BlockLocker sortingLocker = EnhancedInventories.sortingLocker;
 		WoodTypes.init();
 		ArrayList<EWoodType> woodTypes = WoodTypes.getWoodTypes();
 		for(int i = 0; i < woodTypes.size(); i++){
@@ -35,14 +40,26 @@ public class InventoryRecipeRegister {
 			ItemStack stack2 = new ItemStack(locker, 1, mat.ordinal());
 			switch(mat.getTier()){
 			case 0:
+				if(EnhancedInventories.refinedRelocation){
+					registerSortingUpgrades(stack, new ItemStack(improvedSortingChest, 1, 0), mat);
+					registerSortingUpgrades(stack2, new ItemStack(sortingLocker, 1, 0), mat);
+				}
 				break;
 			case 3:
 				registerUpgradeRecipesAlt(improvedChest, stack, mat.getTier()-1, mat.getMaterial());
 				registerUpgradeRecipesAlt(locker, stack2, mat.getTier()-1, mat.getMaterial());
+				if(EnhancedInventories.refinedRelocation){
+					registerSortingUpgrades(stack, new ItemStack(improvedSortingChest, 1, mat.ordinal()), mat);
+					registerSortingUpgrades(stack2, new ItemStack(sortingLocker, 1, mat.ordinal()), mat);
+				}
 				break;
 			default:
 				registerUpgradeRecipes(improvedChest, stack, mat.getTier()-1, mat.getMaterial());
 				registerUpgradeRecipes(locker, stack2, mat.getTier()-1, mat.getMaterial());
+				if(EnhancedInventories.refinedRelocation){
+					registerSortingUpgrades(stack, new ItemStack(improvedSortingChest, 1, mat.ordinal()), mat);
+					registerSortingUpgrades(stack2, new ItemStack(sortingLocker, 1, mat.ordinal()), mat);
+				}
 				break;
 			}
 			GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
@@ -84,6 +101,15 @@ public class InventoryRecipeRegister {
 				'g', "blockGlass"
 			}));
 		}
+	}
+	
+	public static void registerSortingUpgrades(ItemStack input, ItemStack output, EInventoryMaterial mat){
+		GameRegistry.addRecipe(new RecipeImprovedChest(0, output, new Object[]{
+				"g g", " i ", "m m", 'g', "ingotGold", 'i', input, 'm', mat.getMaterial()
+		}));
+		GameRegistry.addRecipe(new RecipeImprovedChest(0, input, new Object[]{
+				"i", 'i', output
+		}));
 	}
 
 }

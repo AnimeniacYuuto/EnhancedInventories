@@ -58,9 +58,10 @@ public class ProxyCommon implements IProxy {
 		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
 		GameRegistry.registerBlock(locker, ItemBlockLocker.class, "locker");
 		GameRegistry.registerTileEntity(TileLocker.class, "container.ImprovedChests:locker");
-		InventoryRecipeRegister.registerRecipes(improvedChest, locker);	
-		registerRecipes();
 		registerCompatBlocks();
+		
+		InventoryRecipeRegister.registerRecipes();	
+		registerRecipes();
 	}
 	
 	public void registerCompatBlocks(){
