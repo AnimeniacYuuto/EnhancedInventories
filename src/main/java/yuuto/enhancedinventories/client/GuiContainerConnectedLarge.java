@@ -12,31 +12,15 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.client;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.lwjgl.opengl.GL11;
 
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.VisiblityData;
-import codechicken.nei.api.INEIGuiHandler;
-import codechicken.nei.api.TaggedInventoryArea;
-
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import yuuto.enhancedinventories.gui.ContainerConnected;
 import yuuto.enhancedinventories.gui.ContainerConnectedLarge;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
-import yuuto.yuutolib.gui.GuiContainerAlt;
 
-@SuppressWarnings("unused")
 public class GuiContainerConnectedLarge extends GuiContainer{
 
 	static ResourceLocation texture = new ResourceLocation("enhancedinventories","textures/gui/scrolling_54.png");

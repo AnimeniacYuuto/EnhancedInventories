@@ -15,7 +15,6 @@ package yuuto.enhancedinventories.client;
 import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EInventoryMaterial;
@@ -23,12 +22,9 @@ import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class RendererImprovedChestItem implements IItemRenderer{
 

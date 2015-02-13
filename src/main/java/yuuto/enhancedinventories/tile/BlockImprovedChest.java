@@ -12,7 +12,6 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.tile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,30 +24,22 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.ForgeEventFactory;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
-import yuuto.yuutolib.block.ModBlockContainerMulti;
-import yuuto.yuutolib.block.tile.IRotatable;
 
 public class BlockImprovedChest extends BlockConnectiveInventory{
 
@@ -145,7 +136,8 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 		return new TileImprovedChest(EInventoryMaterial.values()[meta]);
 	}
     
-    @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List subItems) {
     	Random rand = new Random();

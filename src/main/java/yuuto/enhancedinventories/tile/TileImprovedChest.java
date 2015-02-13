@@ -20,7 +20,6 @@ import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.yuutolib.utill.InventoryWrapper;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;

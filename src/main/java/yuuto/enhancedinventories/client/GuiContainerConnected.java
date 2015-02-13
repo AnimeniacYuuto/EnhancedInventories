@@ -12,27 +12,13 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.client;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.lwjgl.opengl.GL11;
-
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.VisiblityData;
-import codechicken.nei.api.DefaultOverlayRenderer;
-import codechicken.nei.api.INEIGuiHandler;
-import codechicken.nei.api.TaggedInventoryArea;
-import codechicken.nei.guihook.GuiContainerManager;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import yuuto.enhancedinventories.gui.ContainerConnected;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
-import yuuto.yuutolib.gui.GuiContainerAlt;
 
 public class GuiContainerConnected extends GuiContainer{
 

@@ -1,10 +1,8 @@
 package yuuto.enhancedinventories.compat;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import com.dynious.refinedrelocation.api.APIUtils;
 import com.dynious.refinedrelocation.api.filter.IFilterGUI;
@@ -14,8 +12,6 @@ import com.dynious.refinedrelocation.api.tileentity.handlers.ISortingInventoryHa
 
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
-import yuuto.enhancedinventories.tile.TileConnectiveInventory;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileLocker;
 
 public class TileSortingLocker extends TileLocker implements ISortingInventory, IFilterTileGUI{

@@ -33,7 +33,7 @@ import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.enhancedinventories.tile.BlockLocker;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.3")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.4")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")

@@ -6,7 +6,6 @@ import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.client.models.ModelLockerDouble;
 import yuuto.enhancedinventories.client.models.ModelLockerSingle;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileLocker;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

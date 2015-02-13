@@ -12,8 +12,6 @@
  ******************************************************************************/
 package yuuto.enhancedinventories;
 
-import java.util.List;
-
 import net.minecraft.util.ResourceLocation;
 
 public enum EInventoryMaterial {

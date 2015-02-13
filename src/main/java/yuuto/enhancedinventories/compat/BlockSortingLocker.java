@@ -1,17 +1,12 @@
 package yuuto.enhancedinventories.compat;
 
 import com.dynious.refinedrelocation.api.APIUtils;
-import com.dynious.refinedrelocation.api.ModObjects;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EnhancedInventories;
-import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.enhancedinventories.tile.BlockLocker;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
 
 public class BlockSortingLocker extends BlockLocker{
 	

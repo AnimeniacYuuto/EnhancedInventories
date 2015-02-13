@@ -12,14 +12,9 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.proxy;
 
-import java.util.ArrayList;
-
-import codechicken.nei.api.API;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -27,16 +22,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
-import yuuto.enhancedinventories.RecipeImprovedChest;
-import yuuto.enhancedinventories.WoodTypes;
-import yuuto.enhancedinventories.client.GuiContainerConnected;
-import yuuto.enhancedinventories.client.GuiContainerConnectedLarge;
 import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.enhancedinventories.compat.TileSortingLocker;
 import yuuto.enhancedinventories.gui.GuiHandler;
-import yuuto.enhancedinventories.tile.BlockConnectiveInventory;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
 import yuuto.enhancedinventories.tile.BlockLocker;
 import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
@@ -44,7 +33,6 @@ import yuuto.enhancedinventories.tile.ItemBlockLocker;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileLocker;
 import yuuto.yuutolib.IProxy;
-import yuuto.yuutolib.item.ModItemBlockMulti;
 
 public class ProxyCommon implements IProxy {
 

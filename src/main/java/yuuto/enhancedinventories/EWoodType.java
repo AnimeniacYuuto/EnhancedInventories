@@ -13,7 +13,6 @@
 package yuuto.enhancedinventories;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -40,7 +39,7 @@ public enum EWoodType {
 		this.meta = meta;
 		singleChestLoc = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestWood/"+modId+"/"+this.name().toLowerCase()+".png");
 		doubleChestLoc = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestWood/"+modId+"/"+this.name().toLowerCase()+".png");
-		singleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/lockerWood/"+modId+"/"+this.name().toLowerCase()+".png");
+		singleLockerLoc = new ResourceLocation("enhancedinventories", "textures/uvs/lockerWood/"+modId+"/"+this.name().toLowerCase()+".png");
 		//doubleLockerLoc = new ResourceLocation("enhancedinventories", "/textures/uvs/doubleLockerWood/"+this.toString().toLowerCase());
 	}
 	public String getModID(){

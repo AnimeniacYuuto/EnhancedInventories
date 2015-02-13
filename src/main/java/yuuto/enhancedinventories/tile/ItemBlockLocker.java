@@ -22,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.yuutolib.item.ModItemBlockMulti;
 

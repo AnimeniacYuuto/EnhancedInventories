@@ -18,14 +18,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import yuuto.enhancedinventories.ColorHelper;
-import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
-import cpw.mods.fml.common.FMLLog;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -78,7 +74,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
     void renderSingle(TileImprovedChest chest, double x, double y, double z, float f, int pass) {
 		int i = chest.getOrientation().ordinal();
 
-        ModelChest modelchest = this.modelSingleChest;
+        ModelChest modelchest = modelSingleChest;
         
         GL11.glPushMatrix();
         
@@ -133,7 +129,6 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         GL11.glRotatef((float)short1, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         float f1 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * f;
-        float f2;
         f1 = 1.0F - f1;
         f1 = 1.0F - f1 * f1 * f1;
         modelchest.chestLid.rotateAngleX = -(f1 * (float)Math.PI / 2.0F);
@@ -146,7 +141,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
     void renderDouble(TileImprovedChest chest, double x, double y, double z, float f, int pass) {
     	int i = chest.getOrientation().ordinal();
 
-        ModelChest modelchest = this.modelDoubleChest;
+        ModelChest modelchest = modelDoubleChest;
         
         GL11.glPushMatrix();
         switch(pass){
@@ -232,7 +227,6 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         GL11.glRotatef((float)short1, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         float f1 = chest.prevLidAngle + (chest.lidAngle - chest.prevLidAngle) * f;
-        float f2;
         
         /*if (chest.getPartnerDir() == ForgeDirection.NORTH)
         {

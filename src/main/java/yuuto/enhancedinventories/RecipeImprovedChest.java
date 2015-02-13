@@ -13,13 +13,10 @@
 package yuuto.enhancedinventories;
 
 import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
-import yuuto.enhancedinventories.tile.ItemBlockLocker;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeImprovedChest extends ShapedOreRecipe{
