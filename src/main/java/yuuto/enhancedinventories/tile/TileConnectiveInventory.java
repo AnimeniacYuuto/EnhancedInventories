@@ -46,6 +46,9 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     
     boolean initialized = false;
     boolean needsConnectionUpdate = false;
+    boolean disconnected = false;
+    
+    public boolean redstone;
     
     public TileConnectiveInventory()
     {
@@ -78,6 +81,10 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	System.out.println("Disconnecting");
     	partnerTile = null;
     	partnerDir = ForgeDirection.UNKNOWN;
+    	if(!this.worldObj.isRemote){
+    		this.disconnected = true;
+    		this.markDirty();
+    	}
     }
     public abstract boolean isValidForConnection(ItemStack itemBlock);
     public abstract boolean isValidForConnection(TileConnectiveInventory tile);
@@ -230,6 +237,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     {
         super.readFromNBT(nbttagcompound);
         this.type = EInventoryMaterial.values()[nbttagcompound.getInteger("MatType")];
+        this.redstone = nbttagcompound.getBoolean("redstone");
         if(this.chestContents.length != getSizeInventory())
         	chestContents = new ItemStack[getSizeInventory()];
         NBTTagList nbttaglist = nbttagcompound.getTagList("Items", Constants.NBT.TAG_COMPOUND);
@@ -264,6 +272,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
 
         nbttagcompound.setTag("Items", nbttaglist);
         nbttagcompound.setInteger("MatType", type.ordinal());
+        nbttagcompound.setBoolean("redstone", redstone);
     }
 
     @Override
@@ -453,6 +462,9 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	checkConnections();
     }
     public void checkConnections(){
+    	System.out.println("Checking connections");
+    	String s = "remote? "+worldObj.isRemote+" partner? "+(this.partnerTile != null);
+    	System.out.println(s);
     	for(ForgeDirection dir : getValidConnectionSides()){
     		TileEntity tile = worldObj.getTileEntity(xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
     		if(tile == null || !(tile instanceof TileConnectiveInventory))
@@ -479,8 +491,9 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     @Override
     public void invalidate(){
     	super.invalidate();
-    	if(this.partnerTile != null)
+    	if(this.partnerTile != null){
     		this.partnerTile.disconnect();
+    	}
     	this.disconnect();
     }
     
@@ -513,6 +526,9 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
 	    tagCompound.setFloat("pkt.prevLidAngle", this.prevLidAngle);
 	    tagCompound.setFloat("pkt.lidAngle", this.lidAngle);
 	    tagCompound.setBoolean("pkt.needConUpdate", this.needsConnectionUpdate);
+	    tagCompound.setBoolean("pkt.disconnected", this.disconnected);
+	    this.needsConnectionUpdate = false;
+	    this.disconnected = false;
 	    return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tagCompound);
     }
 	
@@ -524,8 +540,11 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
 		readFromNBT(nbt);
 		this.prevLidAngle = nbt.getFloat("pkt.prevLidAngle");
 		this.lidAngle = nbt.getFloat("pkt.lidAngle");
-		if(nbt.getBoolean("pkt.needConUpdate"))
+		if(nbt.getBoolean("pkt.disconnected"))
+			this.disconnect();
+		if(nbt.getBoolean("pkt.needConUpdate")){
 			this.checkConnections();
+		}
 		this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
     }
     
@@ -535,6 +554,8 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	if(stack.getItem() == EnhancedInventories.sizeUpgrade){
     		return EInventoryMaterial.values()[stack.getItemDamage()+1].getTier() == this.getType().getTier()+1;
     	}
+    	if(stack.getItem() == EnhancedInventories.functionUpgrade && stack.getItemDamage() == 2)
+    		return !redstone;
     	return false;
     }
     

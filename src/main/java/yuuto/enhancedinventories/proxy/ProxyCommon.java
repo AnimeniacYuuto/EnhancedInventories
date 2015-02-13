@@ -33,10 +33,16 @@ import yuuto.enhancedinventories.RecipeImprovedChest;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.client.GuiContainerConnected;
 import yuuto.enhancedinventories.client.GuiContainerConnectedLarge;
+import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
+import yuuto.enhancedinventories.compat.TileSortingLocker;
 import yuuto.enhancedinventories.gui.GuiHandler;
+import yuuto.enhancedinventories.tile.BlockConnectiveInventory;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
+import yuuto.enhancedinventories.tile.BlockLocker;
 import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
+import yuuto.enhancedinventories.tile.ItemBlockLocker;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileLocker;
 import yuuto.yuutolib.IProxy;
 import yuuto.yuutolib.item.ModItemBlockMulti;
 
@@ -45,11 +51,26 @@ public class ProxyCommon implements IProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest;
-		GameRegistry.registerBlock(improvedChest, ItemBlockImprovedChest.class, "improvedChest");
-		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
+		BlockLocker locker = EnhancedInventories.locker;
 		GameRegistry.registerItem(EnhancedInventories.sizeUpgrade, "sizeUpgrade");
 		GameRegistry.registerItem(EnhancedInventories.functionUpgrade, "functionUpgrade");
-		registerRecipes(improvedChest);		
+		GameRegistry.registerBlock(improvedChest, ItemBlockImprovedChest.class, "improvedChest");
+		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
+		GameRegistry.registerBlock(locker, ItemBlockLocker.class, "locker");
+		GameRegistry.registerTileEntity(TileLocker.class, "container.ImprovedChests:locker");
+		InventoryRecipeRegister.registerRecipes(improvedChest, locker);	
+		registerRecipes();
+		registerCompatBlocks();
+	}
+	
+	public void registerCompatBlocks(){
+		if(EnhancedInventories.refinedRelocation){
+			GameRegistry.registerBlock(EnhancedInventories.improvedSortingChest, ItemBlockImprovedChest.class, "improvedSortingChest");
+			GameRegistry.registerTileEntity(TileImprovedSortingChest.class, "container.ImprovedChests:ImprovedSortingChest");
+			GameRegistry.registerBlock(EnhancedInventories.sortingLocker, ItemBlockLocker.class, "sortingLocker");
+			GameRegistry.registerTileEntity(TileSortingLocker.class, "container.ImprovedChests:SortingLocker");
+		}
+			
 	}
 
 	@Override
@@ -63,55 +84,19 @@ public class ProxyCommon implements IProxy {
 		
 	}
 	
-	public void registerRecipes(BlockImprovedChest improvedChest){
-		WoodTypes.init();
-		ArrayList<EWoodType> woodTypes = WoodTypes.getWoodTypes();
-		for(int i = 0; i < woodTypes.size(); i++){
-			GameRegistry.addRecipe(new RecipeImprovedChest(0, new ItemStack(improvedChest, 1, 0), new Object[]{
-				"sps", "pwp", "sps", 's', "cobblestone", 'p', woodTypes.get(i).getPlanksStack(),
-				'w', new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE),
-			}));
-		}
-		OreDictionary.registerOre("obsidian", Blocks.obsidian);
-		for(EInventoryMaterial mat : EInventoryMaterial.values()){
-			ItemStack stack = new ItemStack(improvedChest, 1, mat.ordinal());
-			switch(mat.getTier()){
-			case 0:
-				break;
-			case 3:
-				registerUpgradeRecipesAlt(improvedChest, stack, mat.getTier()-1, mat.getMaterial());
-				break;
-			default:
-				registerUpgradeRecipes(improvedChest, stack, mat.getTier()-1, mat.getMaterial());
-				break;
-			}
-			GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
-					" h ", "hch", " h ", 'h', new ItemStack(Blocks.hopper), 'c', stack
-			}));
-			GameRegistry.addRecipe(new RecipeImprovedChest(2, stack, new Object[]{
-					"c", 'c', stack 
-			}));
-			GameRegistry.addRecipe(new RecipeImprovedChest(3, stack, new Object[]{
-					"tc", 't', new ItemStack(Blocks.tripwire_hook), 'c', stack 
-			}));
-		}
-	}
-	public void registerUpgradeRecipes(BlockImprovedChest improvedChest, ItemStack output, int previousTier, String upgMat){
-		for(EInventoryMaterial mat : EInventoryMaterial.values()){
-			if(mat.getTier() != previousTier)
-				continue;
-			GameRegistry.addRecipe(new RecipeImprovedChest(0, output, new Object[]{
-				"mmm", "mpm", "mmm", 'm', upgMat, 'p', new ItemStack(improvedChest, 1, mat.ordinal())
-			}));
-		}
-	}
-	public void registerUpgradeRecipesAlt(BlockImprovedChest improvedChest, ItemStack output, int previousTier, String upgMat){
-		for(EInventoryMaterial mat : EInventoryMaterial.values()){
-			if(mat.getTier() != previousTier)
-				continue;
-			GameRegistry.addRecipe(new RecipeImprovedChest(0, output, new Object[]{
-				"ggg", "mpm", "ggg", 'm', upgMat, 'p', new ItemStack(improvedChest, 1, mat.ordinal()),
-				'g', "blockGlass"
+	public void registerRecipes(){
+		ItemStack base = new ItemStack(EnhancedInventories.functionUpgrade, 1, 0);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 0), new Object[]{
+			" c ", "cpc", " c ", 'c', "cobblestone", 'p', Items.paper 
+		}));
+		GameRegistry.addShapedRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), new Object[]{
+			" h ", "hmh", " h ", 'h', Blocks.hopper, 'm', base
+		});
+		GameRegistry.addShapelessRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), 
+			Blocks.tripwire_hook, base);
+		for(int i = 1; i < EInventoryMaterial.values().length; i++){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
+				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
 			}));
 		}
 	}

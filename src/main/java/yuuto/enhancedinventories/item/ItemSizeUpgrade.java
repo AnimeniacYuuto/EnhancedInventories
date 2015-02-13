@@ -26,7 +26,7 @@ public class ItemSizeUpgrade extends ModItemMulti{
 	@Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side, float hitX, float hitY, float hitZ)
     {
-		if(world.isRemote)
+		if(world.isRemote || !player.isSneaking())
 			return false;
 		TileEntity tile = world.getTileEntity(X, Y, Z);
 		if(tile == null || !(tile instanceof TileConnectiveInventory))
@@ -40,14 +40,14 @@ public class ItemSizeUpgrade extends ModItemMulti{
 		newTile.setContents(oldTile.getContents());
 		world.setTileEntity(X, Y, Z, newTile);
 		world.setBlockMetadataWithNotify(X, Y, Z, stack.getItemDamage()+1, 3);
-		System.out.println("Tile Updated");
+		//System.out.println("Tile Updated");
 		newTile.checkConnections();
 		newTile.markDirty(true);
 		return true;
     }
 	
 	
-	public boolean canUpgrade(TileConnectiveInventory oldTile, TileConnectiveInventory newTile, World world, int x, int y, int z){
+	public static boolean canUpgrade(TileConnectiveInventory oldTile, TileConnectiveInventory newTile, World world, int x, int y, int z){
 		List<ForgeDirection> dirs = newTile.getValidConnectionSides();
     	int chests = 0;
     	for(ForgeDirection dir : dirs){

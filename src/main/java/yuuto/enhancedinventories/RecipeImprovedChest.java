@@ -12,6 +12,8 @@
  ******************************************************************************/
 package yuuto.enhancedinventories;
 
+import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
+import yuuto.enhancedinventories.tile.ItemBlockLocker;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -55,7 +57,7 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 			if(var1.getStackInSlot(i).hasTagCompound())
 				ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
 			else
-				ret.setTagCompound(generateNBT());
+				ret.setTagCompound(generateNBT(ret));
 		}
 		ret.getTagCompound().setBoolean("redstone", true);
 		return ret;
@@ -70,7 +72,8 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 				wood = 0;
 			ret.setTagCompound(new NBTTagCompound());
 			ret.getTagCompound().setByte("wood", (byte)wood);
-			ret.getTagCompound().setByte("wool", (byte)wool);
+			if(ret.getItem() instanceof ItemBlockImprovedChest)
+				ret.getTagCompound().setByte("wool", (byte)wool);
 			ret.getTagCompound().setBoolean("hopper", false);
 			ret.getTagCompound().setBoolean("alt", false);
 			ret.getTagCompound().setBoolean("redstone", false);
@@ -79,7 +82,7 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())
 			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
 		else
-			ret.setTagCompound(generateNBT());
+			ret.setTagCompound(generateNBT(ret));
 		return ret;
 	}
 	public ItemStack getHopperResult(InventoryCrafting var1){
@@ -87,7 +90,7 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())
 			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
 		else
-			ret.setTagCompound(generateNBT());
+			ret.setTagCompound(generateNBT(ret));
 		ret.getTagCompound().setBoolean("hopper", true);
 		return ret;
 	}
@@ -99,18 +102,19 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 			if(var1.getStackInSlot(i).hasTagCompound())
 				ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
 			else
-				ret.setTagCompound(generateNBT());
+				ret.setTagCompound(generateNBT(ret));
 		}
 		ret.getTagCompound().setBoolean("alt", !ret.getTagCompound().getBoolean("alt"));
 		return ret;
 	}
 	
 	
-	public NBTTagCompound generateNBT(){
+	public NBTTagCompound generateNBT(ItemStack stack){
 		NBTTagCompound nbt = new NBTTagCompound();
 		
 		nbt.setByte("wood", (byte)0);
-		nbt.setByte("wool", (byte)0);
+		if(stack.getItem() instanceof ItemBlockImprovedChest)
+			nbt.setByte("wool", (byte)0);
 		nbt.setBoolean("hopper", false);
 		nbt.setBoolean("alt", false);
 		nbt.setBoolean("redstone", false);

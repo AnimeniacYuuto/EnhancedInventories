@@ -17,13 +17,13 @@ import yuuto.yuutolib.item.ModItemMulti;
 public class ItemFunctionUpgrade extends ModItemMulti{
 
 	public ItemFunctionUpgrade() {
-		super(EnhancedInventories.tab, "EnhancedInventories", "functionUpgrade", ",hopper", ".redstone");
+		super(EnhancedInventories.tab, "EnhancedInventories", "functionUpgrade", ".base", ".hopper", ".redstone");
 	}
 	
 	@Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int X, int Y, int Z, int side, float hitX, float hitY, float hitZ)
     {
-		if(world.isRemote)
+		if(world.isRemote || stack.getItemDamage() == 0 || !player.isSneaking())
 			return false;
 		TileEntity tile = world.getTileEntity(X, Y, Z);
 		if(tile == null || !(tile instanceof TileConnectiveInventory))
@@ -35,9 +35,17 @@ public class ItemFunctionUpgrade extends ModItemMulti{
 		if(newTile == null || newTile == oldTile ||!canUpgrade(oldTile, newTile, world, X, Y, Z))
 			return false;
 		newTile.setContents(oldTile.getContents());
+		oldTile.invalidate();
 		world.setTileEntity(X, Y, Z, newTile);
+		System.out.println("set tile");
+		world.setBlockMetadataWithNotify(X, Y, Z, world.getBlockMetadata(X, Y, Z), 3);
+		oldTile.invalidate();
+		if(tile instanceof TileImprovedChest)
+			System.out.println("new tile "+((TileImprovedChest)newTile).hopper);
+		newTile.disconnect();
 		newTile.checkConnections();
 		newTile.markDirty(true);
+		System.out.println("Marked Dirty");
 		return true;
     }
 	

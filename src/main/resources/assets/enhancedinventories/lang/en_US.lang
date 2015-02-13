@@ -14,6 +14,65 @@ tile.EnhancedInventories:improvedChest.Bronze.name=Improved Bronze Chest
 tile.EnhancedInventories:improvedChest.Steel.name=Improved Steel Chest
 tile.EnhancedInventories:improvedChest.Platinum.name=Improved Platinum Chest
 
+tile.EnhancedInventories:improvedSortingChest.Stone.name=Improved Stone Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Iron.name=Improved Iron Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Gold.name=Improved Gold Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Diamond.name=Improved Diamond Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Emerald.name=Improved Emerald Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Obsidian.name=Improved Obsidian Sorting Chest
+
+tile.EnhancedInventories:improvedSortingChest.Copper.name=Improved Copper Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Tin.name=Improved Tin Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Silver.name=Improved Silver Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Bronze.name=Improved Bronze Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Steel.name=Improved Steel Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Platinum.name=Improved Platinum Sorting Chest
+
+tile.EnhancedInventories:locker.Stone.name=Stone Locker
+tile.EnhancedInventories:locker.Iron.name=Iron Locker
+tile.EnhancedInventories:locker.Gold.name=Gold Locker
+tile.EnhancedInventories:locker.Diamond.name=Diamond Locker
+tile.EnhancedInventories:locker.Emerald.name=Emerald Locker
+tile.EnhancedInventories:locker.Obsidian.name=Obsidian Locker
+
+tile.EnhancedInventories:locker.Copper.name=Copper Locker
+tile.EnhancedInventories:locker.Tin.name=Tin Locker
+tile.EnhancedInventories:locker.Silver.name=Silver Locker
+tile.EnhancedInventories:locker.Bronze.name=Bronze Locker
+tile.EnhancedInventories:locker.Steel.name=Steel Locker
+tile.EnhancedInventories:locker.Platinum.name=Platinum Locker
+
+tile.EnhancedInventories:sortingLocker.Stone.name=Stone Sorting Locker
+tile.EnhancedInventories:sortingLocker.Iron.name=Iron Sorting Locker
+tile.EnhancedInventories:sortingLocker.Gold.name=Gold Sorting Locker
+tile.EnhancedInventories:sortingLocker.Diamond.name=Diamond Sorting Locker
+tile.EnhancedInventories:sortingLocker.Emerald.name=Emerald Sorting Locker
+tile.EnhancedInventories:sortingLocker.Obsidian.name=Obsidian Sorting Locker
+
+tile.EnhancedInventories:sortingLocker.Copper.name=Copper Sorting Locker
+tile.EnhancedInventories:sortingLocker.Tin.name=Tin Sorting Locker
+tile.EnhancedInventories:sortingLocker.Silver.name=Silver Sorting Locker
+tile.EnhancedInventories:sortingLocker.Bronze.name=Bronze Sorting Locker
+tile.EnhancedInventories:sortingLocker.Steel.name=Steel Sorting Locker
+tile.EnhancedInventories:sortingLocker.Platinum.name=Platinum Sorting Locker
+
+item.EnhancedInventories:sizeUpgrade.Iron.name=Iron Upgrade
+item.EnhancedInventories:sizeUpgrade.Gold.name=Gold Upgrade
+item.EnhancedInventories:sizeUpgrade.Diamond.name=Diamond Upgrade
+item.EnhancedInventories:sizeUpgrade.Emerald.name=Emerald Upgrade
+item.EnhancedInventories:sizeUpgrade.Obsidian.name=Obsidian Upgrade
+
+item.EnhancedInventories:sizeUpgrade.Copper.name=Copper Upgrade
+item.EnhancedInventories:sizeUpgrade.Tin.name=Tin Upgrade
+item.EnhancedInventories:sizeUpgrade.Silver.name=Silver Upgrade
+item.EnhancedInventories:sizeUpgrade.Bronze.name=Bronze Upgrade
+item.EnhancedInventories:sizeUpgrade.Steel.name=Steel Upgrade
+item.EnhancedInventories:sizeUpgrade.Platinum.name=Platinum Upgrade
+
+item.EnhancedInventories:functionUpgrade.base.name=Basic Upgrade
+item.EnhancedInventories:functionUpgrade.hopper.name=Hopper Upgrade
+item.EnhancedInventories:functionUpgrade.redstone.name=Redstone Upgrade
+
 color.wool.White=White
 color.wool.Orange=Orange
 color.wool.Magenta=Magenta

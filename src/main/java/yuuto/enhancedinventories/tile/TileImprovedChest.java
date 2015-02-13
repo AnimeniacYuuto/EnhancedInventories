@@ -17,9 +17,13 @@ import java.util.List;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
+import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.yuutolib.utill.InventoryWrapper;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -42,7 +46,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	public int woolType = 0;
 	public boolean hopper;
 	public boolean alt;
-	public boolean redstone;
+	public boolean sortingChest = false;
 	int timer = 20;
 	
 	public TileImprovedChest()
@@ -62,7 +66,6 @@ public class TileImprovedChest extends TileConnectiveInventory{
     	woolType = nbttagcompound.getInteger("wool");
     	hopper = nbttagcompound.getBoolean("hopper");
     	alt = nbttagcompound.getBoolean("alt");
-    	redstone = nbttagcompound.getBoolean("redstone");
     }
     
     @Override
@@ -72,11 +75,14 @@ public class TileImprovedChest extends TileConnectiveInventory{
     	nbttagcompound.setByte("wool", (byte)woolType);
     	nbttagcompound.setBoolean("hopper", hopper);
     	nbttagcompound.setBoolean("alt", alt);
-    	nbttagcompound.setBoolean("redstone", redstone);
     }
     @Override
 	public boolean isValidForConnection(ItemStack itemBlock) {
-		if(itemBlock.getItemDamage() != this.getType().ordinal())
+		if(!sortingChest && itemBlock.getItem() != Item.getItemFromBlock(EnhancedInventories.improvedChest))
+			return false;
+		else if(sortingChest && itemBlock.getItem() != Item.getItemFromBlock(EnhancedInventories.improvedSortingChest))
+			return false;
+    	if(itemBlock.getItemDamage() != this.getType().ordinal())
 			return false;
 		if(this.woodType != itemBlock.getTagCompound().getInteger("wood"))
 			return false;
@@ -95,6 +101,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		if(!(tile instanceof TileImprovedChest))
 			return false;
 		TileImprovedChest chest = (TileImprovedChest)tile;
+		System.out.println("is valid? "+this.hopper+"=="+chest.hopper);
 		if(chest.getType() != this.getType())
 			return false;
 		if(this.woodType != chest.woodType)
@@ -106,6 +113,8 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		if(this.alt != chest.alt)
 			return false;
 		if(this.redstone != chest.redstone)
+			return false;
+		if(this.sortingChest != chest.sortingChest)
 			return false;
 		return true;
 	}
@@ -217,7 +226,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			return ret;
 		}
 		if(stack.getItem() == EnhancedInventories.functionUpgrade){
-			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
+			TileImprovedChest ret = new TileImprovedChest(this.getType());
 			ret.woodType = this.woodType;
 			ret.woolType = this.woolType;
 			ret.alt = this.alt;
@@ -226,12 +235,12 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			ret.setOrientation(this.orientation);
 			
 			switch(stack.getItemDamage()){
-			case 0:
+			case 1:
 				if(ret.hopper)
 					return this;
 				ret.hopper = true;
 				break;
-			case 1:
+			case 2:
 				if(ret.redstone)
 					return this;
 				ret.redstone = true;
@@ -241,7 +250,29 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			}
 			return ret;
 		}
+		if(EnhancedInventories.refinedRelocation && stack.getItem() == SortingUpgradeHelper.getUpgradeItem()){
+			TileImprovedSortingChest retChest = new TileImprovedSortingChest(this.getType());
+			retChest.woodType = this.woodType;
+			retChest.woolType = this.woolType;
+			retChest.alt = this.alt;
+			retChest.hopper = this.hopper;
+			retChest.redstone = this.redstone;
+			retChest.setOrientation(this.orientation);
+			return retChest;
+		}
 		return this;
+	}
+	
+	@Override
+	public boolean canUpgrade(ItemStack stack){
+		if(stack.getItem() == EnhancedInventories.functionUpgrade){
+			if(stack.getItemDamage() == 1 && !hopper)
+				return true;
+		}
+		if(EnhancedInventories.refinedRelocation && stack.getItem() == SortingUpgradeHelper.getUpgradeItem()){
+			return true; 
+		}
+		return super.canUpgrade(stack);
 	}
 
 }

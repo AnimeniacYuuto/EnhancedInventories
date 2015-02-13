@@ -25,6 +25,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -34,6 +35,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
@@ -42,6 +44,9 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.ForgeEventFactory;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
+import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
+import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.yuutolib.block.ModBlockContainerMulti;
 import yuuto.yuutolib.block.tile.IRotatable;
 
@@ -56,7 +61,58 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 				".Silver", ".Bronze", ".Steel",
 				".Platinum");
 		this.setHardness(2.1f);
-	}	
+	}
+	public BlockImprovedChest(String name){
+		super(Material.wood, EnhancedInventories.tab, "EnhancedInventories", name, 
+				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
+				".Copper", ".Tin",
+				".Silver", ".Bronze", ".Steel",
+				".Platinum");
+		this.setHardness(2.1f);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    {
+		System.out.println("block activated");
+		ItemStack held = player.getHeldItem();
+		if(!EnhancedInventories.refinedRelocation || held == null || held.getItem() != SortingUpgradeHelper.getUpgradeItem())
+			return super.onBlockActivated(world, x, y, z, player, side, p_149727_7_, p_149727_8_, p_149727_9_);
+		if(world.isRemote)
+			return true;
+		
+		System.out.println("attempting upgrade");
+		
+		TileImprovedChest original = (TileImprovedChest)world.getTileEntity(x, y, z);
+		if(!original.canUpgrade(held)){
+			System.out.println("Cannot Upgrade");
+			return false;
+		}
+		if(!SortingUpgradeHelper.hasUpgradeMaterials(original, player)){
+			player.addChatComponentMessage(new ChatComponentText("Requires 2 "+original.getType().getMaterial()));
+			return false;
+		}
+		try{
+			TileImprovedSortingChest newChest = (TileImprovedSortingChest)original.getUpgradeTile(held);
+			if(newChest == null || newChest == original || !ItemSizeUpgrade.canUpgrade(original, newChest, world, x, y, z))
+				return false;
+			
+			System.out.println("Replacing Block");
+			world.setBlockToAir(x, y, z);
+			world.setBlock(x, y, z, EnhancedInventories.improvedSortingChest, original.getType().ordinal(), 3);
+			world.setTileEntity(x, y, z, newChest);
+			world.setBlockMetadataWithNotify(x, y, z, newChest.getType().ordinal(), 3);
+			newChest.checkConnections();
+			newChest.markDirty(true);
+			if(!player.capabilities.isCreativeMode){
+				held.stackSize--;
+				SortingUpgradeHelper.removeUpgradeMaterials(newChest, player);
+			}
+			return true;
+		}catch(Exception e){
+			return false;
+		}
+    }
 	
 	@Override
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
@@ -88,24 +144,6 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileImprovedChest(EInventoryMaterial.values()[meta]);
 	}
-	
-    @Override
-    public boolean isOpaqueCube()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean renderAsNormalBlock()
-    {
-        return false;
-    }
-
-    @Override
-    public int getRenderType()
-    {
-        return -1;
-    }
     
     @Override
 	@SideOnly(Side.CLIENT)
@@ -135,11 +173,6 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 			subItems.add(stack);
 		}
     	
-    }
-    @Override
-    public int damageDropped(int meta)
-    {
-        return meta;
     }
     
     @Override
@@ -300,45 +333,8 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     		return false;
     	return true;
     }
-
-    @Override
-    public boolean hasComparatorInputOverride()
-    {
-        return true;
-    }
-
-    @Override
-    public int getComparatorInputOverride(World world, int x, int y, int z, int p_149736_5_)
-    {
-        TileEntity tile = world.getTileEntity(x, y, z);
-        if(tile == null || !(tile instanceof TileImprovedChest))
-        	return 0;
-    	return Container.calcRedstoneFromInventory((IInventory) tile);
-    }
     
     @Override
-    public boolean canProvidePower()
-    {
-        return true;
-    }
-
-    @Override
-    public int isProvidingWeakPower(IBlockAccess p_149709_1_, int p_149709_2_, int p_149709_3_, int p_149709_4_, int p_149709_5_)
-    {
-    	TileImprovedChest chest = (TileImprovedChest)p_149709_1_.getTileEntity(p_149709_2_, p_149709_3_, p_149709_4_);
-    	if(!chest.redstone){
-    		return 0;
-    	}
-    	int i1 = chest.getTotalUsingPlayers();
-    	return MathHelper.clamp_int(i1, 0, 15);
-    }
-
-    @Override
-    public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
-    {
-        return p_149748_5_ == 1 ? this.isProvidingWeakPower(p_149748_1_, p_149748_2_, p_149748_3_, p_149748_4_, p_149748_5_) : 0;
-    }
-    
     public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
     {
         TileImprovedChest tile = (TileImprovedChest)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);

@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL12;
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
+import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
 import cpw.mods.fml.common.FMLLog;
@@ -38,12 +39,20 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
     private static ModelChest modelDoubleChest = new ModelLargeChest();
 	
     static ResourceLocation singleChestFrame = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrame.png");
-    static ResourceLocation singleChestFrameObsidian = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestFrameObsidian.png");
     static ResourceLocation singleChestWool = new ResourceLocation("enhancedinventories", "textures/uvs/normalChestWool.png");;
+    static ResourceLocation singleRefinedLocation;
     
     static ResourceLocation doubleChestFrame = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestFrame.png");
-    static ResourceLocation doubleChestFrameObsidian = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestFrameObsidian.png");
     static ResourceLocation doubleChestWool = new ResourceLocation("enhancedinventories", "textures/uvs/doubleChestWool.png");
+    static ResourceLocation doubleRefinedLocation;
+    
+    public RendererImprovedChest(){
+    	super();
+    	if(EnhancedInventories.refinedRelocation){
+    		singleRefinedLocation = new ResourceLocation("enhancedinventories", "textures/uvs/refinedRelocation/normalChest.png");
+    		doubleRefinedLocation = new ResourceLocation("enhancedinventories", "textures/uvs/refinedRelocation/doubleChest.png");
+    	}
+    }
     
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x,
@@ -54,10 +63,14 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 			renderSingle((TileImprovedChest) tile, x, y, z, f, 0);
 			renderSingle((TileImprovedChest) tile, x, y, z, f, 1);
 			renderSingle((TileImprovedChest) tile, x, y, z, f, 2);
+			if(((TileImprovedChest)tile).sortingChest)
+				renderSingle((TileImprovedChest) tile, x, y, z, f, 3);
 		}else{
 			renderDouble((TileImprovedChest) tile, x, y, z, f, 0);
 			renderDouble((TileImprovedChest) tile, x, y, z, f, 1);
 			renderDouble((TileImprovedChest) tile, x, y, z, f, 2);
+			if(((TileImprovedChest)tile).sortingChest)
+				renderDouble((TileImprovedChest) tile, x, y, z, f, 3);
 		}
 		
 	}
@@ -66,37 +79,32 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 		int i = chest.getOrientation().ordinal();
 
         ModelChest modelchest = this.modelSingleChest;
-
+        
+        GL11.glPushMatrix();
+        
         switch(pass){
         case 0:
         	this.bindTexture(EWoodType.values()[chest.woodType].getSingleChestTexture());
+        	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
-        case 1:
-        	this.bindTexture(singleChestWool);
-        	break;
-        case 2:
-        	if(chest.getType() == EInventoryMaterial.Obsidian)
-        		this.bindTexture(singleChestFrameObsidian);
-        	else
-        		this.bindTexture(singleChestFrame);
-        	break;
-        }
-        
-        GL11.glPushMatrix();
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        switch(pass){
         case 1:
         	Color c = ColorHelper.WOOL_COLORS[chest.woolType];
         	GL11.glColor4f(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f, 1f);
+        	this.bindTexture(singleChestWool);
         	break;
         case 2:
-        	GL11.glColor4f(chest.getType().r(), chest.getType().g(), chest.getType().b(), 1f);
+        	if(chest.getType().hasTexture())
+        		this.bindTexture(chest.getType().getTexture(0));
+        	else{
+        		GL11.glColor4f(chest.getType().r(), chest.getType().g(), chest.getType().b(), 1f);
+        		this.bindTexture(singleChestFrame);
+        	}
         	break;
-        default:
-        case 0:
-        	GL11.glColor4f(1f, 1f, 1f, 1f);
+        case 3:
+        	bindTexture(singleRefinedLocation);
         	break;
         }
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glTranslatef((float)x, (float)y + 1.0F, (float)z + 1.0F);
         GL11.glScalef(1.0F, -1.0F, -1.0F);
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
@@ -139,37 +147,31 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
     	int i = chest.getOrientation().ordinal();
 
         ModelChest modelchest = this.modelDoubleChest;
-
+        
+        GL11.glPushMatrix();
         switch(pass){
         case 0:
         	this.bindTexture(EWoodType.values()[chest.woodType].getDoubleChestTexture());
+        	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
-        case 1:
-        	this.bindTexture(doubleChestWool);
-        	break;
-        case 2:
-        	if(chest.getType() == EInventoryMaterial.Obsidian)
-        		this.bindTexture(doubleChestFrameObsidian);
-        	else
-        		this.bindTexture(doubleChestFrame);
-        	break;
-        }
-        
-        GL11.glPushMatrix();
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        switch(pass){
         case 1:
         	Color c = ColorHelper.WOOL_COLORS[chest.woolType];
         	GL11.glColor4f(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f, 1f);
+        	this.bindTexture(doubleChestWool);
         	break;
         case 2:
-        	GL11.glColor4f(chest.getType().r(), chest.getType().g(), chest.getType().b(), 1f);
+        	if(chest.getType().hasTexture())
+        		this.bindTexture(chest.getType().getTexture(1));
+        	else{
+        		GL11.glColor4f(chest.getType().r(), chest.getType().g(), chest.getType().b(), 1f);
+        		this.bindTexture(doubleChestFrame);
+        	}
         	break;
-        default:
-        case 0:
-        	GL11.glColor4f(1f, 1f, 1f, 1f);
+        case 3:
+        	bindTexture(doubleRefinedLocation);
         	break;
         }
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glTranslatef((float)x, (float)y + 1.0F, (float)z + 1.0F);
         GL11.glScalef(1.0F, -1.0F, -1.0F);
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);

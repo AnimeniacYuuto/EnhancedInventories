@@ -14,6 +14,7 @@ package yuuto.enhancedinventories;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -23,13 +24,16 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import yuuto.enhancedinventories.compat.BlockImprovedSortingChest;
+import yuuto.enhancedinventories.compat.BlockSortingLocker;
 import yuuto.enhancedinventories.item.ItemFunctionUpgrade;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.enhancedinventories.tile.BlockImprovedChest;
+import yuuto.enhancedinventories.tile.BlockLocker;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.2")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.3")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")
@@ -48,13 +52,23 @@ public class EnhancedInventories implements IMod{
 		
 	};
 	
+	public static boolean refinedRelocation = false;
+	
 	public static final BlockImprovedChest improvedChest = new BlockImprovedChest();
+	public static final BlockLocker locker = new BlockLocker();
+	public static BlockImprovedChest improvedSortingChest;
+	public static BlockLocker sortingLocker;
 	public static final ItemSizeUpgrade sizeUpgrade = new ItemSizeUpgrade();
 	public static final ItemFunctionUpgrade functionUpgrade = new ItemFunctionUpgrade();
 	
 	@Override
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		if(Loader.isModLoaded("RefinedRelocation")){
+			refinedRelocation = true;
+			improvedSortingChest = new BlockImprovedSortingChest();
+			sortingLocker = new BlockSortingLocker();
+		}
 		proxy.preInit(event);
 	}
 
