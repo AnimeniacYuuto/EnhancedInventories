@@ -119,7 +119,7 @@ public class RendererImprovedChestItem implements IItemRenderer{
         //GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         switch(pass){
         case 0:
-        	mc.renderEngine.bindTexture(WoodTypes.getWoodType(wood).getTexture(0));
+        	mc.renderEngine.bindTexture(WoodTypes.getWoodType(wood).getTexture(2));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:

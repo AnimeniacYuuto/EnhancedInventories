@@ -81,7 +81,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         
         switch(pass){
         case 0:
-        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(0));
+        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(2));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:
@@ -147,7 +147,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         GL11.glPushMatrix();
         switch(pass){
         case 0:
-        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(1));
+        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(3));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:

@@ -16,10 +16,12 @@ public class WoodType {
 		this.modId = modId;
 		this.itemId = itemId;
 		this.meta = meta;
-		textures = new ResourceLocation[3];
+		textures = new ResourceLocation[4];
 		textures[0] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/64x64/"+modId+"/"+this.name.toLowerCase()+".png");
-		textures[1] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/128x64/"+modId+"/"+this.name.toLowerCase()+".png");
-		textures[2] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/128x128/"+modId+"/"+this.name.toLowerCase()+".png");
+		textures[1] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/128x128/"+modId+"/"+this.name.toLowerCase()+".png");
+		
+		textures[2] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestSmall/"+modId+"/"+this.name.toLowerCase()+".png");
+		textures[3] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestLarge/"+modId+"/"+this.name.toLowerCase()+".png");
 	}
 	public String getModID(){
 		return modId;

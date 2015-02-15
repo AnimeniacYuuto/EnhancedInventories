@@ -19,5 +19,6 @@ public final class VanillaModule{
 		WoodTypes.addWoodType(ACACIA);
 		WoodTypes.addWoodType(DARK_OAK);
 	}
+	private VanillaModule(){}
 
 }

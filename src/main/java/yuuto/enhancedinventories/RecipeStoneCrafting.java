@@ -42,7 +42,7 @@ public class RecipeStoneCrafting implements IRecipe{
             	ItemStack mat = inv.getStackInRowAndColumn(x, y);
             	if(mat == null)
             		return false;
-            	int i = (x*3)+y;
+            	int i = (y*3)+x;
                 if(i == 0 || i == 2 || i == 6 || i == 8){
                 	int id = OreDictionary.getOreID("cobblestone");
                 	int ids[] = OreDictionary.getOreIDs(mat);
@@ -103,6 +103,10 @@ public class RecipeStoneCrafting implements IRecipe{
 		nbt.setBoolean("redstone", false);
 		ret.setTagCompound(nbt);
 		return ret;
+	}
+	
+	public int getType(){
+		return this.type;
 	}
 
 }

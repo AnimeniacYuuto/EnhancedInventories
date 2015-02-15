@@ -103,5 +103,6 @@ public final class ChiselModule {
 		WoodTypes.addWoodType(new WoodType("SPRUCE_CHAOTIC_HOR","chisel", "spruce_planks", 14));
 		WoodTypes.addWoodType(new WoodType("SPRUCE_CHAOTIC","chisel", "spruce_planks", 15));
 	}
+	private ChiselModule(){}
 
 }
