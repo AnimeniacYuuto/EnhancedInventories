@@ -20,6 +20,7 @@ import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.item.ItemStack;
@@ -103,12 +104,13 @@ public class RendererImprovedChestItem implements IItemRenderer{
 		}
 	}
 	public void renderItem(ItemStack item, float x, float y, float z, int pass){
-		int wood = 0;
+		String wood = WoodTypes.DEFAULT_WOOD_ID;
 		int wool = 0;
 		EInventoryMaterial mat = EInventoryMaterial.values()[item.getItemDamage()];
 		
 		if(item.hasTagCompound()){
-			wood = item.getTagCompound().getInteger("wood");
+			if(item.getTagCompound().hasKey("woodType"))
+				wood = item.getTagCompound().getString("woodType");
 			wool = item.getTagCompound().getInteger("wool");
 		}
 		
@@ -117,7 +119,7 @@ public class RendererImprovedChestItem implements IItemRenderer{
         //GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         switch(pass){
         case 0:
-        	mc.renderEngine.bindTexture(EWoodType.values()[wood].getSingleChestTexture());
+        	mc.renderEngine.bindTexture(WoodTypes.getWoodType(wood).getTexture(0));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:

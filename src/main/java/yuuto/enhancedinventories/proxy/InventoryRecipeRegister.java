@@ -6,13 +6,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
+import yuuto.enhancedinventories.RecipeStoneCrafting;
+import yuuto.enhancedinventories.RecipeFunctionUpgrades;
+import yuuto.enhancedinventories.WoodType;
 import yuuto.enhancedinventories.WoodTypes;
-import yuuto.enhancedinventories.tile.BlockConnectiveInventory;
-import yuuto.enhancedinventories.tile.BlockImprovedChest;
-import yuuto.enhancedinventories.tile.BlockLocker;
+import yuuto.enhancedinventories.block.BlockConnectiveInventory;
+import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockLocker;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class InventoryRecipeRegister {
@@ -23,7 +25,7 @@ public class InventoryRecipeRegister {
 		BlockImprovedChest improvedSortingChest = EnhancedInventories.improvedSortingChest; 
 		BlockLocker sortingLocker = EnhancedInventories.sortingLocker;
 		WoodTypes.init();
-		ArrayList<EWoodType> woodTypes = WoodTypes.getWoodTypes();
+		/*ArrayList<WoodType> woodTypes = WoodTypes.getWoodTypes();
 		for(int i = 0; i < woodTypes.size(); i++){
 			GameRegistry.addRecipe(new RecipeImprovedChest(0, new ItemStack(improvedChest, 1, 0), new Object[]{
 				"sps", "pwp", "sps", 's', "cobblestone", 'p', woodTypes.get(i).getPlanksStack(),
@@ -33,7 +35,16 @@ public class InventoryRecipeRegister {
 				"sps", "ptp", "sps", 's', "cobblestone", 'p', woodTypes.get(i).getPlanksStack(),
 				't', new ItemStack(Blocks.trapdoor, 1),
 			}));
-		}
+		}*/
+		GameRegistry.addRecipe(new RecipeStoneCrafting(0));
+		GameRegistry.addRecipe(new RecipeStoneCrafting(1));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(0));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(1));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(2));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(3));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(4));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(5));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(6));
 		OreDictionary.registerOre("obsidian", Blocks.obsidian);
 		for(EInventoryMaterial mat : EInventoryMaterial.values()){
 			ItemStack stack = new ItemStack(improvedChest, 1, mat.ordinal());
@@ -62,7 +73,7 @@ public class InventoryRecipeRegister {
 				}
 				break;
 			}
-			GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
+			/*GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
 					" h ", "hch", " h ", 'h', new ItemStack(Blocks.hopper), 'c', stack
 			}));
 			GameRegistry.addRecipe(new RecipeImprovedChest(2, stack, new Object[]{
@@ -80,7 +91,7 @@ public class InventoryRecipeRegister {
 			}));
 			GameRegistry.addRecipe(new RecipeImprovedChest(3, stack2, new Object[]{
 					"tc", 't', new ItemStack(Blocks.tripwire_hook), 'c', stack2 
-			}));
+			}));*/
 		}
 	}
 	public static void registerUpgradeRecipes(BlockConnectiveInventory improvedChest,  ItemStack output, int previousTier, String upgMat){

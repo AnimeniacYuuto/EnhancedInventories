@@ -34,10 +34,9 @@ public class ItemSizeUpgrade extends ModItemMulti{
 		TileConnectiveInventory newTile = oldTile.getUpgradeTile(stack);
 		if(newTile == null || newTile == oldTile || !canUpgrade(oldTile, newTile, world, X, Y, Z))
 			return false;
-		newTile.setContents(oldTile.getContents());
+		newTile.setContents(oldTile.getContents(),true);
 		world.setTileEntity(X, Y, Z, newTile);
 		world.setBlockMetadataWithNotify(X, Y, Z, stack.getItemDamage()+1, 3);
-		//System.out.println("Tile Updated");
 		newTile.checkConnections();
 		newTile.markDirty(true);
 		return true;

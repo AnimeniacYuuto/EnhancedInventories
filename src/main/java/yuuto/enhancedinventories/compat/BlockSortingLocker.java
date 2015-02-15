@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.tile.BlockLocker;
+import yuuto.enhancedinventories.block.BlockLocker;
 
 public class BlockSortingLocker extends BlockLocker{
 	

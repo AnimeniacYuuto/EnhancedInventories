@@ -17,16 +17,16 @@ import invtweaks.api.container.ChestContainer;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import yuuto.yuutolib.gui.ContainerAlt;
 
 @ChestContainer()
 @InventoryContainer(showOptions = true)
 public class ContainerConnectedLarge extends ContainerAlt implements IConnectedContainer{
 
-	public ContainerConnectedLarge(TileConnectiveInventory inventory,
+	public ContainerConnectedLarge(IInventory inventory,
 			EntityPlayer player) {
 		super(inventory, player.inventory);
 		inventory.openInventory();

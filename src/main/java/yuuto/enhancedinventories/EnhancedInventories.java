@@ -13,7 +13,11 @@
 package yuuto.enhancedinventories;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -22,18 +26,20 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.BlockImprovedSortingChest;
 import yuuto.enhancedinventories.compat.BlockSortingLocker;
 import yuuto.enhancedinventories.item.ItemFunctionUpgrade;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
+import yuuto.enhancedinventories.proxy.InventoryRecipeRegister;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
-import yuuto.enhancedinventories.tile.BlockImprovedChest;
-import yuuto.enhancedinventories.tile.BlockLocker;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.4")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.5")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")
@@ -81,7 +87,28 @@ public class EnhancedInventories implements IMod{
 	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		System.out.println("EI Post Init base");
 		proxy.postInit(event);
+		WoolUpgradeHelper.init();
+		InventoryRecipeRegister.registerRecipes();	
+		registerRecipes();
+	}
+	
+	public void registerRecipes(){
+		ItemStack base = new ItemStack(EnhancedInventories.functionUpgrade, 1, 0);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 0), new Object[]{
+			" c ", "cpc", " c ", 'c', "cobblestone", 'p', Items.paper 
+		}));
+		GameRegistry.addShapedRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), new Object[]{
+			" h ", "hmh", " h ", 'h', Blocks.hopper, 'm', base
+		});
+		GameRegistry.addShapelessRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), 
+			Blocks.tripwire_hook, base);
+		for(int i = 1; i < EInventoryMaterial.values().length; i++){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
+				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
+			}));
+		}
 	}
 
 }

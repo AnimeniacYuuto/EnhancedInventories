@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL12;
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
 import net.minecraft.client.model.ModelChest;
@@ -80,7 +81,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         
         switch(pass){
         case 0:
-        	this.bindTexture(EWoodType.values()[chest.woodType].getSingleChestTexture());
+        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(0));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:
@@ -146,7 +147,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         GL11.glPushMatrix();
         switch(pass){
         case 0:
-        	this.bindTexture(EWoodType.values()[chest.woodType].getDoubleChestTexture());
+        	this.bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(1));
         	GL11.glColor4f(1f, 1f, 1f, 1f);
         	break;
         case 1:

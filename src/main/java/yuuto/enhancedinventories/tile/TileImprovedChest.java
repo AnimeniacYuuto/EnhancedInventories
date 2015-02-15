@@ -17,9 +17,12 @@ import java.util.List;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
+import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.yuutolib.utill.InventoryWrapper;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -41,7 +44,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		topDirs.add(ForgeDirection.SOUTH);
 	}
 	
-	public int woodType = 0;
+	public String woodType = WoodTypes.DEFAULT_WOOD_ID;
 	public int woolType = 0;
 	public boolean hopper;
 	public boolean alt;
@@ -61,7 +64,15 @@ public class TileImprovedChest extends TileConnectiveInventory{
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound){
     	super.readFromNBT(nbttagcompound);
-    	woodType = nbttagcompound.getInteger("wood");
+    	if(nbttagcompound.hasKey("wood")){
+    		int w = nbttagcompound.getInteger("wood");
+    		ItemStack stack = new ItemStack(Blocks.planks, 1, w);
+    		woodType = WoodTypes.getId(stack);
+    		System.out.println("Generated: "+woodType);
+    	}else{
+    		woodType = nbttagcompound.getString("woodType");
+    		System.out.println("Loaded: "+woodType);
+    	}
     	woolType = nbttagcompound.getInteger("wool");
     	hopper = nbttagcompound.getBoolean("hopper");
     	alt = nbttagcompound.getBoolean("alt");
@@ -70,7 +81,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound){
     	super.writeToNBT(nbttagcompound);
-    	nbttagcompound.setByte("wood", (byte)woodType);
+    	nbttagcompound.setString("woodType", woodType);
     	nbttagcompound.setByte("wool", (byte)woolType);
     	nbttagcompound.setBoolean("hopper", hopper);
     	nbttagcompound.setBoolean("alt", alt);
@@ -83,7 +94,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			return false;
     	if(itemBlock.getItemDamage() != this.getType().ordinal())
 			return false;
-		if(this.woodType != itemBlock.getTagCompound().getInteger("wood"))
+		if(!this.woodType.matches(itemBlock.getTagCompound().getString("woodType")))
 			return false;
 		if(this.woolType != itemBlock.getTagCompound().getInteger("wool"))
 			return false;
@@ -100,10 +111,9 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		if(!(tile instanceof TileImprovedChest))
 			return false;
 		TileImprovedChest chest = (TileImprovedChest)tile;
-		System.out.println("is valid? "+this.hopper+"=="+chest.hopper);
 		if(chest.getType() != this.getType())
 			return false;
-		if(this.woodType != chest.woodType)
+		if(!this.woodType.matches(chest.woodType))
 			return false;
 		if(this.woolType != chest.woolType)
 			return false;
@@ -259,6 +269,19 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			retChest.setOrientation(this.orientation);
 			return retChest;
 		}
+		int woolId = WoolUpgradeHelper.getDyeId(stack);
+    	if(woolId >= 0){
+    		TileImprovedChest ret = new TileImprovedChest(this.getType());
+			ret.woodType = this.woodType;
+			ret.woolType = this.woolType;
+			ret.alt = this.alt;
+			ret.hopper = this.hopper;
+			ret.redstone = this.redstone;
+			ret.setOrientation(this.orientation);
+			
+			ret.woolType = WoolUpgradeHelper.getCollorValue(woolId);
+			return ret;
+    	}
 		return this;
 	}
 	
@@ -271,6 +294,10 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		if(EnhancedInventories.refinedRelocation && stack.getItem() == SortingUpgradeHelper.getUpgradeItem()){
 			return true; 
 		}
+		int woolId = WoolUpgradeHelper.getDyeId(stack);
+    	if(woolId >= 0){
+    		return WoolUpgradeHelper.getCollorValue(woolId) != this.woolType;
+    	}
 		return super.canUpgrade(stack);
 	}
 

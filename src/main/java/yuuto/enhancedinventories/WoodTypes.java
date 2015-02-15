@@ -13,30 +13,47 @@
 package yuuto.enhancedinventories;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import cpw.mods.fml.common.Loader;
+
+import yuuto.enhancedinventories.compat.modules.*;
+import yuuto.enhancedinventories.proxy.ConfigHandler;
 
 import net.minecraft.item.ItemStack;
 
-public class WoodTypes {
-	static ArrayList<EWoodType> woodTypes = new ArrayList<EWoodType>();
+public final class WoodTypes {
 	
+	public static final String DEFAULT_WOOD_ID = "wood:minecraft:planks:0";
+	
+	static ArrayList<WoodType> woodTypes = new ArrayList<WoodType>();
+	static HashMap<String, WoodType> woodTypeMap = new HashMap<String, WoodType>();
 
 	public static void init(){
 		ArrayList<String> loadedMods = new ArrayList<String>();
-		loadedMods.add("minecraft");
-		
-		for(EWoodType type : EWoodType.values()){
-			if(loadedMods.contains(type.getModID()))
-				woodTypes.add(type);
+		VanillaModule.init();
+		if(ConfigHandler.chisel && Loader.isModLoaded("chisel")){
+			loadedMods.add("chisel");
+			ChiselModule.init();
 		}
 	}
-	public static int getIdOf(ItemStack stack){
-		for(EWoodType wood : woodTypes){
+	public static void addWoodType(WoodType wood){
+		woodTypes.add(wood);
+		woodTypeMap.put(wood.id(), wood);
+	}
+	public static String getId(ItemStack stack){
+		for(WoodType wood : woodTypes){
 			if(wood.matches(stack))
-				return wood.ordinal();
+				return wood.id();
 		}
-		return -1;
+		return null;
 	}
-	public static ArrayList<EWoodType> getWoodTypes(){
+	public static WoodType getWoodType(String id){
+		if(woodTypeMap.containsKey(id))
+			return woodTypeMap.get(id);
+		return null;
+	}
+	public static ArrayList<WoodType> getWoodTypes(){
 		return woodTypes;
 	}
 }

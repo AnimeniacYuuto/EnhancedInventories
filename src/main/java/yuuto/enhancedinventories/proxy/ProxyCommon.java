@@ -23,13 +23,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
 import yuuto.enhancedinventories.compat.TileSortingLocker;
 import yuuto.enhancedinventories.gui.GuiHandler;
-import yuuto.enhancedinventories.tile.BlockImprovedChest;
-import yuuto.enhancedinventories.tile.BlockLocker;
-import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
-import yuuto.enhancedinventories.tile.ItemBlockLocker;
+import yuuto.enhancedinventories.item.ItemBlockImprovedChest;
+import yuuto.enhancedinventories.item.ItemBlockLocker;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileLocker;
 import yuuto.yuutolib.IProxy;
@@ -38,6 +38,7 @@ public class ProxyCommon implements IProxy {
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
+		ConfigHandler.init(event);
 		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest;
 		BlockLocker locker = EnhancedInventories.locker;
 		GameRegistry.registerItem(EnhancedInventories.sizeUpgrade, "sizeUpgrade");
@@ -47,9 +48,6 @@ public class ProxyCommon implements IProxy {
 		GameRegistry.registerBlock(locker, ItemBlockLocker.class, "locker");
 		GameRegistry.registerTileEntity(TileLocker.class, "container.ImprovedChests:locker");
 		registerCompatBlocks();
-		
-		InventoryRecipeRegister.registerRecipes();	
-		registerRecipes();
 	}
 	
 	public void registerCompatBlocks(){
@@ -63,13 +61,14 @@ public class ProxyCommon implements IProxy {
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) {	
 		NetworkRegistry.INSTANCE.registerGuiHandler(EnhancedInventories.instance, new GuiHandler());
 
 	}
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
+		System.out.println("EI Post Init");
 		
 	}
 	

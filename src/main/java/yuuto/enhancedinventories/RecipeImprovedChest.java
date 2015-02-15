@@ -12,7 +12,7 @@
  ******************************************************************************/
 package yuuto.enhancedinventories;
 
-import yuuto.enhancedinventories.tile.ItemBlockImprovedChest;
+import yuuto.enhancedinventories.item.ItemBlockImprovedChest;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -63,12 +63,12 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 	public ItemStack getBasicResult(InventoryCrafting var1){
 		ItemStack ret = super.getCraftingResult(var1);
 		if(ret.getItemDamage() == 0){
-			int wood = WoodTypes.getIdOf(var1.getStackInRowAndColumn(0, 1));
+			String wood = WoodTypes.getId(var1.getStackInRowAndColumn(0, 1));
 			int wool = var1.getStackInRowAndColumn(1, 1).getItemDamage();
-			if(wood < 0)
-				wood = 0;
+			if(wood == null)
+				return null;
 			ret.setTagCompound(new NBTTagCompound());
-			ret.getTagCompound().setByte("wood", (byte)wood);
+			ret.getTagCompound().setString("woodType", wood);
 			if(ret.getItem() instanceof ItemBlockImprovedChest)
 				ret.getTagCompound().setByte("wool", (byte)wool);
 			ret.getTagCompound().setBoolean("hopper", false);
@@ -109,7 +109,7 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 	public NBTTagCompound generateNBT(ItemStack stack){
 		NBTTagCompound nbt = new NBTTagCompound();
 		
-		nbt.setByte("wood", (byte)0);
+		nbt.setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
 		if(stack.getItem() instanceof ItemBlockImprovedChest)
 			nbt.setByte("wool", (byte)0);
 		nbt.setBoolean("hopper", false);

@@ -25,27 +25,33 @@ public class GuiHandler implements IGuiHandler{
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(!(tile instanceof TileConnectiveInventory))
-			return null;
-		TileConnectiveInventory inv = (TileConnectiveInventory)tile;
-		if(inv.getSizeInventory() <= 54){
-			return new ContainerConnected(inv, player);
+		if(ID == 0){
+			TileEntity tile = world.getTileEntity(x, y, z);
+			if(!(tile instanceof TileConnectiveInventory))
+				return null;
+			TileConnectiveInventory inv = (TileConnectiveInventory)tile;
+			if(inv.getSizeInventory() <= 54){
+				return new ContainerConnected(inv, player);
+			}
+			return new ContainerConnectedLarge(inv, player);
 		}
-		return new ContainerConnectedLarge(inv, player);
+		return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
-		TileEntity tile = world.getTileEntity(x, y, z);
-		if(!(tile instanceof TileConnectiveInventory))
-			return null;
-		TileConnectiveInventory inv = (TileConnectiveInventory)tile;
-		if(inv.getSizeInventory() <= 54){
-			return new GuiContainerConnected(inv, player);
+		if(ID == 0){
+			TileEntity tile = world.getTileEntity(x, y, z);
+			if(!(tile instanceof TileConnectiveInventory))
+				return null;
+			TileConnectiveInventory inv = (TileConnectiveInventory)tile;
+			if(inv.getSizeInventory() <= 54){
+				return new GuiContainerConnected(inv, player);
+			}
+			return new GuiContainerConnectedLarge(inv, player);
 		}
-		return new GuiContainerConnectedLarge(inv, player);
+		return null;
 	}
 
 }

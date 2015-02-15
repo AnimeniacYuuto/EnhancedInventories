@@ -1,8 +1,9 @@
 package yuuto.enhancedinventories.compat;
 
+import com.dynious.refinedrelocation.api.ModObjects;
+
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -10,7 +11,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class SortingUpgradeHelper {
 	
 	public static Item getUpgradeItem(){
-		return Items.gold_ingot;
+		return ModObjects.sortingUpgrade.getItem();
 	}
 	public static boolean hasUpgradeMaterials(TileConnectiveInventory inv, EntityPlayer player){
 		String s = inv.getType().getMaterial();

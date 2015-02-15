@@ -16,16 +16,16 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import yuuto.enhancedinventories.gui.ContainerConnected;
-import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 
 public class GuiContainerConnected extends GuiContainer{
 
 	static ResourceLocation smallTexture = new ResourceLocation("enhancedinventories","textures/gui/generic_27.png");
 	static ResourceLocation largeTexture = new ResourceLocation("textures/gui/container/generic_54.png");
 	boolean large;
-	public GuiContainerConnected(TileConnectiveInventory tile, EntityPlayer player) {
+	public GuiContainerConnected(IInventory tile, EntityPlayer player) {
 		super(new ContainerConnected(tile, player));
 		if(tile.getSizeInventory() == 54){
 			large = true;

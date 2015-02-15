@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.client.models.ModelLockerSingle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
@@ -93,11 +94,11 @@ public class RendererLockerItem implements IItemRenderer{
 	}
 	
 	public void renderItem(ItemStack item, float x, float y, float z, int pass){
-		int wood = 0;
+		String wood = WoodTypes.DEFAULT_WOOD_ID;
 		EInventoryMaterial mat = EInventoryMaterial.values()[item.getItemDamage()];
 		
-		if(item.hasTagCompound()){
-			wood = item.getTagCompound().getInteger("wood");
+		if(item.hasTagCompound() && item.getTagCompound().hasKey("woodType")){
+			wood = item.getTagCompound().getString("woodType");
 		}
 		
 		//int i = 5;
@@ -107,7 +108,7 @@ public class RendererLockerItem implements IItemRenderer{
 		GL11.glTranslated(x+0.5d, y+0.5d, z+0.525d);
 		switch (pass){
 	    case 0:
-	    	mc.renderEngine.bindTexture(EWoodType.values()[wood].getSingleLockerTexture());
+	    	mc.renderEngine.bindTexture(WoodTypes.getWoodType(wood).getTexture(0));
 	    	break;
 	    case 1:
 	    	if(mat.hasTexture())

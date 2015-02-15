@@ -12,6 +12,7 @@ import com.dynious.refinedrelocation.api.tileentity.handlers.ISortingInventoryHa
 
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
 public class TileImprovedSortingChest extends TileImprovedChest implements ISortingInventory, IFilterTileGUI{
@@ -187,21 +188,6 @@ public class TileImprovedSortingChest extends TileImprovedChest implements ISort
 	
 	@Override
 	public TileImprovedSortingChest getUpgradeTile(ItemStack stack){
-		if(stack.getItem() == EnhancedInventories.sizeUpgrade){
-			TileImprovedSortingChest ret = new TileImprovedSortingChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
-			ret.woodType = this.woodType;
-			ret.woolType = this.woolType;
-			ret.alt = this.alt;
-			ret.hopper = this.hopper;
-			ret.redstone = this.redstone;
-			ret.setOrientation(this.orientation);
-			ret.setPriority(priority);
-			ret.filter = this.filter;
-			
-			if(ret.getType() == this.getType())
-				return this;
-			return ret;
-		}
 		if(stack.getItem() == EnhancedInventories.functionUpgrade){
 			TileImprovedSortingChest ret = new TileImprovedSortingChest(this.getType());
 			ret.woodType = this.woodType;
@@ -229,6 +215,19 @@ public class TileImprovedSortingChest extends TileImprovedChest implements ISort
 			}
 			return ret;
 		}
+		int woolId = WoolUpgradeHelper.getDyeId(stack);
+    	if(woolId >= 0){
+    		TileImprovedSortingChest ret = new TileImprovedSortingChest(this.getType());
+			ret.woodType = this.woodType;
+			ret.woolType = this.woolType;
+			ret.alt = this.alt;
+			ret.hopper = this.hopper;
+			ret.redstone = this.redstone;
+			ret.setOrientation(this.orientation);
+			
+			ret.woolType = WoolUpgradeHelper.getCollorValue(woolId);
+			return ret;
+    	}
 		return this;
 	}
 	
@@ -237,6 +236,8 @@ public class TileImprovedSortingChest extends TileImprovedChest implements ISort
 		if(stack.getItem() == SortingUpgradeHelper.getUpgradeItem()){
 			return false; 
 		}
+		if(stack.getItem() == EnhancedInventories.sizeUpgrade)
+			return false;
 		return super.canUpgrade(stack);
 	}
 	

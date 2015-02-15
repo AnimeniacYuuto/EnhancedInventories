@@ -15,15 +15,15 @@ package yuuto.enhancedinventories.gui;
 import invtweaks.api.container.ChestContainer;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import yuuto.yuutolib.gui.ContainerAlt;
 
 @ChestContainer()
 @InventoryContainer(showOptions = true)
 public class ContainerConnected extends ContainerAlt implements IConnectedContainer{
 
-	public ContainerConnected(TileConnectiveInventory inventory,
+	public ContainerConnected(IInventory inventory,
 			EntityPlayer player) {
 		super(inventory, player.inventory);
 		inventory.openInventory();

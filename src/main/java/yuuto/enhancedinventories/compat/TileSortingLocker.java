@@ -187,21 +187,6 @@ public class TileSortingLocker extends TileLocker implements ISortingInventory, 
 	
 	@Override
 	public TileSortingLocker getUpgradeTile(ItemStack stack){
-		if(stack.getItem() == EnhancedInventories.sizeUpgrade){
-			TileSortingLocker ret = new TileSortingLocker(EInventoryMaterial.values()[stack.getItemDamage()+1]);
-			ret.woodType = this.woodType;
-			ret.alt = this.alt;
-			ret.hopper = this.hopper;
-			ret.redstone = this.redstone;
-			ret.reversed = this.reversed;
-			ret.setOrientation(this.orientation);
-			ret.setPriority(priority);
-			ret.filter = this.filter;
-			
-			if(ret.getType() == this.getType())
-				return this;
-			return ret;
-		}
 		if(stack.getItem() == EnhancedInventories.functionUpgrade){
 			TileSortingLocker ret = new TileSortingLocker(this.getType());
 			ret.woodType = this.woodType;
@@ -237,6 +222,8 @@ public class TileSortingLocker extends TileLocker implements ISortingInventory, 
 		if(stack.getItem() == SortingUpgradeHelper.getUpgradeItem()){
 			return false; 
 		}
+		if(stack.getItem() == EnhancedInventories.sizeUpgrade)
+			return false;
 		return super.canUpgrade(stack);
 	}
 	

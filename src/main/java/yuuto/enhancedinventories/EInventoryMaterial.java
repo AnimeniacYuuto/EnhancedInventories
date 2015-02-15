@@ -86,18 +86,18 @@ public enum EInventoryMaterial {
 		return size*2;
 	}
 	public float r(){
-		if(this == Tin)
-			return 117f/255f;
+		//if(this == Tin)
+		//	return 117f/255f;
 		return (rVal)/255f;
 	}
 	public float g(){
-		if(this == Tin)
-			return 148f/255f;
+		//if(this == Tin)
+		//	return 148f/255f;
 		return (gVal)/255f;
 	}
 	public float b(){
-		if(this == Tin)
-			return 191f/255f;
+		//if(this == Tin)
+		//	return 191f/255f;
 		return (bVal)/255f;
 	}
 	public boolean hasTexture(){

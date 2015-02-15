@@ -28,6 +28,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.gui.IConnectedContainer;
 import yuuto.yuutolib.block.tile.TileRotatable;
 
@@ -78,7 +79,6 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	this.orientation = partnerTile.orientation;
     }
     public void disconnect(){
-    	System.out.println("Disconnecting");
     	partnerTile = null;
     	partnerDir = ForgeDirection.UNKNOWN;
     	if(!this.worldObj.isRemote){
@@ -462,9 +462,6 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	checkConnections();
     }
     public void checkConnections(){
-    	System.out.println("Checking connections");
-    	String s = "remote? "+worldObj.isRemote+" partner? "+(this.partnerTile != null);
-    	System.out.println(s);
     	for(ForgeDirection dir : getValidConnectionSides()){
     		TileEntity tile = worldObj.getTileEntity(xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
     		if(tile == null || !(tile instanceof TileConnectiveInventory))
@@ -520,7 +517,6 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     @Override
     public Packet getDescriptionPacket()
     {
-		System.out.println("Sending Packet");
     	NBTTagCompound tagCompound = new NBTTagCompound();
 	    writeToNBT(tagCompound);
 	    tagCompound.setFloat("pkt.prevLidAngle", this.prevLidAngle);
@@ -561,11 +557,13 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     
     public abstract TileConnectiveInventory getUpgradeTile(ItemStack stack);
     
-    public void setContents(ItemStack[] origin){
+    public void setContents(ItemStack[] origin, boolean removeOld){
     	for(int i = 0; i < origin.length; i++){
     		if(i > chestContents.length)
     			break;
     		chestContents[i] = origin[i];
+    		if(removeOld)
+    			origin[i] = null;
     	}
     }
 

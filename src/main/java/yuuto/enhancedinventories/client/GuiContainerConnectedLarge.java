@@ -16,10 +16,10 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import yuuto.enhancedinventories.gui.ContainerConnectedLarge;
-import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 
 public class GuiContainerConnectedLarge extends GuiContainer{
 
@@ -32,7 +32,7 @@ public class GuiContainerConnectedLarge extends GuiContainer{
 	int previousY = 0;
 	boolean scrolling = false;
 	ContainerConnectedLarge container;
-	public GuiContainerConnectedLarge(TileConnectiveInventory tile, EntityPlayer player) {
+	public GuiContainerConnectedLarge(IInventory tile, EntityPlayer player) {
 		super(new ContainerConnectedLarge(tile, player));
 		container = (ContainerConnectedLarge)this.inventorySlots;
 		this.ySize = 222;

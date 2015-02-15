@@ -16,9 +16,11 @@ import java.util.List;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.TileSortingLocker;
 import yuuto.yuutolib.utill.InventoryWrapper;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -43,7 +45,7 @@ public class TileLocker extends TileConnectiveInventory{
 		topDirs.add(ForgeDirection.DOWN);
 	}
 	
-	public int woodType = 0;
+	public String woodType = WoodTypes.DEFAULT_WOOD_ID;
 	public boolean hopper;
 	public boolean alt;
 	public boolean reversed;
@@ -63,7 +65,15 @@ public class TileLocker extends TileConnectiveInventory{
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound){
     	super.readFromNBT(nbttagcompound);
-    	woodType = nbttagcompound.getInteger("wood");
+    	if(nbttagcompound.hasKey("wood")){
+    		int w = nbttagcompound.getInteger("wood");
+    		ItemStack stack = new ItemStack(Blocks.planks, 1, w);
+    		woodType = WoodTypes.getId(stack);
+    		System.out.println("Generated: "+woodType);
+    	}else{
+    		woodType = nbttagcompound.getString("woodType");
+    		System.out.println("Loaded: "+woodType);
+    	}
     	hopper = nbttagcompound.getBoolean("hopper");
     	alt = nbttagcompound.getBoolean("alt");
     	reversed = nbttagcompound.getBoolean("reversed");
@@ -72,7 +82,7 @@ public class TileLocker extends TileConnectiveInventory{
     @Override
     public void writeToNBT(NBTTagCompound nbttagcompound){
     	super.writeToNBT(nbttagcompound);
-    	nbttagcompound.setByte("wood", (byte)woodType);
+    	nbttagcompound.setString("woodType", woodType);
     	nbttagcompound.setBoolean("hopper", hopper);
     	nbttagcompound.setBoolean("alt", alt);
     	nbttagcompound.setBoolean("reversed", reversed);
@@ -85,7 +95,7 @@ public class TileLocker extends TileConnectiveInventory{
 			return false;
     	if(itemBlock.getItemDamage() != this.getType().ordinal())
 			return false;
-		if(this.woodType != itemBlock.getTagCompound().getInteger("wood"))
+		if(!this.woodType.matches(itemBlock.getTagCompound().getString("woodType")))
 			return false;
 		if(this.hopper != itemBlock.getTagCompound().getBoolean("hopper"))
 			return false;
@@ -102,7 +112,7 @@ public class TileLocker extends TileConnectiveInventory{
 		TileLocker chest = (TileLocker)tile;
 		if(chest.getType() != this.getType())
 			return false;
-		if(this.woodType != chest.woodType)
+		if(!this.woodType.matches(chest.woodType))
 			return false;
 		if(this.hopper != chest.hopper)
 			return false;

@@ -1,9 +1,11 @@
 package yuuto.enhancedinventories.client;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.client.models.ModelLockerDouble;
 import yuuto.enhancedinventories.client.models.ModelLockerSingle;
 import yuuto.enhancedinventories.tile.TileLocker;
@@ -55,7 +57,7 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 		GL11.glTranslated(x+0.5d, y+0.5d, z+0.525d);
 		switch (pass){
 	    case 0:
-	    	bindTexture(EWoodType.values()[chest.woodType].getSingleLockerTexture());
+	    	bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(0));
 	    	break;
 	    case 1:
 	    	if(chest.getType().hasTexture())
@@ -111,15 +113,10 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 		int i = chest.getOrientation().ordinal();
 		short short1 = 0;
 		GL11.glPushMatrix();
-		
-		if(chest.getPartnerDir() == ForgeDirection.UP)
-			GL11.glTranslated(x+0.49375d, y+1.0d, z+0.53125d);
-	    if(chest.getPartnerDir() == ForgeDirection.DOWN)
-	     	GL11.glTranslated(x+0.49375d, y-5d, z+0.53125d);
 	    
 	    switch (pass){
 	    case 0:
-	    	bindTexture(EWoodType.values()[chest.woodType].getSingleLockerTexture());
+	    	bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(0));
 	    	break;
 	    case 1:
 	    	if(chest.getType().hasTexture())
@@ -135,6 +132,11 @@ public class RendererLocker extends TileEntitySpecialRenderer{
     	default:
     		break;
 	    }
+	    GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+	    if(chest.getPartnerDir() == ForgeDirection.UP)
+			GL11.glTranslated(x+0.49375d, y+1.0d, z+0.53125d);
+	    if(chest.getPartnerDir() == ForgeDirection.DOWN)
+	     	GL11.glTranslated(x+0.49375d, y-5d, z+0.53125d);
 	    if (i == 2)
         {
             short1 = 90;
@@ -166,6 +168,8 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 	     else
 	    	 doubleLockerRenderer.renderAll();
 	     // OpenGL stuff to put everything back
+	     GL11.glColor4f(1f, 1f, 1f, 1f);
+	     GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 	     GL11.glPopMatrix();
 		
 		
