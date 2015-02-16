@@ -548,7 +548,7 @@ public abstract class TileConnectiveInventory extends TileRotatable implements I
     	if(this.getTotalUsingPlayers() > 0)
     		return false;
     	if(stack.getItem() == EnhancedInventories.sizeUpgrade){
-    		return EInventoryMaterial.values()[stack.getItemDamage()+1].getTier() == this.getType().getTier()+1;
+    		return this.type != EInventoryMaterial.Obsidian && EInventoryMaterial.values()[stack.getItemDamage()+1].getTier() == this.getType().getTier()+1;
     	}
     	if(stack.getItem() == EnhancedInventories.functionUpgrade && stack.getItemDamage() == 2)
     		return !redstone;

@@ -31,7 +31,12 @@ public enum EInventoryMaterial {
 	Bronze(81, 225, 155, 50, "ingotBronze", 2), 
 	Steel(81, 128, 128, 128, "ingotSteel", 2),
 	
-	Platinum(108, 98, 153, 255, "ingotPlatinum", 3);
+	Platinum(108, 98, 153, 255, "ingotPlatinum", 3),
+	
+	Alumite(108, 235, 140, 240, "ingotAlumite", 3),
+	Cobalt(135, 65, 65, 255, "ingotCobalt", 4),
+	Ardite(135, 255, 88, 0, "ingotArdite", 4),
+	Manyullyn(162, 120, 0, 235, "ingotManyullyn", 5);
 	
 	int size;
 	int rVal;
@@ -86,18 +91,18 @@ public enum EInventoryMaterial {
 		return size*2;
 	}
 	public float r(){
-		//if(this == Tin)
-		//	return 117f/255f;
+		/*if(this == Alumite)
+			return 120f/255f;*/
 		return (rVal)/255f;
 	}
 	public float g(){
-		//if(this == Tin)
-		//	return 148f/255f;
+		/*if(this == Alumite)
+			return 0f/255f;*/
 		return (gVal)/255f;
 	}
 	public float b(){
-		//if(this == Tin)
-		//	return 191f/255f;
+		/*if(this == Alumite)
+			return 235f/255f;*/
 		return (bVal)/255f;
 	}
 	public boolean hasTexture(){

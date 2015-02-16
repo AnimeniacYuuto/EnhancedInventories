@@ -33,6 +33,8 @@ import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.BlockImprovedSortingChest;
 import yuuto.enhancedinventories.compat.BlockSortingLocker;
+import yuuto.enhancedinventories.compat.modules.NEIModule;
+import yuuto.enhancedinventories.compat.modules.TConstructModule;
 import yuuto.enhancedinventories.item.ItemFunctionUpgrade;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.proxy.InventoryRecipeRegister;
@@ -90,8 +92,12 @@ public class EnhancedInventories implements IMod{
 		System.out.println("EI Post Init base");
 		proxy.postInit(event);
 		WoolUpgradeHelper.init();
+		if(Loader.isModLoaded("TConstruct"))
+			TConstructModule.init();
 		InventoryRecipeRegister.registerRecipes();	
 		registerRecipes();
+		if(Loader.isModLoaded("NotEnoughItems"))
+			NEIModule.init();
 	}
 	
 	public void registerRecipes(){

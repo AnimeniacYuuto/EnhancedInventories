@@ -14,6 +14,11 @@ tile.EnhancedInventories:improvedChest.Bronze.name=Improved Bronze Chest
 tile.EnhancedInventories:improvedChest.Steel.name=Improved Steel Chest
 tile.EnhancedInventories:improvedChest.Platinum.name=Improved Platinum Chest
 
+tile.EnhancedInventories:improvedChest.Alumite.name=Improved Alumite Chest
+tile.EnhancedInventories:improvedChest.Cobalt.name=Improved Cobalt Chest
+tile.EnhancedInventories:improvedChest.Ardite.name=Improved Ardite Chest
+tile.EnhancedInventories:improvedChest.Manyullyn.name=Improved Manyullyn Chest
+
 tile.EnhancedInventories:improvedSortingChest.Stone.name=Improved Stone Sorting Chest
 tile.EnhancedInventories:improvedSortingChest.Iron.name=Improved Iron Sorting Chest
 tile.EnhancedInventories:improvedSortingChest.Gold.name=Improved Gold Sorting Chest
@@ -27,6 +32,11 @@ tile.EnhancedInventories:improvedSortingChest.Silver.name=Improved Silver Sortin
 tile.EnhancedInventories:improvedSortingChest.Bronze.name=Improved Bronze Sorting Chest
 tile.EnhancedInventories:improvedSortingChest.Steel.name=Improved Steel Sorting Chest
 tile.EnhancedInventories:improvedSortingChest.Platinum.name=Improved Platinum Sorting Chest
+
+tile.EnhancedInventories:improvedSortingChest.Alumite.name=Improved Alumite Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Cobalt.name=Improved Cobalt Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Ardite.name=Improved Ardite Sorting Chest
+tile.EnhancedInventories:improvedSortingChest.Manyullyn.name=Improved Manyullyn Sorting Chest
 
 tile.EnhancedInventories:locker.Stone.name=Stone Locker
 tile.EnhancedInventories:locker.Iron.name=Iron Locker
@@ -42,6 +52,11 @@ tile.EnhancedInventories:locker.Bronze.name=Bronze Locker
 tile.EnhancedInventories:locker.Steel.name=Steel Locker
 tile.EnhancedInventories:locker.Platinum.name=Platinum Locker
 
+tile.EnhancedInventories:locker.Alumite.name=Alumite Locker
+tile.EnhancedInventories:locker.Cobalt.name=Cobalt Locker
+tile.EnhancedInventories:locker.Ardite.name=Ardite Locker
+tile.EnhancedInventories:locker.Manyullyn.name=Manyullyn Locker
+
 tile.EnhancedInventories:sortingLocker.Stone.name=Stone Sorting Locker
 tile.EnhancedInventories:sortingLocker.Iron.name=Iron Sorting Locker
 tile.EnhancedInventories:sortingLocker.Gold.name=Gold Sorting Locker
@@ -56,6 +71,11 @@ tile.EnhancedInventories:sortingLocker.Bronze.name=Bronze Sorting Locker
 tile.EnhancedInventories:sortingLocker.Steel.name=Steel Sorting Locker
 tile.EnhancedInventories:sortingLocker.Platinum.name=Platinum Sorting Locker
 
+tile.EnhancedInventories:sortingLocker.Alumite.name=Alumite Sorting Locker
+tile.EnhancedInventories:sortingLocker.Cobalt.name=Cobalt Sorting Locker
+tile.EnhancedInventories:sortingLocker.Ardite.name=Ardite Sorting Locker
+tile.EnhancedInventories:sortingLocker.Manyullyn.name=Manyullyn Sorting Locker
+
 item.EnhancedInventories:sizeUpgrade.Iron.name=Iron Upgrade
 item.EnhancedInventories:sizeUpgrade.Gold.name=Gold Upgrade
 item.EnhancedInventories:sizeUpgrade.Diamond.name=Diamond Upgrade
@@ -68,6 +88,11 @@ item.EnhancedInventories:sizeUpgrade.Silver.name=Silver Upgrade
 item.EnhancedInventories:sizeUpgrade.Bronze.name=Bronze Upgrade
 item.EnhancedInventories:sizeUpgrade.Steel.name=Steel Upgrade
 item.EnhancedInventories:sizeUpgrade.Platinum.name=Platinum Upgrade
+
+item.EnhancedInventories:sizeUpgrade.Alumite.name=Alumite Upgrade
+item.EnhancedInventories:sizeUpgrade.Cobalt.name=Cobalt Upgrade
+item.EnhancedInventories:sizeUpgrade.Ardite.name=Ardite Upgrade
+item.EnhancedInventories:sizeUpgrade.Manyullyn.name=Manyullyn Upgrade
 
 item.EnhancedInventories:functionUpgrade.base.name=Basic Upgrade
 item.EnhancedInventories:functionUpgrade.hopper.name=Hopper Upgrade
@@ -90,15 +115,11 @@ color.wool.Green=Green
 color.wool.Red=Red
 color.wool.Black=Black
 
-woodType.OAK=Oak
-woodType.SPRUCE=Spruce
-woodType.BIRCH=Birch
-woodType.JUNGLE=Jungle
-woodType.ACACIA=Acacia
-woodType.DARK_OAK=Dark Oak
-
 upgrade.hopper=Hopper
 upgrade.redstone=Trapped
 upgrade.alt=Alternate
+
+recipe.functionUpgrade=Inventory Upgrades
+recipe.stoneCrafting=Inventory Crafting
 
 easterEgg.pink=Pink Power

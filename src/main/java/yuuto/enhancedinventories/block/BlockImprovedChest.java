@@ -55,7 +55,8 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
 				".Silver", ".Bronze", ".Steel",
-				".Platinum");
+				".Platinum", 
+				".Alumite", ".Cobalt", ".Ardite", ".Manyullyn");
 		this.setHardness(2.1f);
 	}
 	public BlockImprovedChest(String name){
@@ -63,7 +64,8 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
 				".Silver", ".Bronze", ".Steel",
-				".Platinum");
+				".Platinum",
+				".Alumite", ".Cobalt", ".Ardite", ".Manyullyn");
 		this.setHardness(2.1f);
 	}
 	

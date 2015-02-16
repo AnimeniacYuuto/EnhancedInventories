@@ -30,12 +30,11 @@ public final class WoodTypes {
 	static HashMap<String, WoodType> woodTypeMap = new HashMap<String, WoodType>();
 
 	public static void init(){
-		ArrayList<String> loadedMods = new ArrayList<String>();
 		VanillaModule.init();
-		if(ConfigHandler.chisel && Loader.isModLoaded("chisel")){
-			loadedMods.add("chisel");
+		if(ConfigHandler.chisel && Loader.isModLoaded("chisel"))
 			ChiselModule.init();
-		}
+		if(ConfigHandler.natura && Loader.isModLoaded("Natura"))
+			NaturaModule.init();
 	}
 	public static void addWoodType(WoodType wood){
 		woodTypes.add(wood);

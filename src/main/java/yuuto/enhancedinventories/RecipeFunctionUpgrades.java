@@ -204,5 +204,9 @@ public class RecipeFunctionUpgrades implements IRecipe{
 		ret.setTagCompound(nbt);
 		return ret;
 	}
+	
+	public int getType(){
+		return this.type;
+	}
 
 }

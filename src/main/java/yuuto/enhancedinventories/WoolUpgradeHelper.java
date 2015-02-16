@@ -9,8 +9,14 @@ import net.minecraftforge.oredict.OreDictionary;
 public class WoolUpgradeHelper {
 	
 	static List<Integer> dyeIds = null;
+	static List<String> dyeNames = null;
 	
 	public static void init(){
+		dyeNames = Arrays.asList(
+				"dyeWhite", "dyeOrange", "dyeMagenta", "dyeLightBlue", 
+				"dyeYellow", "dyeLime", "dyePink", "dyeGray", 
+				"dyeLightGray", "dyeCyan", "dyePurple", "dyeBlue",
+				"dyeBrown", "dyeGreen", "dyeRed", "dyeBlack");
 		dyeIds = Arrays.asList(
 				OreDictionary.getOreID("dyeWhite"), OreDictionary.getOreID("dyeOrange"), OreDictionary.getOreID("dyeMagenta"), OreDictionary.getOreID("dyeLightBlue"), 
 				OreDictionary.getOreID("dyeYellow"), OreDictionary.getOreID("dyeLime"), OreDictionary.getOreID("dyePink"), OreDictionary.getOreID("dyeGray"), 
@@ -34,6 +40,12 @@ public class WoolUpgradeHelper {
 		if(dyeIds == null || dyeIds.size() < 16)
 			return -1;
 		return dyeIds.indexOf(dyeId);
+	}
+	public static List<Integer> getDyeIDs(){
+		return dyeIds;
+	}
+	public static List<String> getDyeNames(){
+		return dyeNames;
 	}
 
 }

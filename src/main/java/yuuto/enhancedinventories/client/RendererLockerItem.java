@@ -3,7 +3,6 @@ package yuuto.enhancedinventories.client;
 import org.lwjgl.opengl.GL11;
 
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.client.models.ModelLockerSingle;
@@ -63,6 +62,7 @@ public class RendererLockerItem implements IItemRenderer{
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		//GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glEnable(GL11.GL_BLEND);
 		switch(type){
 		case ENTITY:
 			renderItem(item, 0f,0f,0f, 0);
@@ -91,6 +91,7 @@ public class RendererLockerItem implements IItemRenderer{
 		default:
 			break;
 		}
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
 	public void renderItem(ItemStack item, float x, float y, float z, int pass){
@@ -112,7 +113,7 @@ public class RendererLockerItem implements IItemRenderer{
 	    	break;
 	    case 1:
 	    	if(mat.hasTexture())
-	    		mc.renderEngine.bindTexture(mat.getTexture(3));
+	    		mc.renderEngine.bindTexture(mat.getTexture(2));
 		    else{
 		    	mc.renderEngine.bindTexture(singleChestFrame);
 		    	GL11.glColor4f(mat.r(), mat.g(), mat.b(), 1f);

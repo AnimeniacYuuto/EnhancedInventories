@@ -3,7 +3,6 @@ package yuuto.enhancedinventories.client;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.client.models.ModelLockerDouble;
@@ -54,7 +53,7 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 		short short1 = 0;
 		GL11.glPushMatrix();
 		
-		GL11.glTranslated(x+0.5d, y+0.5d, z+0.525d);
+		GL11.glTranslated(x+0.5d, y+0.5d, z+0.502d);
 		switch (pass){
 	    case 0:
 	    	bindTexture(WoodTypes.getWoodType(chest.woodType).getTexture(0));
@@ -134,9 +133,9 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 	    }
 	    GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	    if(chest.getPartnerDir() == ForgeDirection.UP)
-			GL11.glTranslated(x+0.49375d, y+1.0d, z+0.53125d);
+			GL11.glTranslated(x+0.49375d, y+1.0d, z+0.50825d);
 	    if(chest.getPartnerDir() == ForgeDirection.DOWN)
-	     	GL11.glTranslated(x+0.49375d, y-5d, z+0.53125d);
+	     	GL11.glTranslated(x+0.49375d, y-0d, z+0.50825d);
 	    if (i == 2)
         {
             short1 = 90;

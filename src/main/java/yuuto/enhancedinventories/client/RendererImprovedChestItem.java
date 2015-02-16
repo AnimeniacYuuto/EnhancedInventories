@@ -18,11 +18,11 @@ import org.lwjgl.opengl.GL11;
 
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -52,6 +52,7 @@ public class RendererImprovedChestItem implements IItemRenderer{
 	@Override
 	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
 			ItemRendererHelper helper) {
+		
 		switch (type) {
 	      case ENTITY: {
 	        return (helper == ItemRendererHelper.ENTITY_BOBBING ||
@@ -72,12 +73,18 @@ public class RendererImprovedChestItem implements IItemRenderer{
 	        return false;
 	      }
 	    }
+		
 	}
 
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		//GL11.glPushMatrix();
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		//GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		//GL11.glColorMask(true, true, true, true);
+        //GL11.glEnable(GL11.GL_LIGHTING);
+        //GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_BLEND);
+		
 		switch(type){
 		case ENTITY:
 			renderItem(item, 0f,0f,0f, 0);
@@ -102,6 +109,7 @@ public class RendererImprovedChestItem implements IItemRenderer{
 		default:
 			break;
 		}
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 	public void renderItem(ItemStack item, float x, float y, float z, int pass){
 		String wood = WoodTypes.DEFAULT_WOOD_ID;

@@ -23,7 +23,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import yuuto.enhancedinventories.ColorHelper;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.compat.modules.VanillaModule;
@@ -42,20 +41,25 @@ public class ItemBlockImprovedChest extends ModItemBlockMulti{
 		super.addInformation(stack, player, results, bool);
 		if(stack.hasTagCompound()){
 			results.add(I18n.format(ColorHelper.WOOL_NAMES[stack.getTagCompound().getInteger("wool")]));
-			results.add(I18n.format("woodType."+WoodTypes.getWoodType(stack.getTagCompound().getString("woodType")).name()));
+			//results.add(WoodTypes.getWoodType(stack.getTagCompound().getString("woodType")).name());
+			WoodTypes.getWoodType(stack.getTagCompound().getString("woodType")).addInformation(stack, player, results, bool);
+			
 			if(stack.getTagCompound().getBoolean("hopper"))
 				results.add(I18n.format("upgrade.hopper"));
 			if(stack.getTagCompound().getBoolean("redstone"))
 				results.add(I18n.format("upgrade.redstone"));
 			if(stack.getTagCompound().getBoolean("alt"))
 				results.add(I18n.format("upgrade.alt"));
-			if(stack.getTagCompound().getInteger("wool") == 6 &&
-					true)
+			if(stack.getTagCompound().getInteger("wool") == 6 && isPinkWood(stack))
 				results.add(I18n.format("easterEgg.pink"));
 		}else{
 			results.add(I18n.format(ColorHelper.WOOL_NAMES[0]));
-			results.add(I18n.format("woodType."+VanillaModule.OAK.name()));
+			//results.add(VanillaModule.OAK.name());
+			VanillaModule.OAK.addInformation(stack, player, results, bool);
 		}
+	}
+	public boolean isPinkWood(ItemStack stack){
+		return stack.getTagCompound().getString("woodType").matches("wood:Natura:planks:0");
 	}
 	
 	public boolean onItemUse(ItemStack stack, EntityPlayer p_77648_2_, World world, int x, int y, int z, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)

@@ -47,12 +47,26 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         public int woolType;
         public int matType;
         
+        public boolean resultCache = false;
+        
         int chestIndex;
         int dyeIndex;
 
         public CachedUpgradeRecipe(RecipeFunctionUpgrades recipe) {
             this.type = recipe.getType();
-            result = new PositionedStack(this.getCoreStacks(true), 119, 24);
+            chestIndex = type == 0 || type == 3 ? 4: type == 2 || type == 5 ? 0 : 1;
+            result = new PositionedStack(this.getCoreStacks(true), 119, 24, true);
+            result.setPermutationToRender(0);
+            ingredients = new ArrayList<PositionedStack>();
+            setIngredients();
+        }
+        public CachedUpgradeRecipe(RecipeFunctionUpgrades recipe, int dye) {
+            this.type = recipe.getType();
+            this.resultCache = true;
+            this.woolType = dye;
+            chestIndex = type == 0 || type == 3 ? 4: type == 2 || type == 5 ? 0 : 1;
+            result = new PositionedStack(this.getCoreStacks(true), 119, 24, true);
+            result.setPermutationToRender(0);
             ingredients = new ArrayList<PositionedStack>();
             setIngredients();
         }
@@ -124,8 +138,8 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         		ItemStack s = new ItemStack(type < 3|| type == 6 ? EnhancedInventories.improvedChest : EnhancedInventories.locker, 1, i);
         		NBTTagCompound nbt = new NBTTagCompound();
         		nbt.setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
-        		if(type == 0 || type == 1 || type == 2)
-        			nbt.setByte("wool", (byte)0);
+        		if(type == 0 || type == 1 || type == 2 || type == 6)
+        			nbt.setByte("wool", (byte) (resultCache ? woolType : 0));
         		nbt.setBoolean("hopper", (type == 0 || type == 3) && output);
         		nbt.setBoolean("redstone", (type == 1 || type == 4) && output);
         		nbt.setBoolean("alt", (type == 2 || type == 5) && output);
@@ -137,8 +151,12 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         ItemStack[] getDyeStacks(){
         	List<String> dyeNames = WoolUpgradeHelper.getDyeNames();
         	ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
-        	for(String id : dyeNames){
-        		stacks.addAll(OreDictionary.getOres(id));
+        	if(!resultCache){
+	        	for(String id : dyeNames){
+	        		stacks.addAll(OreDictionary.getOres(id));
+	        	}
+        	}else{
+        		stacks.addAll(OreDictionary.getOres(dyeNames.get(woolType)));
         	}
         	return stacks.toArray(new ItemStack[0]);
         }
@@ -157,16 +175,26 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         		this.woolType = rand.nextInt(16);
         	System.out.println(ingredients.size()+"/"+this.chestIndex+":"+this.type);
         	PositionedStack chest = ingredients.get(this.chestIndex);
-        	chest.setPermutationToRender(matType);
+        	System.out.println(chest.items.length+"/"+EInventoryMaterial.values().length);
+        	if(chest.items.length > 1){
+        		chest.setPermutationToRender(matType);
+        	}else{
+        		this.matType = chest.item.getItemDamage();
+        	}
         	chest.item.getTagCompound().setString("woodType", WoodTypes.getWoodTypes().get(woodType).id());
         	if(this.type < 3)
         		chest.item.getTagCompound().setByte("wool", (byte)woolType);
         	else if(type == 6){
-        		PositionedStack dye = ingredients.get(this.dyeIndex);
-        		dye.setPermutationToRender(rand.nextInt(dye.items.length));
-        		int index = WoolUpgradeHelper.getDyeId(dye.item);
-        		int woolType = WoolUpgradeHelper.getCollorValue(index);
-        		chest.item.getTagCompound().setByte("wool", (byte)woolType);
+        		if(!resultCache){
+	        		PositionedStack dye = ingredients.get(this.dyeIndex);
+	        		dye.setPermutationToRender(rand.nextInt(dye.items.length));
+	        		int index = WoolUpgradeHelper.getDyeId(dye.item);
+	        		woolType = WoolUpgradeHelper.getCollorValue(index);
+	        		//chest.item.getTagCompound().setByte("wool", (byte)woolType);
+        		}else{
+        			PositionedStack dye = ingredients.get(this.dyeIndex);
+	        		dye.setPermutationToRender(rand.nextInt(dye.items.length));
+        		}
         	}
         	/*for (int itemIndex = 0; itemIndex < ingredients.size(); itemIndex++){
         		if(itemIndex == 0 || itemIndex == 2 || itemIndex == 6 || itemIndex == 8){
@@ -184,7 +212,7 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         public PositionedStack getResult() {
             result.setPermutationToRender(matType);
         	result.item.getTagCompound().setString("woodType", WoodTypes.getWoodTypes().get(woodType).id());
-            if(type < 3 || type == 6)
+            if(type < 3)
             	result.item.getTagCompound().setByte("wool", (byte)woolType);
         	return result;
         }
@@ -280,9 +308,22 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
             if(!(irecipe instanceof RecipeFunctionUpgrades))
             	continue;
             RecipeFunctionUpgrades recipe = (RecipeFunctionUpgrades)irecipe;
-            if(((recipe.getType() < 3 || recipe.getType() == 6 )&& result.getItem() == Item.getItemFromBlock(EnhancedInventories.improvedChest)) ||
-            		((recipe.getType() > 2 &&  recipe.getType() < 6)&& result.getItem() == Item.getItemFromBlock(EnhancedInventories.locker))){
+            if(recipe.getType() < 3 || recipe.getType() == 6){
+            	if(result.getItem() != Item.getItemFromBlock(EnhancedInventories.improvedChest))
+            		return;
             	CachedUpgradeRecipe cache = new  CachedUpgradeRecipe(recipe);
+            	cache.computeVisuals();
+            	arecipes.add(cache);
+            	/*if(((recipe.getType() < 3 || recipe.getType() == 6 )&& result.getItem() == Item.getItemFromBlock(EnhancedInventories.improvedChest)) ||
+            		((recipe.getType() > 2 && recipe.getType() < 6)&& result.getItem() == Item.getItemFromBlock(EnhancedInventories.locker))){
+            	CachedUpgradeRecipe cache = new  CachedUpgradeRecipe(recipe);
+            	cache.computeVisuals();
+            	arecipes.add(cache);*/
+            }else if(recipe.getType() > 2 && recipe.getType() < 6){
+            	if(result.getItem() != Item.getItemFromBlock(EnhancedInventories.locker))
+            		return;
+            	CachedUpgradeRecipe cache = new  CachedUpgradeRecipe(recipe, result.getTagCompound().getInteger("wool"));
+            	
             	cache.computeVisuals();
             	arecipes.add(cache);
             }else{

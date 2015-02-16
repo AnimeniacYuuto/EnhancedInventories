@@ -17,7 +17,8 @@ public class ItemSizeUpgrade extends ModItemMulti{
 		super(EnhancedInventories.tab, "EnhancedInventories", "sizeUpgrade", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
 				".Silver", ".Bronze", ".Steel",
-				".Platinum");
+				".Platinum",
+				".Alumite", ".Cobalt", ".Ardite", ".Manyullyn");
 	}
 	
 	@Override

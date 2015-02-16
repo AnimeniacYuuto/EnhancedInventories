@@ -1,27 +1,30 @@
 package yuuto.enhancedinventories;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class WoodType {
 	
-	String name;
+	String textureName;
 	String modId;
 	String itemId;
 	int meta;
 	ResourceLocation[] textures;
 	public WoodType(String name, String modId, String itemId, int meta){
-		this.name = name;
+		this.textureName = name;
 		this.modId = modId;
 		this.itemId = itemId;
 		this.meta = meta;
 		textures = new ResourceLocation[4];
-		textures[0] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/64x64/"+modId+"/"+this.name.toLowerCase()+".png");
-		textures[1] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/128x128/"+modId+"/"+this.name.toLowerCase()+".png");
+		textures[0] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/64x64/"+modId+"/"+this.textureName.toLowerCase()+".png");
+		textures[1] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/128x128/"+modId+"/"+this.textureName.toLowerCase()+".png");
 		
-		textures[2] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestSmall/"+modId+"/"+this.name.toLowerCase()+".png");
-		textures[3] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestLarge/"+modId+"/"+this.name.toLowerCase()+".png");
+		textures[2] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestSmall/"+modId+"/"+this.textureName.toLowerCase()+".png");
+		textures[3] = new ResourceLocation("enhancedinventories", "textures/uvs/wood/chestLarge/"+modId+"/"+this.textureName.toLowerCase()+".png");
 	}
 	public String getModID(){
 		return modId;
@@ -33,7 +36,7 @@ public class WoodType {
 		return meta;
 	}
 	public String name(){
-		return name;
+		return getPlanksStack().getDisplayName();
 	}
 	public String id(){
 		return "wood:"+modId+":"+itemId+":"+meta;
@@ -57,6 +60,10 @@ public class WoodType {
 	}
 	public ResourceLocation getTexture(int index){
 		return textures[index];
+	}
+	
+	public void addInformation(ItemStack stack, EntityPlayer player, List results, boolean bool){
+		results.add(getPlanksStack().getDisplayName());
 	}
 
 }

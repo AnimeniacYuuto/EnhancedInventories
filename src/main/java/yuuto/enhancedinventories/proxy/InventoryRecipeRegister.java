@@ -107,6 +107,8 @@ public class InventoryRecipeRegister {
 		for(EInventoryMaterial mat : EInventoryMaterial.values()){
 			if(mat.getTier() != previousTier)
 				continue;
+			if(mat == EInventoryMaterial.Obsidian)
+				continue;
 			GameRegistry.addRecipe(new RecipeImprovedChest(0, output, new Object[]{
 				"ggg", "mpm", "ggg", 'm', upgMat, 'p', new ItemStack(improvedChest, 1, mat.ordinal()),
 				'g', "blockGlass"

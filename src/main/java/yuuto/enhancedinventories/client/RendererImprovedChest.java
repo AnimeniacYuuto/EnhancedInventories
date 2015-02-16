@@ -18,7 +18,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import yuuto.enhancedinventories.ColorHelper;
-import yuuto.enhancedinventories.EWoodType;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
