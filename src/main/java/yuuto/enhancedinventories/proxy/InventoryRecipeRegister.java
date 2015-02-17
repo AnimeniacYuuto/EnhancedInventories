@@ -1,7 +1,5 @@
 package yuuto.enhancedinventories.proxy;
 
-import java.util.ArrayList;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -10,7 +8,6 @@ import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
 import yuuto.enhancedinventories.RecipeStoneCrafting;
 import yuuto.enhancedinventories.RecipeFunctionUpgrades;
-import yuuto.enhancedinventories.WoodType;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.block.BlockConnectiveInventory;
 import yuuto.enhancedinventories.block.BlockImprovedChest;

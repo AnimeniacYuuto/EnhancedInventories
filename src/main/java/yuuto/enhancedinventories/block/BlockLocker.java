@@ -37,8 +37,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
-import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
-import yuuto.enhancedinventories.compat.TileSortingLocker;
+import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
+import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.tile.TileLocker;
 

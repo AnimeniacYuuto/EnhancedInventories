@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.yuutolib.item.ModItemMulti;
 
 public class ItemFunctionUpgrade extends ModItemMulti{
@@ -40,6 +39,10 @@ public class ItemFunctionUpgrade extends ModItemMulti{
 		newTile.disconnect();
 		newTile.checkConnections();
 		newTile.markDirty(true);
+		if(!player.capabilities.isCreativeMode){
+			stack.stackSize--;
+			player.inventoryContainer.detectAndSendChanges();
+		}
 		return true;
     }
 	

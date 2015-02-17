@@ -94,6 +94,25 @@ item.EnhancedInventories:sizeUpgrade.Cobalt.name=Cobalt Upgrade
 item.EnhancedInventories:sizeUpgrade.Ardite.name=Ardite Upgrade
 item.EnhancedInventories:sizeUpgrade.Manyullyn.name=Manyullyn Upgrade
 
+item.EnhancedInventories:chestConverter.Stone.name=Stone Chest Converter
+item.EnhancedInventories:chestConverter.Iron.name=Iron Chest Converter
+item.EnhancedInventories:chestConverter.Gold.name=Gold Chest Converter
+item.EnhancedInventories:chestConverter.Diamond.name=Diamond Chest Converter
+item.EnhancedInventories:chestConverter.Emerald.name=Emerald Chest Converter
+item.EnhancedInventories:chestConverter.Obsidian.name=Obsidian Chest Converter
+
+item.EnhancedInventories:chestConverter.Copper.name=Copper Chest Converter
+item.EnhancedInventories:chestConverter.Tin.name=Tin Chest Converter
+item.EnhancedInventories:chestConverter.Silver.name=Silver Chest Converter
+item.EnhancedInventories:chestConverter.Bronze.name=Bronze Chest Converter
+item.EnhancedInventories:chestConverter.Steel.name=Steel Chest Converter
+item.EnhancedInventories:chestConverter.Platinum.name=Platinum Chest Converter
+
+item.EnhancedInventories:chestConverter.Alumite.name=Alumite Chest Converter
+item.EnhancedInventories:chestConverter.Cobalt.name=Cobalt Chest Converter
+item.EnhancedInventories:chestConverter.Ardite.name=Ardite Chest Converter
+item.EnhancedInventories:chestConverter.Manyullyn.name=Manyullyn Chest Converter
+
 item.EnhancedInventories:functionUpgrade.base.name=Basic Upgrade
 item.EnhancedInventories:functionUpgrade.hopper.name=Hopper Upgrade
 item.EnhancedInventories:functionUpgrade.redstone.name=Redstone Upgrade

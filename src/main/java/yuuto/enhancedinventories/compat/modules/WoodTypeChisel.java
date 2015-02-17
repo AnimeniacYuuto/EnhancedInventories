@@ -12,6 +12,7 @@ public class WoodTypeChisel extends WoodType{
 		super(name, modId, itemId, meta);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List results, boolean bool){
 		ItemStack planks = getPlanksStack();
 		results.add(planks.getDisplayName());

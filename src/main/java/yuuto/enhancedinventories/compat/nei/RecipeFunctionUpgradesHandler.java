@@ -19,10 +19,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeFunctionUpgrades;
-import yuuto.enhancedinventories.RecipeStoneCrafting;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.WoolUpgradeHelper;
-import yuuto.enhancedinventories.compat.nei.RecipeStoneCraftingHandler.CachedStoneCraftingRecipe;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.DefaultOverlayRenderer;
 import codechicken.nei.api.IOverlayHandler;
@@ -30,8 +28,6 @@ import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
 import codechicken.nei.recipe.RecipeInfo;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import codechicken.nei.recipe.TemplateRecipeHandler.CachedRecipe;
-import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect;
 
 public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
 
@@ -173,9 +169,9 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         	this.matType = rand.nextInt(EInventoryMaterial.values().length);
         	if(this.type < 3)
         		this.woolType = rand.nextInt(16);
-        	System.out.println(ingredients.size()+"/"+this.chestIndex+":"+this.type);
+        	//System.out.println(ingredients.size()+"/"+this.chestIndex+":"+this.type);
         	PositionedStack chest = ingredients.get(this.chestIndex);
-        	System.out.println(chest.items.length+"/"+EInventoryMaterial.values().length);
+        	//System.out.println(chest.items.length+"/"+EInventoryMaterial.values().length);
         	if(chest.items.length > 1){
         		chest.setPermutationToRender(matType);
         	}else{
@@ -283,7 +279,8 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         return true;
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("crafting") && getClass() == RecipeFunctionUpgradesHandler.class) {
             for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
@@ -302,7 +299,8 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadCraftingRecipes(ItemStack result) {
     	for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
             if(!(irecipe instanceof RecipeFunctionUpgrades))
@@ -332,7 +330,8 @@ public class RecipeFunctionUpgradesHandler extends TemplateRecipeHandler{
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
         	CachedUpgradeRecipe recipe = null;

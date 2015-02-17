@@ -31,17 +31,18 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.block.BlockLocker;
-import yuuto.enhancedinventories.compat.BlockImprovedSortingChest;
-import yuuto.enhancedinventories.compat.BlockSortingLocker;
 import yuuto.enhancedinventories.compat.modules.NEIModule;
 import yuuto.enhancedinventories.compat.modules.TConstructModule;
+import yuuto.enhancedinventories.compat.refinedrelocation.BlockImprovedSortingChest;
+import yuuto.enhancedinventories.compat.refinedrelocation.BlockSortingLocker;
+import yuuto.enhancedinventories.item.ItemChestConverter;
 import yuuto.enhancedinventories.item.ItemFunctionUpgrade;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.proxy.InventoryRecipeRegister;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.5")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.7")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")
@@ -66,6 +67,7 @@ public class EnhancedInventories implements IMod{
 	public static final BlockLocker locker = new BlockLocker();
 	public static BlockImprovedChest improvedSortingChest;
 	public static BlockLocker sortingLocker;
+	public static final ItemChestConverter chestConverter = new ItemChestConverter();
 	public static final ItemSizeUpgrade sizeUpgrade = new ItemSizeUpgrade();
 	public static final ItemFunctionUpgrade functionUpgrade = new ItemFunctionUpgrade();
 	
@@ -89,7 +91,6 @@ public class EnhancedInventories implements IMod{
 	@Override
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		System.out.println("EI Post Init base");
 		proxy.postInit(event);
 		WoolUpgradeHelper.init();
 		if(Loader.isModLoaded("TConstruct"))
@@ -110,9 +111,19 @@ public class EnhancedInventories implements IMod{
 		});
 		GameRegistry.addShapelessRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), 
 			Blocks.tripwire_hook, base);
+		GameRegistry.addRecipe(new RecipeConverter(new ItemStack(chestConverter, 1, 0), new Object[]{
+			"c","b", 
+			'c', new ItemStack(improvedChest, 1, 0), 
+			'b', new ItemStack(functionUpgrade, 1, 0)
+		}));
 		for(int i = 1; i < EInventoryMaterial.values().length; i++){
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
 				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
+			}));
+			GameRegistry.addRecipe(new RecipeConverter(new ItemStack(chestConverter, 1, i), new Object[]{
+				"c","b", 
+				'c', new ItemStack(improvedChest, 1, i), 
+				'b', new ItemStack(functionUpgrade, 1, 0)
 			}));
 		}
 	}

@@ -30,18 +30,7 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 	
 	@Override
     public ItemStack getCraftingResult(InventoryCrafting var1){ 
-		switch(subType){
-		case 0:
 			return getBasicResult(var1);
-		case 1:
-			return getHopperResult(var1);
-		case 2:
-			return getAltResult(var1);
-		case 3:
-			return getRedstoneResult(var1);
-		default:
-			return super.getCraftingResult(var1);
-		}
 	}
 	
 	public ItemStack getRedstoneResult(InventoryCrafting var1) {

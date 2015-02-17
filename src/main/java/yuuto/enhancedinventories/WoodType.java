@@ -43,7 +43,7 @@ public class WoodType {
 	}
 	public boolean matches(ItemStack target){
 		ItemStack woodStack = getPlanksStack();
-		if(woodStack == null)
+		if(woodStack == null || target == null)
 			return false;
 		if(woodStack.getItem() == target.getItem() && woodStack.getItemDamage() == target.getItemDamage()){
 			return true;
@@ -62,6 +62,7 @@ public class WoodType {
 		return textures[index];
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void addInformation(ItemStack stack, EntityPlayer player, List results, boolean bool){
 		results.add(getPlanksStack().getDisplayName());
 	}

@@ -40,6 +40,9 @@ public class ItemSizeUpgrade extends ModItemMulti{
 		world.setBlockMetadataWithNotify(X, Y, Z, stack.getItemDamage()+1, 3);
 		newTile.checkConnections();
 		newTile.markDirty(true);
+		if(!player.capabilities.isCreativeMode && stack.stackSize > 0){
+			stack.stackSize--;
+		}
 		return true;
     }
 	

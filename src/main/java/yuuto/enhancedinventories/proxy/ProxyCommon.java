@@ -23,10 +23,11 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.RecipeConverter;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.block.BlockLocker;
-import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
-import yuuto.enhancedinventories.compat.TileSortingLocker;
+import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
+import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
 import yuuto.enhancedinventories.gui.GuiHandler;
 import yuuto.enhancedinventories.item.ItemBlockImprovedChest;
 import yuuto.enhancedinventories.item.ItemBlockLocker;
@@ -43,6 +44,7 @@ public class ProxyCommon implements IProxy {
 		BlockLocker locker = EnhancedInventories.locker;
 		GameRegistry.registerItem(EnhancedInventories.sizeUpgrade, "sizeUpgrade");
 		GameRegistry.registerItem(EnhancedInventories.functionUpgrade, "functionUpgrade");
+		GameRegistry.registerItem(EnhancedInventories.chestConverter, "chestConverter");
 		GameRegistry.registerBlock(improvedChest, ItemBlockImprovedChest.class, "improvedChest");
 		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
 		GameRegistry.registerBlock(locker, ItemBlockLocker.class, "locker");
@@ -68,7 +70,7 @@ public class ProxyCommon implements IProxy {
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		System.out.println("EI Post Init");
+		//System.out.println("EI Post Init");
 		
 	}
 	
@@ -85,6 +87,11 @@ public class ProxyCommon implements IProxy {
 		for(int i = 1; i < EInventoryMaterial.values().length; i++){
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
 				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
+			}));
+			GameRegistry.addRecipe(new RecipeConverter(new ItemStack(EnhancedInventories.chestConverter, 1, i), new Object[]{
+				"c","b", 
+				'c', new ItemStack(EnhancedInventories.improvedChest, 1, i), 
+				'b', new ItemStack(EnhancedInventories.functionUpgrade, 1, 0)
 			}));
 		}
 	}

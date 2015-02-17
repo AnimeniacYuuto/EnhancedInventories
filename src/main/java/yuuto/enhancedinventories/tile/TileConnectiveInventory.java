@@ -28,7 +28,6 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
-import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.gui.IConnectedContainer;
 import yuuto.yuutolib.block.tile.TileRotatable;
 

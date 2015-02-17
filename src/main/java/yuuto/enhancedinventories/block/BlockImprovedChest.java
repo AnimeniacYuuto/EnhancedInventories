@@ -12,7 +12,6 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.block;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -36,13 +35,12 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.WoolUpgradeHelper;
-import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
-import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
+import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
+import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
@@ -108,22 +106,15 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 			}
 		}
 		if(WoolUpgradeHelper.getDyeId(held) >= 0){
-			System.out.println("Attempting Dye Change");
 			if(world.isRemote)
 				return true;
 			TileImprovedChest original = (TileImprovedChest)world.getTileEntity(x, y, z);
 			if(!original.canUpgrade(held)){
-				System.out.println("cannot upgrade");
 				return false;
 			}
 			try{
 				TileImprovedChest newChest = original.getUpgradeTile(held);
-				if(newChest == null)
-					System.out.println("null");
-				if(newChest == original)
-					System.out.println("Same");
 				if(newChest == null || newChest == original || !ItemSizeUpgrade.canUpgrade(original, newChest, world, x, y, z)){
-					System.out.println("Cannot upgrade 2");
 					return false;
 				}
 				newChest.setContents(original.getContents(), true);
@@ -134,7 +125,6 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 				newChest.disconnect();
 				newChest.checkConnections();
 				newChest.markDirty(true);
-				System.out.println("upgraded");
 				if(!player.capabilities.isCreativeMode){
 					held.stackSize--;
 				}

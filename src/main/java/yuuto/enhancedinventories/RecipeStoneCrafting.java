@@ -2,7 +2,6 @@ package yuuto.enhancedinventories;
 
 import java.util.Random;
 
-import yuuto.enhancedinventories.item.ItemBlockImprovedChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;

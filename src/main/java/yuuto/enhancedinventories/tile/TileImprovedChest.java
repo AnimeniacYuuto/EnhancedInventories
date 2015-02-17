@@ -19,8 +19,8 @@ import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.WoolUpgradeHelper;
-import yuuto.enhancedinventories.compat.SortingUpgradeHelper;
-import yuuto.enhancedinventories.compat.TileImprovedSortingChest;
+import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
+import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.yuutolib.utill.InventoryWrapper;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
@@ -68,10 +68,8 @@ public class TileImprovedChest extends TileConnectiveInventory{
     		int w = nbttagcompound.getInteger("wood");
     		ItemStack stack = new ItemStack(Blocks.planks, 1, w);
     		woodType = WoodTypes.getId(stack);
-    		System.out.println("Generated: "+woodType);
     	}else{
     		woodType = nbttagcompound.getString("woodType");
-    		System.out.println("Loaded: "+woodType);
     	}
     	woolType = nbttagcompound.getInteger("wool");
     	hopper = nbttagcompound.getBoolean("hopper");

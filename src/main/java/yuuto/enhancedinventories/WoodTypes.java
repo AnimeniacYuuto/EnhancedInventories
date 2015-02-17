@@ -35,6 +35,19 @@ public final class WoodTypes {
 			ChiselModule.init();
 		if(ConfigHandler.natura && Loader.isModLoaded("Natura"))
 			NaturaModule.init();
+		if(ConfigHandler.forestry && Loader.isModLoaded("Forestry")){
+			ForestryModule.init();
+			if(ConfigHandler.extraTrees && Loader.isModLoaded("ExtraTrees"))
+				ExtraTreesModule.init();
+		}
+		if(ConfigHandler.botania && Loader.isModLoaded("Botania"))
+			BotaniaModule.init();
+		if(ConfigHandler.thaumcraft && Loader.isModLoaded("Thaumcraft"))
+			ThaumcraftModule.init();
+		if(ConfigHandler.biomesOPlenty && Loader.isModLoaded("BiomesOPlenty"))
+			BiomesOPlentyModule.init();
+		if(ConfigHandler.extrabiomes && Loader.isModLoaded("ExtrabiomesXL"))
+			ExtrabiomesModule.init();
 	}
 	public static void addWoodType(WoodType wood){
 		woodTypes.add(wood);

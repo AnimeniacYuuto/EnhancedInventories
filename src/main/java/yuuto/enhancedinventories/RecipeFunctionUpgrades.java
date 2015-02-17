@@ -1,9 +1,5 @@
 package yuuto.enhancedinventories;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -13,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
 
 public class RecipeFunctionUpgrades implements IRecipe{

@@ -18,20 +18,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.DefaultOverlayRenderer;
 import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
 import codechicken.nei.recipe.RecipeInfo;
-import codechicken.nei.recipe.ShapedRecipeHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import codechicken.nei.recipe.ShapedRecipeHandler.CachedShapedRecipe;
-import codechicken.nei.recipe.TemplateRecipeHandler.CachedRecipe;
 
 public class RecipeStoneCraftingHandler extends TemplateRecipeHandler{
 
@@ -199,7 +193,8 @@ public class RecipeStoneCraftingHandler extends TemplateRecipeHandler{
         return true;
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("crafting") && getClass() == RecipeStoneCraftingHandler.class) {
             for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
@@ -218,7 +213,8 @@ public class RecipeStoneCraftingHandler extends TemplateRecipeHandler{
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadCraftingRecipes(ItemStack result) {
         if(result.getItemDamage() != 0)
         	return;
@@ -237,7 +233,8 @@ public class RecipeStoneCraftingHandler extends TemplateRecipeHandler{
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (IRecipe irecipe : (List<IRecipe>) CraftingManager.getInstance().getRecipeList()) {
         	CachedStoneCraftingRecipe recipe = null;

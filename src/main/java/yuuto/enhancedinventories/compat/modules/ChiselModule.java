@@ -1,6 +1,5 @@
 package yuuto.enhancedinventories.compat.modules;
 
-import yuuto.enhancedinventories.WoodType;
 import yuuto.enhancedinventories.WoodTypes;
 
 public final class ChiselModule {

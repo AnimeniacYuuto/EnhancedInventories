@@ -22,7 +22,6 @@ import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;

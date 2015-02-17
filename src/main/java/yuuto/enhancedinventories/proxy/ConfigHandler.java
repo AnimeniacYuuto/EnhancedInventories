@@ -4,10 +4,14 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ConfigHandler {
-	public static boolean chisel = false;
-	public static boolean natura = false;
-	public static boolean forestry = false;
-	public static boolean extraTrees = false;
+	public static boolean chisel;
+	public static boolean natura;
+	public static boolean forestry;
+	public static boolean extraTrees;
+	public static boolean botania;
+	public static boolean thaumcraft;
+	public static boolean extrabiomes;
+	public static boolean biomesOPlenty;
 	
 	public static void init(FMLPreInitializationEvent event){
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -15,7 +19,12 @@ public class ConfigHandler {
 		chisel = config.get("Modules", "Chisel", true).getBoolean(true);
 		natura = config.get("Modules", "Natura", true).getBoolean(true);
 		forestry = config.get("Modules", "Forestry", true).getBoolean(true);
-		extraTrees = config.get("Modules", "Extra Trees", true).getBoolean(true);
+		//extraTrees = config.get("Modules", "Extra Trees", true).getBoolean(true);
+		extraTrees = config.getBoolean("ExtraTrees", "Modules", true, "Requires Forestry Module");
+		botania = config.get("Modules", "Botania", true).getBoolean(true);
+		thaumcraft = config.get("Modules", "Thaumcraft", true).getBoolean(true);
+		extrabiomes = config.get("Modules", "Extrabiomes", true).getBoolean(true);
+		biomesOPlenty = config.get("Modules", "BiomesOPlenty", true).getBoolean(true);
 		config.save();
 	}
 
