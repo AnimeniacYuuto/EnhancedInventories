@@ -13,6 +13,9 @@ public class ConfigHandler {
 	public static boolean extrabiomes;
 	public static boolean biomesOPlenty;
 	
+	public static boolean showUpgrades;
+	public static boolean showTiers;
+	
 	public static void init(FMLPreInitializationEvent event){
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
@@ -25,6 +28,10 @@ public class ConfigHandler {
 		thaumcraft = config.get("Modules", "Thaumcraft", true).getBoolean(true);
 		extrabiomes = config.get("Modules", "Extrabiomes", true).getBoolean(true);
 		biomesOPlenty = config.get("Modules", "BiomesOPlenty", true).getBoolean(true);
+		
+		
+		showUpgrades = config.getBoolean("ShowUpgrades", "Creative", true, "Show an inventory with each of the upgrades per tier shown");
+		showTiers = config.getBoolean("ShowTiers", "Creative", true, "Show each material that effects the size of the inventory");
 		config.save();
 	}
 

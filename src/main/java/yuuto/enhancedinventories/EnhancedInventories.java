@@ -18,6 +18,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -42,7 +43,7 @@ import yuuto.enhancedinventories.proxy.InventoryRecipeRegister;
 import yuuto.enhancedinventories.proxy.ProxyCommon;
 import yuuto.yuutolib.IMod;
 
-@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.7")
+@Mod(modid = "EnhancedInventories", name = "Enhanced Inventories", version = "1.7.10-1.0.8")
 public class EnhancedInventories implements IMod{
 
 	@Instance("EnhancedInventories")
@@ -97,35 +98,12 @@ public class EnhancedInventories implements IMod{
 			TConstructModule.init();
 		InventoryRecipeRegister.registerRecipes();	
 		registerRecipes();
-		if(Loader.isModLoaded("NotEnoughItems"))
+		if(Loader.isModLoaded("NotEnoughItems") && FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
 			NEIModule.init();
 	}
 	
 	public void registerRecipes(){
-		ItemStack base = new ItemStack(EnhancedInventories.functionUpgrade, 1, 0);
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 0), new Object[]{
-			" c ", "cpc", " c ", 'c', "cobblestone", 'p', Items.paper 
-		}));
-		GameRegistry.addShapedRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), new Object[]{
-			" h ", "hmh", " h ", 'h', Blocks.hopper, 'm', base
-		});
-		GameRegistry.addShapelessRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), 
-			Blocks.tripwire_hook, base);
-		GameRegistry.addRecipe(new RecipeConverter(new ItemStack(chestConverter, 1, 0), new Object[]{
-			"c","b", 
-			'c', new ItemStack(improvedChest, 1, 0), 
-			'b', new ItemStack(functionUpgrade, 1, 0)
-		}));
-		for(int i = 1; i < EInventoryMaterial.values().length; i++){
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
-				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
-			}));
-			GameRegistry.addRecipe(new RecipeConverter(new ItemStack(chestConverter, 1, i), new Object[]{
-				"c","b", 
-				'c', new ItemStack(improvedChest, 1, i), 
-				'b', new ItemStack(functionUpgrade, 1, 0)
-			}));
-		}
+		
 	}
 
 }

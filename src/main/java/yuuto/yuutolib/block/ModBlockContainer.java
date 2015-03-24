@@ -1,0 +1,33 @@
+package yuuto.yuutolib.block;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+
+public abstract class ModBlockContainer extends BlockContainer{
+
+	/**
+	 * A quick constructor for a mod block
+	 * @param mat the material of the block
+	 * @param tab the creativeTab for the block
+	 * @param mod the mod adding the block, used for texture and naming
+	 * @param unlocName the base name of the block
+	 */
+	public ModBlockContainer(Material mat, CreativeTabs tab, String mod, String unlocName) {
+		super(mat);
+		setBlockName(mod+":"+unlocName);
+		setCreativeTab(tab);
+	}
+	
+	@Override
+    public Block setBlockName(String name)
+    {
+        super.setBlockName(name);
+        this.setBlockTextureName(name);
+        return this;
+    }
+
+}

@@ -42,6 +42,7 @@ import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
+import yuuto.enhancedinventories.proxy.ConfigHandler;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 
 public class BlockImprovedChest extends BlockConnectiveInventory{
@@ -175,29 +176,50 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List subItems) {
     	Random rand = new Random();
-    	NBTTagCompound nbt = new NBTTagCompound();
-    	nbt.setString("woodType", WoodTypes.getWoodTypes().get(rand.nextInt(WoodTypes.getWoodTypes().size())).id());
-    	nbt.setByte("wool", (byte) rand.nextInt(16));
-    	NBTTagCompound h = (NBTTagCompound)nbt.copy();
-    	h.setBoolean("hopper", true);
-    	NBTTagCompound r = (NBTTagCompound)nbt.copy();
-    	r.setBoolean("redstone", true);
-    	NBTTagCompound a = (NBTTagCompound)nbt.copy();
-    	a.setBoolean("alt", true);
-    	for (int ix = 0; ix < subNames.length; ix++) {
-    		ItemStack stack = new ItemStack(this, 1, ix);
-    		stack.setTagCompound((NBTTagCompound)nbt.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)h.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)r.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)a.copy());
-			subItems.add(stack);
-		}
+    	NBTTagCompound[] nbts = new NBTTagCompound[ConfigHandler.showUpgrades ? 4 : 1];
+    	nbts[0] = new NBTTagCompound();
+    	nbts[0].setString("woodType", WoodTypes.getWoodTypes().get(rand.nextInt(WoodTypes.getWoodTypes().size())).id());
+    	nbts[0].setByte("wool", (byte) rand.nextInt(16));
+    	if(ConfigHandler.showUpgrades){
+	    	nbts[1] = (NBTTagCompound)nbts[0].copy();
+	    	nbts[1].setBoolean("hopper", true);
+	    	nbts[2] = (NBTTagCompound)nbts[0].copy();
+	    	nbts[2].setBoolean("redstone", true);
+	    	nbts[3] = (NBTTagCompound)nbts[0].copy();
+	    	nbts[3].setBoolean("alt", true);
+    	}
+    	if(ConfigHandler.showTiers){
+	    	for (int ix = 0; ix < subNames.length; ix++) {
+	    		ItemStack stack = new ItemStack(this, 1, ix);
+	    		stack.setTagCompound(nbts[0]);
+				subItems.add(stack);
+				if(ConfigHandler.showUpgrades){
+					stack = stack.copy();
+					stack.setTagCompound(nbts[1]);
+					subItems.add(stack);
+					stack = stack.copy();
+					stack.setTagCompound(nbts[2]);
+					subItems.add(stack);
+					stack = stack.copy();
+					stack.setTagCompound(nbts[3]);
+					subItems.add(stack);
+				}
+			}
+    	}else{
+    		ItemStack stack = new ItemStack(this, 1, 0);
+    		stack.setTagCompound(nbts[0]);
+    		if(ConfigHandler.showUpgrades){
+				stack = stack.copy();
+				stack.setTagCompound(nbts[1]);
+				subItems.add(stack);
+				stack = stack.copy();
+				stack.setTagCompound(nbts[2]);
+				subItems.add(stack);
+				stack = stack.copy();
+				stack.setTagCompound(nbts[3]);
+				subItems.add(stack);
+			}
+    	}
     	
     }
     
