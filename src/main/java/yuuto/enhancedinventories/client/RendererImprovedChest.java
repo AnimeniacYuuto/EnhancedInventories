@@ -75,6 +75,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 		int i = chest.getOrientation().ordinal();
 
         ModelChest modelchest = modelSingleChest;
+        
         GL11.glPushMatrix();
         
         switch(pass){

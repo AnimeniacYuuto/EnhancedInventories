@@ -1,14 +1,14 @@
 package yuuto.enhancedinventories.compat.modules;
 
-import yuuto.enhancedinventories.compat.nei.EnhancedShapedRecipeHandler;
-import yuuto.enhancedinventories.compat.nei.EnhancedShapelessRecipeHandler;
+import yuuto.enhancedinventories.compat.nei.RecipeFunctionUpgradesHandler;
+import yuuto.enhancedinventories.compat.nei.RecipeStoneCraftingHandler;
 import codechicken.nei.api.API;
 
 public final class NEIModule {
 	
 	public static final void init(){
-		EnhancedShapedRecipeHandler recipeHandler = new EnhancedShapedRecipeHandler();
-		EnhancedShapelessRecipeHandler upgradeHandler = new EnhancedShapelessRecipeHandler();
+		RecipeStoneCraftingHandler recipeHandler = new RecipeStoneCraftingHandler();
+		RecipeFunctionUpgradesHandler upgradeHandler = new RecipeFunctionUpgradesHandler();
 		API.registerRecipeHandler(recipeHandler);
 		API.registerUsageHandler(recipeHandler);
 		API.registerRecipeHandler(upgradeHandler);

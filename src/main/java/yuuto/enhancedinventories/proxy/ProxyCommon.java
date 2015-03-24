@@ -23,6 +23,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
+import yuuto.enhancedinventories.RecipeConverter;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
@@ -74,7 +75,25 @@ public class ProxyCommon implements IProxy {
 	}
 	
 	public void registerRecipes(){
-		
+		ItemStack base = new ItemStack(EnhancedInventories.functionUpgrade, 1, 0);
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 0), new Object[]{
+			" c ", "cpc", " c ", 'c', "cobblestone", 'p', Items.paper 
+		}));
+		GameRegistry.addShapedRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), new Object[]{
+			" h ", "hmh", " h ", 'h', Blocks.hopper, 'm', base
+		});
+		GameRegistry.addShapelessRecipe(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), 
+			Blocks.tripwire_hook, base);
+		for(int i = 1; i < EInventoryMaterial.values().length; i++){
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(EnhancedInventories.sizeUpgrade, 1, i-1), new Object[]{
+				"mmm", "mbm", "mmm", 'm', EInventoryMaterial.values()[i].getMaterial(), 'b', base
+			}));
+			GameRegistry.addRecipe(new RecipeConverter(new ItemStack(EnhancedInventories.chestConverter, 1, i), new Object[]{
+				"c","b", 
+				'c', new ItemStack(EnhancedInventories.improvedChest, 1, i), 
+				'b', new ItemStack(EnhancedInventories.functionUpgrade, 1, 0)
+			}));
+		}
 	}
 
 }
