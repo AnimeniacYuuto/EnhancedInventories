@@ -17,9 +17,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -130,6 +132,21 @@ public abstract class BlockConnectiveInventory extends ModBlockContainerMulti{
     public int isProvidingStrongPower(IBlockAccess p_149748_1_, int p_149748_2_, int p_149748_3_, int p_149748_4_, int p_149748_5_)
     {
         return p_149748_5_ == 1 ? this.isProvidingWeakPower(p_149748_1_, p_149748_2_, p_149748_3_, p_149748_4_, p_149748_5_) : 0;
+    }
+    
+    protected void dropItem(ItemStack stack, World world, int x, int y, int z){
+    	if (captureDrops.get())
+        {
+            capturedDrops.get().add(stack);
+            return;
+        }
+        float f = 0.7F;
+        double d0 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+        double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+        double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+        EntityItem entityitem = new EntityItem(world, (double)x + d0, (double)y + d1, (double)z + d2, stack);
+        entityitem.delayBeforeCanPickup = 10;
+        world.spawnEntityInWorld(entityitem);
     }
 
 }

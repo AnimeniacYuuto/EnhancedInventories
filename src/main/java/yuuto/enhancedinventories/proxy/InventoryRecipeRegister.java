@@ -2,12 +2,11 @@ package yuuto.enhancedinventories.proxy;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
-import yuuto.enhancedinventories.RecipeStoneCrafting;
-import yuuto.enhancedinventories.RecipeFunctionUpgrades;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.block.BlockConnectiveInventory;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
@@ -33,7 +32,7 @@ public class InventoryRecipeRegister {
 				't', new ItemStack(Blocks.trapdoor, 1),
 			}));
 		}*/
-		GameRegistry.addRecipe(new RecipeStoneCrafting(0));
+		/*GameRegistry.addRecipe(new RecipeStoneCrafting(0));
 		GameRegistry.addRecipe(new RecipeStoneCrafting(1));
 		GameRegistry.addRecipe(new RecipeFunctionUpgrades(0));
 		GameRegistry.addRecipe(new RecipeFunctionUpgrades(1));
@@ -41,7 +40,15 @@ public class InventoryRecipeRegister {
 		GameRegistry.addRecipe(new RecipeFunctionUpgrades(3));
 		GameRegistry.addRecipe(new RecipeFunctionUpgrades(4));
 		GameRegistry.addRecipe(new RecipeFunctionUpgrades(5));
-		GameRegistry.addRecipe(new RecipeFunctionUpgrades(6));
+		GameRegistry.addRecipe(new RecipeFunctionUpgrades(6));*/
+		GameRegistry.addRecipe(new RecipeImprovedChest(0, new ItemStack(improvedChest, 1, 0), new Object[]{
+			"sps", "pwp", "sps", 's', "cobblestone", 'p', "plankWood",
+			'w', new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE),
+		}));
+		GameRegistry.addRecipe(new RecipeImprovedChest(0, new ItemStack(locker, 1, 0), new Object[]{
+			"sps", "ptp", "sps", 's', "cobblestone", 'p', "plankWood",
+			't', new ItemStack(Blocks.trapdoor, 1),
+		}));
 		OreDictionary.registerOre("obsidian", Blocks.obsidian);
 		for(EInventoryMaterial mat : EInventoryMaterial.values()){
 			ItemStack stack = new ItemStack(improvedChest, 1, mat.ordinal());
@@ -70,25 +77,16 @@ public class InventoryRecipeRegister {
 				}
 				break;
 			}
-			/*GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
-					" h ", "hch", " h ", 'h', new ItemStack(Blocks.hopper), 'c', stack
+			GameRegistry.addRecipe(new RecipeImprovedChest(1, stack, new Object[]{
+					"d","c", 'd', "dye", 'c', stack
 			}));
 			GameRegistry.addRecipe(new RecipeImprovedChest(2, stack, new Object[]{
 					"c", 'c', stack 
 			}));
-			GameRegistry.addRecipe(new RecipeImprovedChest(3, stack, new Object[]{
-					"tc", 't', new ItemStack(Blocks.tripwire_hook), 'c', stack 
-			}));
 			
-			GameRegistry.addRecipe(new RecipeImprovedChest(1, stack2, new Object[]{
-					" h ", "hch", " h ", 'h', new ItemStack(Blocks.hopper), 'c', stack2
-			}));
 			GameRegistry.addRecipe(new RecipeImprovedChest(2, stack2, new Object[]{
-					"c", 'c', stack2 
+					"c", 'c', stack2
 			}));
-			GameRegistry.addRecipe(new RecipeImprovedChest(3, stack2, new Object[]{
-					"tc", 't', new ItemStack(Blocks.tripwire_hook), 'c', stack2 
-			}));*/
 		}
 	}
 	public static void registerUpgradeRecipes(BlockConnectiveInventory improvedChest,  ItemStack output, int previousTier, String upgMat){

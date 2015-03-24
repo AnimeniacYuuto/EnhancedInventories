@@ -128,7 +128,7 @@ public class ItemChestConverter extends ModItemMulti{
     	return true;
 	}
 	
-	 @SuppressWarnings({ "rawtypes", "unchecked" })
+	/*@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List subItems) {
@@ -157,6 +157,6 @@ public class ItemChestConverter extends ModItemMulti{
 			subItems.add(stack);
 		}
     	
-    }
+    }*/
 
 }

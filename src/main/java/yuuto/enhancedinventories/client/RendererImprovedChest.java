@@ -55,6 +55,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 			double y, double z, float f) {
 		if(!(tile instanceof TileImprovedChest))
 			return;
+		TileImprovedChest chest = (TileImprovedChest)tile;
 		if(((TileImprovedChest)tile).getPartner() == null){
 			renderSingle((TileImprovedChest) tile, x, y, z, f, 0);
 			renderSingle((TileImprovedChest) tile, x, y, z, f, 1);

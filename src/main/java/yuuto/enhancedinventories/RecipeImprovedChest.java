@@ -17,6 +17,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeImprovedChest extends ShapedOreRecipe{
@@ -29,23 +30,68 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 	}
 	
 	@Override
+    public boolean matches(InventoryCrafting inv, World world)
+    {
+        if(subType != 0)
+        	return super.matches(inv, world);
+        if(!super.matches(inv, world))
+        	return false;
+        ItemStack wood = null;
+        for(int x = 0; x < 3; x++){
+        	for(int y = 0; y < 3; y++){
+            	if(!((x==1 && y != 1) || (y == 1 && x!=1)))
+            		continue;
+        		if(wood == null){
+        			wood = inv.getStackInRowAndColumn(x, y);
+        			continue;
+        		}
+    			ItemStack stack = inv.getStackInRowAndColumn(x, y);
+    			if(wood.getItem() != stack.getItem())
+    				return false;
+    			if(wood.getItemDamage() != stack.getItemDamage())
+    				return false;
+    			if(wood.hasTagCompound() != stack.hasTagCompound())
+    				return false;
+    			if(wood.hasTagCompound() && !ItemStack.areItemStacksEqual(wood, stack))
+    				return false;
+            }
+        }
+        return true;
+    }
+	
+	@Override
     public ItemStack getCraftingResult(InventoryCrafting var1){ 
+		if(subType == 0)
 			return getBasicResult(var1);
+		if(subType == 1)
+			return getDyeResult(var1);
+		if(subType == 2)
+			return getAltResult(var1);
+		return null;
 	}
 	
-	public ItemStack getRedstoneResult(InventoryCrafting var1) {
+	public ItemStack getDyeResult(InventoryCrafting var1) {
 		ItemStack ret = super.getCraftingResult(var1);
+		ItemStack dye = null;
 		for(int i = 0; i < var1.getSizeInventory(); i++){
 			if(var1.getStackInSlot(i) == null)
 				continue;
-			if(var1.getStackInSlot(i).getItem() != Item.getItemFromBlock(EnhancedInventories.improvedChest))
+			if(var1.getStackInSlot(i).getItem() != Item.getItemFromBlock(EnhancedInventories.improvedChest)){
+				dye = var1.getStackInSlot(i);
 				continue;
-			if(var1.getStackInSlot(i).hasTagCompound())
+			}
+			else if(var1.getStackInSlot(i).hasTagCompound())
 				ret.setTagCompound((NBTTagCompound)var1.getStackInSlot(i).getTagCompound().copy());
 			else
 				ret.setTagCompound(generateNBT(ret));
 		}
-		ret.getTagCompound().setBoolean("redstone", true);
+		int dyeColor = WoolUpgradeHelper.getDyeId(dye);
+		dyeColor = WoolUpgradeHelper.getCollorValue(dyeColor);
+		if(dyeColor < 0)
+			dyeColor = 0;
+		if(dyeColor > 15)
+			dyeColor = 15;
+		ret.getTagCompound().setByte("wool", (byte)dyeColor);
 		return ret;
 	}
 
@@ -69,15 +115,6 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
 		else
 			ret.setTagCompound(generateNBT(ret));
-		return ret;
-	}
-	public ItemStack getHopperResult(InventoryCrafting var1){
-		ItemStack ret = super.getCraftingResult(var1);
-		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())
-			ret.setTagCompound((NBTTagCompound)var1.getStackInRowAndColumn(1, 1).getTagCompound().copy());
-		else
-			ret.setTagCompound(generateNBT(ret));
-		ret.getTagCompound().setBoolean("hopper", true);
 		return ret;
 	}
 	public ItemStack getAltResult(InventoryCrafting var1){

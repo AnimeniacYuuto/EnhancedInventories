@@ -23,7 +23,7 @@ group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-
 archivesBaseName = "EnhancedInventories"
 
 minecraft {
-    version = "1.7.10-10.13.2.1231"
+    version = "1.7.10-10.13.2.1291"
 }
 repositories {
     maven { // The repo from which to get waila

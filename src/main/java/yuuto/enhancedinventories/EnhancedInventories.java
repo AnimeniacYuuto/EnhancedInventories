@@ -31,7 +31,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import yuuto.enhancedinventories.block.BlockImprovedChest;
 import yuuto.enhancedinventories.block.BlockLocker;
-import yuuto.enhancedinventories.compat.modules.NEIModule;
 import yuuto.enhancedinventories.compat.modules.TConstructModule;
 import yuuto.enhancedinventories.compat.refinedrelocation.BlockImprovedSortingChest;
 import yuuto.enhancedinventories.compat.refinedrelocation.BlockSortingLocker;
@@ -97,8 +96,6 @@ public class EnhancedInventories implements IMod{
 			TConstructModule.init();
 		InventoryRecipeRegister.registerRecipes();	
 		registerRecipes();
-		if(Loader.isModLoaded("NotEnoughItems"))
-			NEIModule.init();
 	}
 	
 	public void registerRecipes(){

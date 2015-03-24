@@ -58,7 +58,7 @@ public final class WoodTypes {
 			if(wood.matches(stack))
 				return wood.id();
 		}
-		return null;
+		return DEFAULT_WOOD_ID;
 	}
 	public static WoodType getWoodType(String id){
 		if(woodTypeMap.containsKey(id))

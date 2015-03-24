@@ -178,24 +178,9 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("woodType", WoodTypes.getWoodTypes().get(rand.nextInt(WoodTypes.getWoodTypes().size())).id());
     	nbt.setByte("wool", (byte) rand.nextInt(16));
-    	NBTTagCompound h = (NBTTagCompound)nbt.copy();
-    	h.setBoolean("hopper", true);
-    	NBTTagCompound r = (NBTTagCompound)nbt.copy();
-    	r.setBoolean("redstone", true);
-    	NBTTagCompound a = (NBTTagCompound)nbt.copy();
-    	a.setBoolean("alt", true);
     	for (int ix = 0; ix < subNames.length; ix++) {
     		ItemStack stack = new ItemStack(this, 1, ix);
     		stack.setTagCompound((NBTTagCompound)nbt.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)h.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)r.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)a.copy());
 			subItems.add(stack);
 		}
     	
@@ -226,22 +211,15 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
             	stack.setTagCompound(new NBTTagCompound());
             	stack.getTagCompound().setString("woodType", ((TileImprovedChest)tile).woodType);
                 stack.getTagCompound().setByte("wool", (byte)((TileImprovedChest)tile).woolType);
-                stack.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
+                //stack.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
                 stack.getTagCompound().setBoolean("alt", ((TileImprovedChest)tile).alt);
-                stack.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
+                //stack.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
+                if(((TileImprovedChest)tile).hopper)
+                	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), world, x, y, z);
+                if(((TileImprovedChest)tile).redstone)
+                	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), world, x, y, z);
             }
-            if (captureDrops.get())
-            {
-                capturedDrops.get().add(stack);
-                return;
-            }
-            float f = 0.7F;
-            double d0 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(world, (double)x + d0, (double)y + d1, (double)z + d2, stack);
-            entityitem.delayBeforeCanPickup = 10;
-            world.spawnEntityInWorld(entityitem);
+            dropItem(stack, world, x, y, z);
         }
     }
     
@@ -305,9 +283,9 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
         ret.setTagCompound(new NBTTagCompound());
         ret.getTagCompound().setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
         ret.getTagCompound().setByte("wool", (byte)0);
-        ret.getTagCompound().setBoolean("hopper", false);
+        //ret.getTagCompound().setBoolean("hopper", false);
         ret.getTagCompound().setBoolean("alt", false);
-        ret.getTagCompound().setBoolean("redstone", false);
+        //ret.getTagCompound().setBoolean("redstone", false);
         return ret;
     }
     
@@ -327,16 +305,16 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
         if(tile != null && tile instanceof TileImprovedChest){
         	 ret.getTagCompound().setString("woodType", ((TileImprovedChest)tile).woodType);
              ret.getTagCompound().setByte("wool", (byte)((TileImprovedChest)tile).woolType);
-             ret.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
+             //ret.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
              ret.getTagCompound().setBoolean("alt", ((TileImprovedChest)tile).alt);
-             ret.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
+             //ret.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
              return ret;
         }
         ret.getTagCompound().setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
         ret.getTagCompound().setByte("wool", (byte)0);
-        ret.getTagCompound().setBoolean("hopper", false);
+        //ret.getTagCompound().setBoolean("hopper", false);
         ret.getTagCompound().setBoolean("alt", false);
-        ret.getTagCompound().setBoolean("redstone", false);
+        //ret.getTagCompound().setBoolean("redstone", false);
         return ret;
     }
     

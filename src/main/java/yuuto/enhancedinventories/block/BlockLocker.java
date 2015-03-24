@@ -40,6 +40,7 @@ import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
+import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileLocker;
 
 public class BlockLocker extends BlockConnectiveInventory{
@@ -154,24 +155,9 @@ public class BlockLocker extends BlockConnectiveInventory{
     	Random rand = new Random();
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("woodType", WoodTypes.getWoodTypes().get(rand.nextInt(WoodTypes.getWoodTypes().size())).id());
-    	NBTTagCompound h = (NBTTagCompound)nbt.copy();
-    	h.setBoolean("hopper", true);
-    	NBTTagCompound r = (NBTTagCompound)nbt.copy();
-    	r.setBoolean("redstone", true);
-    	NBTTagCompound a = (NBTTagCompound)nbt.copy();
-    	a.setBoolean("alt", true);
     	for (int ix = 0; ix < subNames.length; ix++) {
     		ItemStack stack = new ItemStack(this, 1, ix);
     		stack.setTagCompound((NBTTagCompound)nbt.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)h.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)r.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)a.copy());
 			subItems.add(stack);
 		}
     	
@@ -201,22 +187,15 @@ public class BlockLocker extends BlockConnectiveInventory{
             if(tile instanceof TileLocker){
             	stack.setTagCompound(new NBTTagCompound());
             	stack.getTagCompound().setString("woodType", ((TileLocker)tile).woodType);
-                stack.getTagCompound().setBoolean("hopper", ((TileLocker)tile).hopper);
+                //stack.getTagCompound().setBoolean("hopper", ((TileLocker)tile).hopper);
                 stack.getTagCompound().setBoolean("alt", ((TileLocker)tile).alt);
-                stack.getTagCompound().setBoolean("redstone", ((TileLocker)tile).redstone);
+                //stack.getTagCompound().setBoolean("redstone", ((TileLocker)tile).redstone);
+                if(((TileLocker)tile).hopper)
+                	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), world, x, y, z);
+                if(((TileLocker)tile).redstone)
+                	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), world, x, y, z);
             }
-            if (captureDrops.get())
-            {
-                capturedDrops.get().add(stack);
-                return;
-            }
-            float f = 0.7F;
-            double d0 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            EntityItem entityitem = new EntityItem(world, (double)x + d0, (double)y + d1, (double)z + d2, stack);
-            entityitem.delayBeforeCanPickup = 10;
-            world.spawnEntityInWorld(entityitem);
+            this.dropItem(stack, world, x, y, z);
         }
     }
     
@@ -279,9 +258,9 @@ public class BlockLocker extends BlockConnectiveInventory{
         ItemStack ret = new ItemStack(item, 1, j);
         ret.setTagCompound(new NBTTagCompound());
         ret.getTagCompound().setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
-        ret.getTagCompound().setBoolean("hopper", false);
+        //ret.getTagCompound().setBoolean("hopper", false);
         ret.getTagCompound().setBoolean("alt", false);
-        ret.getTagCompound().setBoolean("redstone", false);
+        //ret.getTagCompound().setBoolean("redstone", false);
         return ret;
     }
     
@@ -300,15 +279,15 @@ public class BlockLocker extends BlockConnectiveInventory{
         ret.setTagCompound(new NBTTagCompound());
         if(tile != null && tile instanceof TileLocker){
         	 ret.getTagCompound().setString("woodType", ((TileLocker)tile).woodType);
-             ret.getTagCompound().setBoolean("hopper", ((TileLocker)tile).hopper);
+            // ret.getTagCompound().setBoolean("hopper", ((TileLocker)tile).hopper);
              ret.getTagCompound().setBoolean("alt", ((TileLocker)tile).alt);
-             ret.getTagCompound().setBoolean("redstone", ((TileLocker)tile).redstone);
+            // ret.getTagCompound().setBoolean("redstone", ((TileLocker)tile).redstone);
              return ret;
         }
         ret.getTagCompound().setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
-        ret.getTagCompound().setBoolean("hopper", false);
+        //ret.getTagCompound().setBoolean("hopper", false);
         ret.getTagCompound().setBoolean("alt", false);
-        ret.getTagCompound().setBoolean("redstone", false);
+        //ret.getTagCompound().setBoolean("redstone", false);
         return ret;
     }
     
