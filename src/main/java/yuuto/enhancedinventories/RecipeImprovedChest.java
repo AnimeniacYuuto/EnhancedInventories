@@ -138,9 +138,9 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 		nbt.setString("woodType", WoodTypes.DEFAULT_WOOD_ID);
 		if(stack.getItem() instanceof ItemBlockImprovedChest)
 			nbt.setByte("wool", (byte)0);
-		nbt.setBoolean("hopper", false);
+		//nbt.setBoolean("hopper", false);
 		nbt.setBoolean("alt", false);
-		nbt.setBoolean("redstone", false);
+		//nbt.setBoolean("redstone", false);
 		return nbt;
 	}
 

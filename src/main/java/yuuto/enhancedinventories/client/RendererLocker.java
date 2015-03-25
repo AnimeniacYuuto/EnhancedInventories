@@ -34,12 +34,13 @@ public class RendererLocker extends TileEntitySpecialRenderer{
 			double y, double z, float f) {
 		if(!(tile instanceof TileLocker))
 			return;
-		if(((TileLocker)tile).getPartner() != null){
+		TileLocker locker = (TileLocker)tile;
+		if(locker.getPartner() != null){
 			renderDouble((TileLocker)tile, x, y, z, f, 0);
 			renderDouble((TileLocker)tile, x, y, z, f, 1);
 			if(((TileLocker)tile).sortingChest)
 				renderDouble((TileLocker)tile, x, y, z, f, 2);
-		}else{
+		}else if(!locker.getTopSides().contains(locker.getPartnerDir())){
 			renderSingle((TileLocker) tile, x, y, z, f, 0);
 			renderSingle((TileLocker) tile, x, y, z, f, 1);
 			if(((TileLocker)tile).sortingChest)

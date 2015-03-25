@@ -12,6 +12,9 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.client;
 
+import java.util.List;
+
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -148,4 +151,48 @@ public class GuiContainerConnectedLarge extends GuiContainer{
 		scrolling = false;
 		previousY = scroll;
     }
+	
+	@Override
+	public void handleMouseInput()
+    {
+		super.handleMouseInput();
+		int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
+		int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+		if(this.getSlot(x, y) != null)
+			return;
+		int i = Mouse.getEventDWheel();
+		//int delta = Math.max( Math.min( -i, 1 ), -1 );
+		//this.scroll += (delta*0.5f) * (this.maxScroll-this.minScroll);
+		int maxRows = (int)Math.ceil(container.playerInvStart/9d);
+		int scrollSize = (int)Math.ceil((this.maxScroll-this.minScroll)/maxRows);
+		
+		
+		if(i > 0){
+			this.scroll-=scrollSize;
+		}else if (i < 0){
+			this.scroll+=scrollSize;
+		}
+		
+		if(scroll < minScroll)
+			scroll = minScroll;
+		else if(scroll > maxScroll)
+			scroll = maxScroll;
+		
+		updateSlots();
+    }
+	
+	protected Slot getSlot(int mouseX, int mouseY)
+	{
+		final List<Slot> slots = this.inventorySlots.inventorySlots;
+		for (Slot slot : slots)
+		{
+			// isPointInRegion
+			if ( this.func_146978_c( slot.xDisplayPosition, slot.yDisplayPosition, 16, 16, mouseX, mouseY ) )
+			{
+				return slot;
+			}
+		}
+
+		return null;
+	}
 }

@@ -70,6 +70,8 @@ public class ItemChestConverter extends ModItemMulti{
 			System.out.println("Client");
 			return false;
 		}
+		if(!stack.hasTagCompound())
+			return false;
 		System.out.println("Server");
 		TileEntity tile = world.getTileEntity(X, Y, Z);
 		if(!(tile instanceof TileEntityChest))
@@ -128,7 +130,7 @@ public class ItemChestConverter extends ModItemMulti{
     	return true;
 	}
 	
-	/*@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List subItems) {
@@ -136,27 +138,27 @@ public class ItemChestConverter extends ModItemMulti{
     	NBTTagCompound nbt = new NBTTagCompound();
     	nbt.setString("woodType", WoodTypes.getWoodTypes().get(rand.nextInt(WoodTypes.getWoodTypes().size())).id());
     	nbt.setByte("wool", (byte) rand.nextInt(16));
-    	NBTTagCompound h = (NBTTagCompound)nbt.copy();
-    	h.setBoolean("hopper", true);
-    	NBTTagCompound r = (NBTTagCompound)nbt.copy();
-    	r.setBoolean("redstone", true);
-    	NBTTagCompound a = (NBTTagCompound)nbt.copy();
-    	a.setBoolean("alt", true);
+    	//NBTTagCompound h = (NBTTagCompound)nbt.copy();
+    	//h.setBoolean("hopper", true);
+    	//NBTTagCompound r = (NBTTagCompound)nbt.copy();
+    	//r.setBoolean("redstone", true);
+    	//NBTTagCompound a = (NBTTagCompound)nbt.copy();
+    	//a.setBoolean("alt", true);
     	for (int ix = 0; ix < subNames.length; ix++) {
     		ItemStack stack = new ItemStack(this, 1, ix);
     		stack.setTagCompound((NBTTagCompound)nbt.copy());
 			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)h.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)r.copy());
-			subItems.add(stack);
-			stack = stack.copy();
-			stack.setTagCompound((NBTTagCompound)a.copy());
-			subItems.add(stack);
+			//stack = stack.copy();
+			//stack.setTagCompound((NBTTagCompound)h.copy());
+			//subItems.add(stack);
+			//stack = stack.copy();
+			//stack.setTagCompound((NBTTagCompound)r.copy());
+			//subItems.add(stack);
+			//stack = stack.copy();
+			//stack.setTagCompound((NBTTagCompound)a.copy());
+			//subItems.add(stack);
 		}
     	
-    }*/
+    }
 
 }

@@ -18,7 +18,11 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'curseforge'
 
+<<<<<<< HEAD
 version = "1.7.10-1.0.2"
+=======
+version = "1.7.10-1.0.10"
+>>>>>>> origin/master
 group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EnhancedInventories"
 
