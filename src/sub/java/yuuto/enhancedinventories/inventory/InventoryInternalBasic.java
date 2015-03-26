@@ -3,14 +3,14 @@ package yuuto.enhancedinventories.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import yuuto.enhancedinventories.tile.TileBasicInventory;
+import yuuto.enhancedinventories.tile.TileEnhancedInventory;
 
 public class InventoryInternalBasic implements IInventory{
 	
-	TileBasicInventory tile;
+	TileEnhancedInventory tile;
 	ItemStack[] inv;
 	
-	public InventoryInternalBasic(TileBasicInventory tile){
+	public InventoryInternalBasic(TileEnhancedInventory tile){
 		this.tile = tile;
 		this.inv = new ItemStack[tile.getBaseSize()*(tile.getTier()*tile.getBaseSize())];
 	}
