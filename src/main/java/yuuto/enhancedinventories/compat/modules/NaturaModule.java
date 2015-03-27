@@ -14,8 +14,8 @@ public final class NaturaModule {
 		WoodTypes.addWoodType(new WoodType("HOPSEED","Natura", "planks", 5));
 		WoodTypes.addWoodType(new WoodType("MAPLE","Natura", "planks", 6));
 		WoodTypes.addWoodType(new WoodType("SILVERBELL","Natura", "planks", 7));
-		WoodTypes.addWoodType(new WoodType("AMARANTH","Natura", "planks", 8));
-		WoodTypes.addWoodType(new WoodType("TIGERWOOD","Natura", "planks", 9));
+		WoodTypes.addWoodType(new WoodType("PURPLEHEART","Natura", "planks", 8));//Amaranth
+		WoodTypes.addWoodType(new WoodType("TIGER","Natura", "planks", 9));
 		WoodTypes.addWoodType(new WoodType("WILLOW","Natura", "planks", 10));
 		WoodTypes.addWoodType(new WoodType("DARKWOOD","Natura", "planks", 11));
 		WoodTypes.addWoodType(new WoodType("FUSEWOOD","Natura", "planks", 12));

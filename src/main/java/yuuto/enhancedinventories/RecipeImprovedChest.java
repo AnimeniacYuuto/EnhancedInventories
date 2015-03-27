@@ -36,6 +36,8 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
         	return super.matches(inv, world);
         if(!super.matches(inv, world))
         	return false;
+        if(this.getRecipeOutput().getItemDamage() != 0)
+        	return true;
         ItemStack wood = null;
         for(int x = 0; x < 3; x++){
         	for(int y = 0; y < 3; y++){
@@ -106,9 +108,9 @@ public class RecipeImprovedChest extends ShapedOreRecipe{
 			ret.getTagCompound().setString("woodType", wood);
 			if(ret.getItem() instanceof ItemBlockImprovedChest)
 				ret.getTagCompound().setByte("wool", (byte)wool);
-			ret.getTagCompound().setBoolean("hopper", false);
+			//ret.getTagCompound().setBoolean("hopper", false);
 			ret.getTagCompound().setBoolean("alt", false);
-			ret.getTagCompound().setBoolean("redstone", false);
+			//ret.getTagCompound().setBoolean("redstone", false);
 			return ret;
 		}
 		if(var1.getStackInRowAndColumn(1, 1).hasTagCompound())

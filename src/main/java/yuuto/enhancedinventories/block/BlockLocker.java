@@ -21,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -64,6 +65,7 @@ public class BlockLocker extends BlockConnectiveInventory{
 				".Platinum",
 				".Alumite", ".Cobalt", ".Ardite", ".Manyullyn");
 		this.setHardness(2.1f);
+		this.setResistance(10);
 	}
 	
 	@Override
@@ -312,49 +314,19 @@ public class BlockLocker extends BlockConnectiveInventory{
     	return true;
     }
     
-    /*public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
+    @Override
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
     {
-        TileLocker tile = (TileLocker)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);
-    	if(tile.getPartner() == null){
-    		this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-    		return;
-    	}
-    	switch(tile.partnerDir){
-    	case NORTH:
-    		this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-    		break;
-    	case SOUTH:
-    		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-    		break;
-    	case WEST:
-    		this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-    		break;
-    	case EAST:
-    		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
-    		break;
+    	int meta = world.getBlockMetadata(x, y, z);
+    	int tier = EInventoryMaterial.values()[meta].getTier();
+    	
+    	switch(tier){
+    	case 4:
+    		return 2000f;
+    	case 5:
+    		return 2000f;
     	default:
-    		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-    		break;
+    		return getExplosionResistance(par1Entity);
     	}
-        /*if (p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ - 1) == this)
-        {
-            this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-        }
-        else if (p_149719_1_.getBlock(p_149719_2_, p_149719_3_, p_149719_4_ + 1) == this)
-        {
-            this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-        }
-        else if (p_149719_1_.getBlock(p_149719_2_ - 1, p_149719_3_, p_149719_4_) == this)
-        {
-            this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-        }
-        else if (p_149719_1_.getBlock(p_149719_2_ + 1, p_149719_3_, p_149719_4_) == this)
-        {
-            this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
-        }
-        else
-        {
-            this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-        }*/
-    //}
+    }
 }

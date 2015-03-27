@@ -9,7 +9,7 @@ public final class ForestryModule {
 		registerWood("MAHOE", 1, 0);
 		registerWood("POPLAR", 1, 1);
 		registerWood("PALM", 1, 2);
-		registerWood("PAPYA", 1, 3);
+		registerWood("PAPAYA", 1, 3);
 		registerWood("PINE", 1, 4);
 		registerWood("PLUM", 1, 5);
 		registerWood("MAPLE", 1, 6);
