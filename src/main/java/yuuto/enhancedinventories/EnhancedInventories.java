@@ -29,7 +29,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockImprovedChestOld;
 import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.modules.TConstructModule;
 import yuuto.enhancedinventories.compat.refinedrelocation.BlockImprovedSortingChest;
@@ -62,9 +62,9 @@ public class EnhancedInventories implements IMod{
 	
 	public static boolean refinedRelocation = false;
 	
-	public static final BlockImprovedChest improvedChest = new BlockImprovedChest();
+	public static final BlockImprovedChestOld improvedChest = new BlockImprovedChestOld();
 	public static final BlockLocker locker = new BlockLocker();
-	public static BlockImprovedChest improvedSortingChest;
+	public static BlockImprovedChestOld improvedSortingChest;
 	public static BlockLocker sortingLocker;
 	public static final ItemChestConverter chestConverter = new ItemChestConverter();
 	public static final ItemSizeUpgrade sizeUpgrade = new ItemSizeUpgrade();

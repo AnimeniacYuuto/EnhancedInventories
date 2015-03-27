@@ -24,14 +24,14 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeConverter;
-import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockImprovedChestOld;
 import yuuto.enhancedinventories.block.BlockLocker;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
 import yuuto.enhancedinventories.gui.GuiHandler;
 import yuuto.enhancedinventories.item.ItemBlockImprovedChest;
 import yuuto.enhancedinventories.item.ItemBlockLocker;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 import yuuto.enhancedinventories.tile.TileLocker;
 import yuuto.yuutolib.IProxy;
 
@@ -40,13 +40,13 @@ public class ProxyCommon implements IProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		ConfigHandler.init(event);
-		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest;
+		BlockImprovedChestOld improvedChest = EnhancedInventories.improvedChest;
 		BlockLocker locker = EnhancedInventories.locker;
 		GameRegistry.registerItem(EnhancedInventories.sizeUpgrade, "sizeUpgrade");
 		GameRegistry.registerItem(EnhancedInventories.functionUpgrade, "functionUpgrade");
 		GameRegistry.registerItem(EnhancedInventories.chestConverter, "chestConverter");
 		GameRegistry.registerBlock(improvedChest, ItemBlockImprovedChest.class, "improvedChest");
-		GameRegistry.registerTileEntity(TileImprovedChest.class, "container.ImprovedChests:ImprovedChest");
+		GameRegistry.registerTileEntity(TileImprovedChestOld.class, "container.ImprovedChests:ImprovedChest");
 		GameRegistry.registerBlock(locker, ItemBlockLocker.class, "locker");
 		GameRegistry.registerTileEntity(TileLocker.class, "container.ImprovedChests:locker");
 		registerCompatBlocks();

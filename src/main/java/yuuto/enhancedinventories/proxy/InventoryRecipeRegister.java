@@ -9,16 +9,16 @@ import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.RecipeImprovedChest;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.block.BlockConnectiveInventory;
-import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockImprovedChestOld;
 import yuuto.enhancedinventories.block.BlockLocker;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class InventoryRecipeRegister {
 	
 	public static void registerRecipes(){
-		BlockImprovedChest improvedChest = EnhancedInventories.improvedChest; 
+		BlockImprovedChestOld improvedChest = EnhancedInventories.improvedChest; 
 		BlockLocker locker = EnhancedInventories.locker;
-		BlockImprovedChest improvedSortingChest = EnhancedInventories.improvedSortingChest; 
+		BlockImprovedChestOld improvedSortingChest = EnhancedInventories.improvedSortingChest; 
 		BlockLocker sortingLocker = EnhancedInventories.sortingLocker;
 		WoodTypes.init();
 		/*ArrayList<WoodType> woodTypes = WoodTypes.getWoodTypes();

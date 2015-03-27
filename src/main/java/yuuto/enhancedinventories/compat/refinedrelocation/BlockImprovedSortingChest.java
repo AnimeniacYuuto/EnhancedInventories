@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import yuuto.enhancedinventories.EInventoryMaterial;
-import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockImprovedChestOld;
 
-public class BlockImprovedSortingChest extends BlockImprovedChest{
+public class BlockImprovedSortingChest extends BlockImprovedChestOld{
 	
 	public BlockImprovedSortingChest() {
 		super("improvedSortingChest");

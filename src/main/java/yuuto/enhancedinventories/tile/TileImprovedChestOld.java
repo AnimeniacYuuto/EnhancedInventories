@@ -35,7 +35,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileImprovedChest extends TileConnectiveInventory{
+public class TileImprovedChestOld extends TileConnectiveInventory{
 	
 	public static ArrayList<ForgeDirection> conDirs = new ArrayList<ForgeDirection>();
 	static ArrayList<ForgeDirection> topDirs = new ArrayList<ForgeDirection>();
@@ -55,12 +55,12 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	public boolean sortingChest = false;
 	int timer = 20;
 	
-	public TileImprovedChest()
+	public TileImprovedChestOld()
     {
         super();
     }
 
-    public TileImprovedChest(EInventoryMaterial type)
+    public TileImprovedChestOld(EInventoryMaterial type)
     {
         super(type);
     }
@@ -110,9 +110,9 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	}
     @Override
 	public boolean isValidForConnection(TileConnectiveInventory tile) {
-		if(!(tile instanceof TileImprovedChest))
+		if(!(tile instanceof TileImprovedChestOld))
 			return false;
-		TileImprovedChest chest = (TileImprovedChest)tile;
+		TileImprovedChestOld chest = (TileImprovedChestOld)tile;
 		if(chest.getType() != this.getType())
 			return false;
 		if(!this.woodType.matches(chest.woodType))
@@ -222,9 +222,9 @@ public class TileImprovedChest extends TileConnectiveInventory{
 	}
 	
 	@Override
-	public TileImprovedChest getUpgradeTile(ItemStack stack){
+	public TileImprovedChestOld getUpgradeTile(ItemStack stack){
 		if(stack.getItem() == EnhancedInventories.sizeUpgrade){
-			TileImprovedChest ret = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()+1]);
+			TileImprovedChestOld ret = new TileImprovedChestOld(EInventoryMaterial.values()[stack.getItemDamage()+1]);
 			ret.woodType = this.woodType;
 			ret.woolType = this.woolType;
 			ret.alt = this.alt;
@@ -237,7 +237,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 			return ret;
 		}
 		if(stack.getItem() == EnhancedInventories.functionUpgrade){
-			TileImprovedChest ret = new TileImprovedChest(this.getType());
+			TileImprovedChestOld ret = new TileImprovedChestOld(this.getType());
 			ret.woodType = this.woodType;
 			ret.woolType = this.woolType;
 			ret.alt = this.alt;
@@ -273,7 +273,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		}
 		int woolId = WoolUpgradeHelper.getDyeId(stack);
     	if(woolId >= 0){
-    		TileImprovedChest ret = new TileImprovedChest(this.getType());
+    		TileImprovedChestOld ret = new TileImprovedChestOld(this.getType());
 			ret.woodType = this.woodType;
 			ret.woolType = this.woolType;
 			ret.alt = this.alt;

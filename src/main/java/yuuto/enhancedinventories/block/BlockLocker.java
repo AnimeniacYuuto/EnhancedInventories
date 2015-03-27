@@ -40,7 +40,7 @@ import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 import yuuto.enhancedinventories.tile.TileLocker;
 
 public class BlockLocker extends BlockConnectiveInventory{

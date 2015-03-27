@@ -42,13 +42,13 @@ import yuuto.enhancedinventories.WoolUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.SortingUpgradeHelper;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.enhancedinventories.item.ItemSizeUpgrade;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 
-public class BlockImprovedChest extends BlockConnectiveInventory{
+public class BlockImprovedChestOld extends BlockConnectiveInventory{
 
 	private final Random random = new Random();
 	
-	public BlockImprovedChest() {
+	public BlockImprovedChestOld() {
 		super(Material.wood, EnhancedInventories.tab, "EnhancedInventories", "improvedChest", 
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
@@ -57,7 +57,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 				".Alumite", ".Cobalt", ".Ardite", ".Manyullyn");
 		this.setHardness(2.1f);
 	}
-	public BlockImprovedChest(String name){
+	public BlockImprovedChestOld(String name){
 		super(Material.wood, EnhancedInventories.tab, "EnhancedInventories", name, 
 				".Stone", ".Iron", ".Gold", ".Diamond", ".Emerald", ".Obsidian",
 				".Copper", ".Tin",
@@ -83,7 +83,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 			if(world.isRemote)
 				return true;
 			
-			TileImprovedChest original = (TileImprovedChest)world.getTileEntity(x, y, z);
+			TileImprovedChestOld original = (TileImprovedChestOld)world.getTileEntity(x, y, z);
 			if(!original.canUpgrade(held)){
 				return false;
 			}
@@ -114,12 +114,12 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 		if(WoolUpgradeHelper.getDyeId(held) >= 0){
 			if(world.isRemote)
 				return true;
-			TileImprovedChest original = (TileImprovedChest)world.getTileEntity(x, y, z);
+			TileImprovedChestOld original = (TileImprovedChestOld)world.getTileEntity(x, y, z);
 			if(!original.canUpgrade(held)){
 				return false;
 			}
 			try{
-				TileImprovedChest newChest = original.getUpgradeTile(held);
+				TileImprovedChestOld newChest = original.getUpgradeTile(held);
 				if(newChest == null || newChest == original || !ItemSizeUpgrade.canUpgrade(original, newChest, world, x, y, z)){
 					return false;
 				}
@@ -149,9 +149,9 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
 		super.onBlockPlacedBy(world, x, y, z, player, stack);
 		TileEntity tile = world.getTileEntity(x, y, z);
-		if(!(tile instanceof TileImprovedChest))
+		if(!(tile instanceof TileImprovedChestOld))
 			return;
-		TileImprovedChest chest = (TileImprovedChest)tile;
+		TileImprovedChestOld chest = (TileImprovedChestOld)tile;
 		if(stack.hasTagCompound()){
 			chest.woodType = stack.getTagCompound().getString("woodType");
 			chest.woolType = stack.getTagCompound().getInteger("wool");
@@ -173,7 +173,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TileImprovedChest(EInventoryMaterial.values()[meta]);
+		return new TileImprovedChestOld(EInventoryMaterial.values()[meta]);
 	}
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -213,16 +213,16 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     	if (!world.isRemote && world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
         {
             TileEntity tile = world.getTileEntity(x, y, z);
-            if(tile instanceof TileImprovedChest){
+            if(tile instanceof TileImprovedChestOld){
             	stack.setTagCompound(new NBTTagCompound());
-            	stack.getTagCompound().setString("woodType", ((TileImprovedChest)tile).woodType);
-                stack.getTagCompound().setByte("wool", (byte)((TileImprovedChest)tile).woolType);
+            	stack.getTagCompound().setString("woodType", ((TileImprovedChestOld)tile).woodType);
+                stack.getTagCompound().setByte("wool", (byte)((TileImprovedChestOld)tile).woolType);
                 //stack.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
-                stack.getTagCompound().setBoolean("alt", ((TileImprovedChest)tile).alt);
+                stack.getTagCompound().setBoolean("alt", ((TileImprovedChestOld)tile).alt);
                 //stack.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
-                if(((TileImprovedChest)tile).hopper)
+                if(((TileImprovedChestOld)tile).hopper)
                 	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 1), world, x, y, z);
-                if(((TileImprovedChest)tile).redstone)
+                if(((TileImprovedChestOld)tile).redstone)
                 	dropItem(new ItemStack(EnhancedInventories.functionUpgrade, 1, 2), world, x, y, z);
             }
             dropItem(stack, world, x, y, z);
@@ -232,7 +232,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     @Override
     public void breakBlock(World world, int x, int y, int z, Block p_149749_5_, int meta)
     {
-    	TileImprovedChest tileentitychest = (TileImprovedChest)world.getTileEntity(x, y, z);
+    	TileImprovedChestOld tileentitychest = (TileImprovedChestOld)world.getTileEntity(x, y, z);
         
     	if(tileentitychest.getPartner() != null){
     		tileentitychest.getPartner().disconnect();
@@ -308,11 +308,11 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
         ItemStack ret = new ItemStack(item, 1, world.getBlockMetadata(x, y, z));
         TileEntity tile = world.getTileEntity(x, y, z);
         ret.setTagCompound(new NBTTagCompound());
-        if(tile != null && tile instanceof TileImprovedChest){
-        	 ret.getTagCompound().setString("woodType", ((TileImprovedChest)tile).woodType);
-             ret.getTagCompound().setByte("wool", (byte)((TileImprovedChest)tile).woolType);
+        if(tile != null && tile instanceof TileImprovedChestOld){
+        	 ret.getTagCompound().setString("woodType", ((TileImprovedChestOld)tile).woodType);
+             ret.getTagCompound().setByte("wool", (byte)((TileImprovedChestOld)tile).woolType);
              //ret.getTagCompound().setBoolean("hopper", ((TileImprovedChest)tile).hopper);
-             ret.getTagCompound().setBoolean("alt", ((TileImprovedChest)tile).alt);
+             ret.getTagCompound().setBoolean("alt", ((TileImprovedChestOld)tile).alt);
              //ret.getTagCompound().setBoolean("redstone", ((TileImprovedChest)tile).redstone);
              return ret;
         }
@@ -325,13 +325,13 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     }
     
     public boolean canPlaceBlockAt(ItemStack itemBlock, World world, int x, int y, int z){
-    	List<ForgeDirection> dirs = TileImprovedChest.conDirs;
+    	List<ForgeDirection> dirs = TileImprovedChestOld.conDirs;
     	int chests = 0;
     	for(ForgeDirection dir : dirs){
     		TileEntity tile = world.getTileEntity(x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ);
-    		if(tile == null || !(tile instanceof TileImprovedChest))
+    		if(tile == null || !(tile instanceof TileImprovedChestOld))
     			continue;
-    		TileImprovedChest chest = (TileImprovedChest)tile;
+    		TileImprovedChestOld chest = (TileImprovedChestOld)tile;
     		if(!chest.isValidForConnection(itemBlock))
     			continue;
     		if(chest.getPartner() != null)
@@ -346,7 +346,7 @@ public class BlockImprovedChest extends BlockConnectiveInventory{
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
     {
-        TileImprovedChest tile = (TileImprovedChest)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);
+        TileImprovedChestOld tile = (TileImprovedChestOld)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);
     	if(tile.getPartner() == null){
     		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
     		return;

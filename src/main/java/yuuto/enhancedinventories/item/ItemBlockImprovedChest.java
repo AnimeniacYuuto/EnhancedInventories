@@ -24,7 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.WoodTypes;
-import yuuto.enhancedinventories.block.BlockImprovedChest;
+import yuuto.enhancedinventories.block.BlockImprovedChestOld;
 import yuuto.enhancedinventories.compat.modules.VanillaModule;
 import yuuto.yuutolib.item.ModItemBlockMulti;
 
@@ -122,7 +122,7 @@ public class ItemBlockImprovedChest extends ModItemBlockMulti{
         {
             return false;
         }
-        else if(!((BlockImprovedChest)field_150939_a).canPlaceBlockAt(stack, world, x, y, z))
+        else if(!((BlockImprovedChestOld)field_150939_a).canPlaceBlockAt(stack, world, x, y, z))
         {
         	return false;
         }

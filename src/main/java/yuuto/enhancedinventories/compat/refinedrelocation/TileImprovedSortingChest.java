@@ -13,9 +13,9 @@ import com.dynious.refinedrelocation.api.tileentity.handlers.ISortingInventoryHa
 import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoolUpgradeHelper;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 
-public class TileImprovedSortingChest extends TileImprovedChest implements ISortingInventory, IFilterTileGUI{
+public class TileImprovedSortingChest extends TileImprovedChestOld implements ISortingInventory, IFilterTileGUI{
 
 	public ISortingInventoryHandler sortingInventoryHandler = APIUtils.createSortingInventoryHandler(this);
 	public IFilterGUI filter = APIUtils.createStandardFilter(this);

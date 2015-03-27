@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL12;
 import yuuto.enhancedinventories.ColorHelper;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
@@ -53,26 +53,26 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x,
 			double y, double z, float f) {
-		if(!(tile instanceof TileImprovedChest))
+		if(!(tile instanceof TileImprovedChestOld))
 			return;
-		TileImprovedChest chest = (TileImprovedChest)tile;
+		TileImprovedChestOld chest = (TileImprovedChestOld)tile;
 		if(chest.getPartner() == null){
-			renderSingle((TileImprovedChest) tile, x, y, z, f, 0);
-			renderSingle((TileImprovedChest) tile, x, y, z, f, 1);
-			renderSingle((TileImprovedChest) tile, x, y, z, f, 2);
-			if(((TileImprovedChest)tile).sortingChest)
-				renderSingle((TileImprovedChest) tile, x, y, z, f, 3);
+			renderSingle((TileImprovedChestOld) tile, x, y, z, f, 0);
+			renderSingle((TileImprovedChestOld) tile, x, y, z, f, 1);
+			renderSingle((TileImprovedChestOld) tile, x, y, z, f, 2);
+			if(((TileImprovedChestOld)tile).sortingChest)
+				renderSingle((TileImprovedChestOld) tile, x, y, z, f, 3);
 		}else if(!chest.getTopSides().contains(chest.getPartnerDir())){
-			renderDouble((TileImprovedChest) tile, x, y, z, f, 0);
-			renderDouble((TileImprovedChest) tile, x, y, z, f, 1);
-			renderDouble((TileImprovedChest) tile, x, y, z, f, 2);
-			if(((TileImprovedChest)tile).sortingChest)
-				renderDouble((TileImprovedChest) tile, x, y, z, f, 3);
+			renderDouble((TileImprovedChestOld) tile, x, y, z, f, 0);
+			renderDouble((TileImprovedChestOld) tile, x, y, z, f, 1);
+			renderDouble((TileImprovedChestOld) tile, x, y, z, f, 2);
+			if(((TileImprovedChestOld)tile).sortingChest)
+				renderDouble((TileImprovedChestOld) tile, x, y, z, f, 3);
 		}
 		
 	}
     
-    void renderSingle(TileImprovedChest chest, double x, double y, double z, float f, int pass) {
+    void renderSingle(TileImprovedChestOld chest, double x, double y, double z, float f, int pass) {
 		int i = chest.getOrientation().ordinal();
 
         ModelChest modelchest = modelSingleChest;
@@ -139,7 +139,7 @@ public class RendererImprovedChest extends TileEntitySpecialRenderer{
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 	}
-    void renderDouble(TileImprovedChest chest, double x, double y, double z, float f, int pass) {
+    void renderDouble(TileImprovedChestOld chest, double x, double y, double z, float f, int pass) {
     	int i = chest.getOrientation().ordinal();
 
         ModelChest modelchest = modelDoubleChest;

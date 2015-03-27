@@ -22,7 +22,7 @@ import yuuto.enhancedinventories.EInventoryMaterial;
 import yuuto.enhancedinventories.EnhancedInventories;
 import yuuto.enhancedinventories.WoodTypes;
 import yuuto.enhancedinventories.compat.modules.VanillaModule;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 import yuuto.yuutolib.item.ModItemMulti;
 
 public class ItemChestConverter extends ModItemMulti{
@@ -78,7 +78,7 @@ public class ItemChestConverter extends ModItemMulti{
 			return false;
 		System.out.println("passed check");
 		TileEntityChest oldTile = (TileEntityChest)tile;
-		TileImprovedChest newTile = new TileImprovedChest(EInventoryMaterial.values()[stack.getItemDamage()]);
+		TileImprovedChestOld newTile = new TileImprovedChestOld(EInventoryMaterial.values()[stack.getItemDamage()]);
 		newTile.woodType = stack.getTagCompound().getString("woodType");
 		newTile.woolType = stack.getTagCompound().getInteger("wool");
 		newTile.hopper = stack.getTagCompound().getBoolean("hopper");
@@ -111,14 +111,14 @@ public class ItemChestConverter extends ModItemMulti{
 		return true;
     }
 	
-	public static boolean canUpgrade(TileImprovedChest newTile, World world, int x, int y, int z){
+	public static boolean canUpgrade(TileImprovedChestOld newTile, World world, int x, int y, int z){
 		List<ForgeDirection> dirs = newTile.getValidConnectionSides();
     	int chests = 0;
     	for(ForgeDirection dir : dirs){
     		TileEntity tile = world.getTileEntity(x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ);
-    		if(tile == null || !(tile instanceof TileImprovedChest))
+    		if(tile == null || !(tile instanceof TileImprovedChestOld))
     			continue;
-    		TileImprovedChest inv = (TileImprovedChest)tile;
+    		TileImprovedChestOld inv = (TileImprovedChestOld)tile;
     		if(!inv.isValidForConnection(newTile))
     			continue;
     		if(inv.getPartner() != null)

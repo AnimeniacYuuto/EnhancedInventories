@@ -21,7 +21,7 @@ import yuuto.enhancedinventories.client.RendererLocker;
 import yuuto.enhancedinventories.client.RendererLockerItem;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileImprovedSortingChest;
 import yuuto.enhancedinventories.compat.refinedrelocation.TileSortingLocker;
-import yuuto.enhancedinventories.tile.TileImprovedChest;
+import yuuto.enhancedinventories.tile.TileImprovedChestOld;
 import yuuto.enhancedinventories.tile.TileLocker;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -32,7 +32,7 @@ public class ProxyClient extends ProxyCommon {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileImprovedChest.class, new RendererImprovedChest());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileImprovedChestOld.class, new RendererImprovedChest());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileLocker.class, new RendererLocker());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnhancedInventories.improvedChest), new RendererImprovedChestItem());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(EnhancedInventories.locker), new RendererLockerItem());

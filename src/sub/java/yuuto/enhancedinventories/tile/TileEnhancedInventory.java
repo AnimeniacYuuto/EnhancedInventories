@@ -1,230 +1,187 @@
 package yuuto.enhancedinventories.tile;
 
-import com.mojang.authlib.GameProfile;
-
-import cofh.api.tileentity.ISecurable;
-import cofh.core.util.SocialRegistry;
+import cofh.api.tileentity.ISecurable.AccessMode;
+import yuuto.enhancedinventories.inventory.TileInventory;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.MathHelper;
+import net.minecraftforge.common.util.Constants;
 
-public class TileEnhancedInventory extends TileEntity implements IInventory, ISecurable{
+public class TileEnhancedInventory extends TileSecurable implements IInventory{
 
-	//protected TileBasicInventory partner;
-	//protected ForgeDirection partnerDirection;
-	protected IInventory internalInventory;
-	protected IInventory combinedInventory;
+	protected ItemStack[] inv;
+	protected TileInventory invHandler;
 	protected int tier;
 	
-	protected boolean secured;
-	protected GameProfile owner;
-	protected AccessMode accessMode;
+	protected int numUsingPlayers;
+	protected float prevLidAngle;
+	protected float lidAngle;
 	
+	protected boolean redstone;
 	
-	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
+	public TileEnhancedInventory(){
+		this(0);
 	}
-
-	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
+	public TileEnhancedInventory(int tier){
+		this.tier = tier;
+		this.resetInventory();
+	}
+	public void resetInventory(){
+		int size = getBaseSize();
+		this.inv = new ItemStack[size*(this.tier+1)];
+		setInventory();
+	}
+	public void setInventory(){
+		if(inv == null)
+			return;
+		invHandler = new TileInventory(this);
+	}
+	public ItemStack[] getContents(){
+		return inv;
 	}
 	
-	public int getBaseSize(){
-		return 27;
-	}
 	public int getTier(){
 		return tier;
 	}
+	public int getBaseSize(){
+		return 27;
+	}
+	public TileInventory getInventory(){
+		return invHandler;
+	}
+	public void setUsingPlayers(int amount){
+		this.numUsingPlayers = amount;
+		worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.blockType, 2, this.numUsingPlayers);
+	}
+	public int countUsingPlayers(){
+		return this.numUsingPlayers;
+	}
+	public int getRedstonePower(){
+		return this.redstone ? MathHelper.clamp_int(this.numUsingPlayers, 0, 15) : 0;
+	}
+	public int getComparatorInputOverride(){
+		return Container.calcRedstoneFromInventory(getInventory());
+	}
 	
 	@Override
-	public boolean canPlayerAccess(String name) {
-		if(accessMode == AccessMode.PUBLIC)
-			return true;
-		if(accessMode == AccessMode.RESTRICTED)
-			return SocialRegistry.playerHasAccess(name, owner);
-		return name.equals(owner.getName()); 
+	public void updateEntity(){
+		super.updateEntity();
+		prevLidAngle = lidAngle;
+		if (numUsingPlayers > 0) {
+			if (lidAngle < 1.0F) lidAngle = Math.min(1.0F, lidAngle + 0.1f);
+		} else if (lidAngle > 0.0F) lidAngle = Math.max(0.0F, lidAngle - 0.1f);
 	}
-
-	@Override
-	public AccessMode getAccess() {
-		return accessMode;
-	}
-
-	@Override
-	public GameProfile getOwner() {
-		return owner;
-	}
-
-	@Override
-	public String getOwnerName() {
-		return owner.getName();
-	}
-
-	@Override
-	public boolean setAccess(AccessMode mode) {
-		accessMode = mode;
-		return true;
-	}
-
-	@Override
-	public boolean setOwner(GameProfile owner) {
-		if(this.owner != null)
-			return false;
-		this.owner = owner;
-		return true;
-	}
-
-	@Override
-	public boolean setOwnerName(String name) {
-		EntityPlayer player = this.worldObj.getPlayerEntityByName(name);
-		if(player == null)
-			return false;
-		return setOwner(player.getGameProfile());
-	}
-
-	@Override
-	public int getSizeInventory() {
-		if(secured)
-			return 0;
-		if(combinedInventory != null)
-			return combinedInventory.getSizeInventory();
-		return internalInventory.getSizeInventory();
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int p_70301_1_) {
-		if(secured)
-			return null;
-		if(combinedInventory != null)
-			return combinedInventory.getStackInSlot(p_70301_1_);
-		return internalInventory.getStackInSlot(p_70301_1_);
-	}
-
-	@Override
-	public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
-		if(secured)
-			return null;
-		if(combinedInventory != null)
-			return combinedInventory.decrStackSize(p_70298_1_, p_70298_2_);
-		return internalInventory.decrStackSize(p_70298_1_, p_70298_2_);
-	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
-		if(secured)
-			return null;
-		if(combinedInventory != null)
-			return combinedInventory.getStackInSlotOnClosing(p_70304_1_);
-		return internalInventory.getStackInSlotOnClosing(p_70304_1_);
-	}
-
-	@Override
-	public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
-		if(secured)
-			return;
-		if(combinedInventory != null)
-			combinedInventory.setInventorySlotContents(p_70299_1_, p_70299_2_);
-		else
-			internalInventory.setInventorySlotContents(p_70299_1_, p_70299_2_);
-	}
-
+	
 	@Override
 	public String getInventoryName() {
-		return "container";
+		return null;
 	}
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
-
+	
+	@Override
+	public int getSizeInventory() {
+		return this.isAccessible() ? this.getInventory().getSizeInventory() : 0;
+	}
+	@Override
+	public ItemStack getStackInSlot(int p_70301_1_) {
+		return this.isAccessible() ? this.getInventory().getStackInSlot(p_70301_1_) : null;
+	}
+	@Override
+	public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_) {
+		return this.isAccessible() ? this.getInventory().decrStackSize(p_70298_1_, p_70298_2_) : null;
+	}
+	@Override
+	public ItemStack getStackInSlotOnClosing(int p_70304_1_) {
+		return this.isAccessible() ? this.getInventory().getStackInSlotOnClosing(p_70304_1_) : null;
+	}
+	@Override
+	public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_) {
+		if(this.isAccessible())
+			this.getInventory().setInventorySlotContents(p_70299_1_, p_70299_2_);
+	}
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		if(!(this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : player.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D))
+	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+		if(!(entityplayer.getDistanceSq((double) xCoord + 0.5D, (double) yCoord + 0.5D, (double) zCoord + 0.5D) <= 64D))
 			return false;
-		if(!secured)
-			return true;
-		return canPlayerAccess(player.getGameProfile().getName());
+		return this.canPlayerAccess(entityplayer.getGameProfile().getName());
 	}
+	@Override
+	public void openInventory() {}
+	@Override
+	public void closeInventory() {}
 
 	@Override
 	public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
-		if(secured)
-			return false;
-		if(this.combinedInventory != null)
-			return this.combinedInventory.isItemValidForSlot(p_94041_1_, p_94041_2_);
-		return this.internalInventory.isItemValidForSlot(p_94041_1_, p_94041_2_);
+		return this.isAccessible() ? this.getInventory().isItemValidForSlot(p_94041_1_, p_94041_2_) : false;
 	}
 	
+	@Override
+	public void writeToNBT(NBTTagCompound nbt){
+		super.writeToNBT(nbt);
+		nbt.setByte("tier", (byte) tier);
+		NBTTagList nbttaglist = new NBTTagList();
+		for(int i = 0; i < this.inv.length; i++){
+			if(this.inv[i] == null)
+				continue;
+			NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+            nbttagcompound1.setByte("Slot", (byte) i);
+            inv[i].writeToNBT(nbttagcompound1);
+            nbttaglist.appendTag(nbttagcompound1);
+		}
+		nbt.setBoolean("redstone", redstone);
+	}
+	@Override
+	public void writePacketNBT(NBTTagCompound nbt){
+		super.writePacketNBT(nbt);
+		nbt.setInteger("usingPlayers", numUsingPlayers);
+		nbt.setBoolean("redstone", redstone);
+	}
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
 		this.tier = nbt.getInteger("tier");
-		this.secured = nbt.getBoolean("secured");
-		if(secured){
-			this.accessMode = AccessMode.values()[nbt.getInteger("accessMode")];
-			this.setOwnerName(nbt.getString("owner"));
-		}
+		this.resetInventory();
+		NBTTagList nbttaglist = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+        for (int i = 0; i < nbttaglist.tagCount(); i++)
+        {
+            NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 0xff;
+            if (j >= 0 && j < inv.length)
+            {
+                inv[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
+        this.redstone = nbt.getBoolean("redstone");
+		
 	}
-	
-	@Override 
-	public void writeToNBT(NBTTagCompound nbt){
-		super.writeToNBT(nbt);
-		nbt.setByte("tier", (byte)tier);
-		nbt.setBoolean("secured", secured);
-		if(secured){
-			nbt.setByte("accessMode", (byte)accessMode.ordinal());
-			nbt.setString("owner", owner.getName());
-		}
+	@Override
+	public void readPacketNBT(NBTTagCompound nbt){
+		super.readPacketNBT(nbt);
+		this.numUsingPlayers = nbt.getInteger("usingPlayers");
+		this.redstone = nbt.getBoolean("redstone");
 	}
 	
 	@Override
-	public Packet getDescriptionPacket()
-    {
-		NBTTagCompound tagCompound = new NBTTagCompound();
-	    writeNbtPacket(tagCompound);
-	    return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, tagCompound);
-    }
-	public void writeNbtPacket(NBTTagCompound nbt){
-		nbt.setByte("tier", (byte)tier);
-		nbt.setBoolean("secured", secured);
-		if(secured){
-			nbt.setByte("accessMode", (byte)accessMode.ordinal());
-			nbt.setString("owner", owner.getName());
+    public boolean receiveClientEvent(int i, int j){
+		switch(i){
+		case 2:
+			this.numUsingPlayers = j;
+			return true;
+		default:
+			return super.receiveClientEvent(i, j);
 		}
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
-    {
-		super.onDataPacket(net, pkt);
-		readNbtPacket(pkt.func_148857_g());
-		this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
     }
-	public void readNbtPacket(NBTTagCompound nbt){
-		this.tier = nbt.getInteger("tier");
-		this.secured = nbt.getBoolean("secured");
-		if(secured){
-			this.accessMode = AccessMode.values()[nbt.getInteger("accessMode")];
-			this.setOwnerName(nbt.getString("owner"));
-		}
-	}
-	
 
 }
