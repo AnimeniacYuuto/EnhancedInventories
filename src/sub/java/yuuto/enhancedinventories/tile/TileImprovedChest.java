@@ -3,6 +3,10 @@ package yuuto.enhancedinventories.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import yuuto.enhancedinventories.materials.CoreMaterial;
+import yuuto.enhancedinventories.materials.FrameMaterial;
+import yuuto.enhancedinventories.materials.MaterialHelper;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -12,9 +16,10 @@ public class TileImprovedChest extends TileBasicInventory{
 	static List<ForgeDirection> validDirections;
 	static List<ForgeDirection> topDirections;
 	
-	public String coreMat;
-	public String frameMat;
+	public CoreMaterial coreMat;
+	public FrameMaterial frameMat;
 	public int woolColor;
+	public boolean isPainted;
 	
 	static{
 		validDirections = new ArrayList<ForgeDirection>();
@@ -42,9 +47,9 @@ public class TileImprovedChest extends TileBasicInventory{
 		TileImprovedChest chest = (TileImprovedChest)tile;
 		if(super.isValidForConnection(tile))
 			return false;
-		if(!this.coreMat.equals(chest.coreMat))
+		if(!this.coreMat.matches(chest.coreMat))
 			return false;
-		if(!this.frameMat.equals(chest.frameMat))
+		if(this.frameMat != chest.frameMat)
 			return false;
 		if(this.woolColor != chest.woolColor)
 			return false;
@@ -55,11 +60,11 @@ public class TileImprovedChest extends TileBasicInventory{
 	public boolean isValidForConnection(ItemStack tileStack) {
 		if(!super.isValidForConnection(tileStack))
 			return false;
-		if(!this.coreMat.equals(tileStack.getTagCompound().getString("coreMat")))
+		if(!this.coreMat.matches(MaterialHelper.readCoreMaterial(tileStack)))
 			return false;
-		if(!this.frameMat.equals(tileStack.getTagCompound().getString("frameMat")))
+		if(this.frameMat != MaterialHelper.readFrameMaterial(tileStack))
 			return false;
-		if(this.woolColor != tileStack.getTagCompound().getInteger("woolType"))
+		if(this.woolColor != MaterialHelper.readColor(tileStack))
 			return false;
 		return true;
 	}

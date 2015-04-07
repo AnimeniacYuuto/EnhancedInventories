@@ -2,6 +2,7 @@ package yuuto.enhancedinventories.tile;
 
 import cofh.api.tileentity.ISecurable.AccessMode;
 import yuuto.enhancedinventories.inventory.TileInventory;
+import yuuto.enhancedinventories.tile.upgrades.EUpgrade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -14,14 +15,12 @@ import net.minecraftforge.common.util.Constants;
 public class TileEnhancedInventory extends TileSecurable implements IInventory{
 
 	protected ItemStack[] inv;
-	protected TileInventory invHandler;
+	protected IInventory invHandler;
 	protected int tier;
 	
 	protected int numUsingPlayers;
 	protected float prevLidAngle;
 	protected float lidAngle;
-	
-	protected boolean redstone;
 	
 	public TileEnhancedInventory(){
 		this(0);
@@ -30,6 +29,7 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
 		this.tier = tier;
 		this.resetInventory();
 	}
+	
 	public void resetInventory(){
 		int size = getBaseSize();
 		this.inv = new ItemStack[size*(this.tier+1)];
@@ -43,6 +43,9 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
 	public ItemStack[] getContents(){
 		return inv;
 	}
+	public IInventory getInventory(){
+		return invHandler;
+	}
 	
 	public int getTier(){
 		return tier;
@@ -50,9 +53,7 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
 	public int getBaseSize(){
 		return 27;
 	}
-	public TileInventory getInventory(){
-		return invHandler;
-	}
+	
 	public void setUsingPlayers(int amount){
 		this.numUsingPlayers = amount;
 		worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.blockType, 2, this.numUsingPlayers);
@@ -60,8 +61,9 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
 	public int countUsingPlayers(){
 		return this.numUsingPlayers;
 	}
+	
 	public int getRedstonePower(){
-		return this.redstone ? MathHelper.clamp_int(this.numUsingPlayers, 0, 15) : 0;
+		return hasUpgrade(EUpgrade.Redstone) ? MathHelper.clamp_int(this.numUsingPlayers, 0, 15) : 0;
 	}
 	public int getComparatorInputOverride(){
 		return Container.calcRedstoneFromInventory(getInventory());
@@ -80,7 +82,6 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
 	public String getInventoryName() {
 		return null;
 	}
-
 	@Override
 	public boolean hasCustomInventoryName() {
 		return false;
@@ -140,13 +141,11 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
             inv[i].writeToNBT(nbttagcompound1);
             nbttaglist.appendTag(nbttagcompound1);
 		}
-		nbt.setBoolean("redstone", redstone);
 	}
 	@Override
 	public void writePacketNBT(NBTTagCompound nbt){
 		super.writePacketNBT(nbt);
 		nbt.setInteger("usingPlayers", numUsingPlayers);
-		nbt.setBoolean("redstone", redstone);
 	}
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
@@ -163,14 +162,12 @@ public class TileEnhancedInventory extends TileSecurable implements IInventory{
                 inv[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
-        this.redstone = nbt.getBoolean("redstone");
 		
 	}
 	@Override
 	public void readPacketNBT(NBTTagCompound nbt){
 		super.readPacketNBT(nbt);
 		this.numUsingPlayers = nbt.getInteger("usingPlayers");
-		this.redstone = nbt.getBoolean("redstone");
 	}
 	
 	@Override

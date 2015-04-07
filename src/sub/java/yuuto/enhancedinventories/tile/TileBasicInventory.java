@@ -24,6 +24,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import yuuto.enhancedinventories.inventory.TileInventory;
+import yuuto.enhancedinventories.tile.upgrades.EUpgrade;
 import yuuto.yuutolib.block.tile.IRotatable;
 import yuuto.yuutolib.utill.InventoryWrapper;
 
@@ -34,9 +35,6 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 	
 	protected TileInventory combinedInventory;
 	protected TileBasicInventory partner;
-	
-	protected boolean alternate;
-	protected boolean hopper;
 	
 	public TileBasicInventory(){
 		super();
@@ -76,24 +74,19 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 		this.markDirty();
 		foundConnection.markDirty();
 	}
-	
 	public boolean canConnect(TileBasicInventory tile, ForgeDirection dir){
 		if(!initialized)
 			return false;
 		if(!isValidForConnection(tile))
 			return false;
-		if(tile.secured != this.secured)
-			return false;
-		if(tile.redstone != this.redstone)
-			return false;
-		if(tile.hopper != this.hopper)
+		if(!tile.upgradesMatch(upgrades))
 			return false;
 		return true;
 	}
 	public boolean isValidForConnection(TileBasicInventory tile){
 		if(this.tier != tile.getTier())
 			return false;
-		if(this.alternate != tile.alternate)
+		if(this.hasUpgrade(EUpgrade.Alternate) != tile.hasUpgrade(EUpgrade.Alternate))
 			return false;
 		return true;
 	}
@@ -102,11 +95,13 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 			return false;
 		if(this.tier != tileStack.getItemDamage())
 			return false;
-		if(this.alternate != tileStack.getTagCompound().getBoolean("alt"))
+		if(hasUpgrade(EUpgrade.Alternate) != tileStack.getTagCompound().getBoolean("alt"))
 			return false;
 		return true;
 	}
+	
 	public abstract Item getItem();
+	
 	public void connectTo(TileBasicInventory tile, ForgeDirection dir){
 		this.connection = dir;
 		combinedInventory = new TileInventory(this, 
@@ -137,6 +132,10 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 	public TileBasicInventory getPartner(){
 		return this.partner;
 	}
+	public ForgeDirection getPartnerDir(){
+		return connection;
+	}
+	
 	public void updateHopper(){
 		suckItems(getSuckDirection());
 		pushItems(getPushDirection());
@@ -238,24 +237,26 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 		if ((lidAngle < 0.5F) && (prevLidAngle >= 0.5F))
 			worldObj.playSoundEffect(x, y, z, "random.chestclosed", 0.5F, pitch);
 		
-		if(hopper)
+		if(hasUpgrade(EUpgrade.Hopper))
 			updateHopper();
 	}
+	
 	@Override
-	public TileInventory getInventory(){
+	public IInventory getInventory(){
 		if(isConnected())
 			return combinedInventory;
 		return invHandler;
 	}
 	@Override
 	public int getRedstonePower(){
-		if(!this.redstone)
+		if(!hasUpgrade(EUpgrade.Redstone))
 			return 0;
 		int power = this.numUsingPlayers;
 		if(isConnected())
 			power += this.partner.countUsingPlayers();
 		return MathHelper.clamp_int(power, 0, 15);
 	}
+	
 	@Override
 	public ForgeDirection getOrientation() {
 		return orientation;
@@ -279,22 +280,16 @@ public abstract class TileBasicInventory extends TileEnhancedInventory implement
 	public void writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
 		nbt.setByte("orientation", (byte)orientation.ordinal());
-		nbt.setBoolean("hopper", hopper);
-		nbt.setBoolean("alternate", alternate);
 	}
 	@Override
 	public void writePacketNBT(NBTTagCompound nbt){
 		super.writePacketNBT(nbt);
 		nbt.setByte("orientation", (byte)orientation.ordinal());
-		nbt.setBoolean("hopper", hopper);
-		nbt.setBoolean("alternate", alternate);
 	}
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);	
 		this.setOrientation(ForgeDirection.getOrientation(nbt.getInteger("orientation")));
-		this.hopper = nbt.getBoolean("hopper");
-		this.alternate = nbt.getBoolean("alternate");
 	}
 	@Override
 	public void readPacketNBT(NBTTagCompound nbt){

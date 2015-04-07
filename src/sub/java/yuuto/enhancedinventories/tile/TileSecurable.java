@@ -1,5 +1,7 @@
 package yuuto.enhancedinventories.tile;
 
+import yuuto.enhancedinventories.tile.upgrades.EUpgrade;
+
 import com.mojang.authlib.GameProfile;
 
 import cofh.api.tileentity.ISecurable;
@@ -17,8 +19,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileSecurable extends TileBase implements ISecurable{
 
-	
-	protected boolean secured;
 	protected AccessMode accessMode;
 	protected GameProfile owner;
 	
@@ -33,7 +33,7 @@ public class TileSecurable extends TileBase implements ISecurable{
 		return playerName.equals(owner.getName());
 	}
 	public boolean isAccessible(){
-		return !secured || (accessMode == AccessMode.PUBLIC);
+		return !hasUpgrade(EUpgrade.Security) || (accessMode == AccessMode.PUBLIC);
 	}
 
 	@Override
@@ -81,8 +81,8 @@ public class TileSecurable extends TileBase implements ISecurable{
 	@Override
 	public void writeToNBT(NBTTagCompound nbt){
 		super.writeToNBT(nbt);
-		nbt.setBoolean("secured", secured);
-		if(secured){
+		//nbt.setBoolean("secured", secured);
+		if(hasUpgrade(EUpgrade.Security)){
 			nbt.setByte("accessMode", (byte)accessMode.ordinal());
 			if(owner != null)
 				nbt.setString("owner", owner.getName());
@@ -91,8 +91,8 @@ public class TileSecurable extends TileBase implements ISecurable{
 	@Override
 	public void writePacketNBT(NBTTagCompound nbt){
 		super.writePacketNBT(nbt);
-		nbt.setBoolean("secured", secured);
-		if(secured){
+		//nbt.setBoolean("secured", secured);
+		if(hasUpgrade(EUpgrade.Security)){
 			nbt.setByte("accessMode", (byte)accessMode.ordinal());
 			if(owner != null)
 				nbt.setString("owner", owner.getName());
@@ -101,8 +101,8 @@ public class TileSecurable extends TileBase implements ISecurable{
 	@Override
 	public void readFromNBT(NBTTagCompound nbt){
 		super.readFromNBT(nbt);
-		this.secured = nbt.getBoolean("secured");
-		if(secured){
+		//this.secured = nbt.getBoolean("secured");
+		if(hasUpgrade(EUpgrade.Security)){
 			this.accessMode = AccessMode.values()[nbt.getInteger("accessMode")];
 			this.setOwnerName(nbt.getString("owner"));
 		}
@@ -110,8 +110,8 @@ public class TileSecurable extends TileBase implements ISecurable{
 	@Override
 	public void readPacketNBT(NBTTagCompound nbt){
 		super.readPacketNBT(nbt);
-		this.secured = nbt.getBoolean("secured");
-		if(secured){
+		//this.secured = nbt.getBoolean("secured");
+		if(hasUpgrade(EUpgrade.Security)){
 			this.accessMode = AccessMode.values()[nbt.getInteger("accessMode")];
 			this.setOwnerName(nbt.getString("owner"));
 		}

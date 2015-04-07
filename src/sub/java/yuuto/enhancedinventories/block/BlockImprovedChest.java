@@ -5,6 +5,9 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import yuuto.enhancedinventories.materials.CoreMaterial;
+import yuuto.enhancedinventories.materials.FrameMaterial;
+import yuuto.enhancedinventories.materials.MaterialHelper;
 import yuuto.enhancedinventories.tile.TileBasicInventory;
 import yuuto.enhancedinventories.tile.TileImprovedChest;
 import yuuto.enhancedinventories.tile.TileImprovedChestOld;
@@ -31,7 +34,14 @@ public class BlockImprovedChest extends BlockBasicInventory{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(Item item, CreativeTabs tab, List subItems) {
-		
+		CoreMaterial core = MaterialHelper.getRandomCore();
+		int color = MaterialHelper.getRandomColor();
+		for(int i = 0; i < 8; i++){
+			ItemStack stack = new ItemStack(this, 1, i);
+			FrameMaterial frame = MaterialHelper.getRandomFrame(i);
+			MaterialHelper.writeToStack(stack, core, frame, color, false);
+			subItems.add(stack);
+		}
 	}
 
 	@Override
@@ -40,7 +50,12 @@ public class BlockImprovedChest extends BlockBasicInventory{
 	}
 
 	@Override
-	public void setTags(TileBasicInventory tile, ItemStack stack) {		
+	public void setTags(TileBasicInventory tile, ItemStack stack) {
+		TileImprovedChest chest = (TileImprovedChest)tile;
+		chest.coreMat = MaterialHelper.readCoreMaterial(stack);
+		chest.frameMat = MaterialHelper.readFrameMaterial(stack);
+		chest.woolColor = MaterialHelper.readColor(stack);
+		chest.isPainted = MaterialHelper.isPainted(stack);
 	}
 	
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
@@ -53,9 +68,10 @@ public class BlockImprovedChest extends BlockBasicInventory{
             Item item = getItemDropped(metadata, world.rand, fortune);
             if (item != null)
             {
-                ItemStack stack = new ItemStack(item, 1, damageDropped(metadata));
+                ItemStack stack = new ItemStack(item, count, damageDropped(metadata));
                 TileImprovedChest chest = (TileImprovedChest)world.getTileEntity(x, y, z);
-            	ret.add(stack);
+                chest.getUpgradeDrops(stack, ret);
+            	//ret.add(stack);
             }
         }
         return ret;
@@ -63,14 +79,20 @@ public class BlockImprovedChest extends BlockBasicInventory{
 	
 	@Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z){
-		return super.getPickBlock(target, world, x, y, z);
+		TileImprovedChest chest = (TileImprovedChest)world.getTileEntity(x, y, z);
+		if(chest == null)
+			return null;
+		ItemStack stack = new ItemStack(this, 1, chest.blockMetadata);
+		MaterialHelper.writeToStack(stack, chest.coreMat, chest.frameMat, chest.woolColor, chest.isPainted);
+		return stack;
+		//return super.getPickBlock(target, world, x, y, z);
 	}
 	
 	@Override
     public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int p_149719_2_, int p_149719_3_, int p_149719_4_)
     {
-        TileImprovedChestOld tile = (TileImprovedChestOld)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);
-    	if(tile.getPartner() == null){
+        TileImprovedChest tile = (TileImprovedChest)p_149719_1_.getTileEntity(p_149719_2_, p_149719_3_, p_149719_4_);
+    	if(tile.isConnected() == false){
     		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
     		return;
     	}

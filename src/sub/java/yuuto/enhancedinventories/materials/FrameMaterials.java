@@ -1,41 +1,33 @@
 package yuuto.enhancedinventories.materials;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import yuuto.enhancedinventories.ref.MaterialKeys;
+import yuuto.enhancedinventories.tile.upgrades.ETier;
 
 import net.minecraft.item.ItemStack;
 
 public class FrameMaterials {
-	
-	public static final String DEFAULT_MAT_ID = "frame:ore:cobblestone"; 
-	
-	static ArrayList<FrameMaterial> materials = new ArrayList<FrameMaterial>();
-	static HashMap<String, FrameMaterial> materialMap = new HashMap<String, FrameMaterial>();
+	static Map<String, FrameMaterial> mats;
 	
 	public static void addMaterial(FrameMaterial mat){
-		materials.add(mat);
-		materialMap.put(mat.id, mat);
+		addMaterial(mat, -1);
 	}
 	public static void addMaterial(FrameMaterial mat, int tier){
-		addMaterial(mat);
-		StorageTiers.getTier(tier).addMat(mat);
-	}
-	
-	public static String getId(ItemStack stack){
-		for(FrameMaterial mat : materials){
-			if(mat.matches(stack))
-				return mat.getId();
+		mats.put(mat.getId(), mat);
+		if(tier > -1){
+			ETier.get(tier).getFrames().add(mat);
 		}
-		return DEFAULT_MAT_ID;
 	}
-	public static FrameMaterial getMaterial(String id){
-		if(materialMap.containsKey(id))
-			return materialMap.get(id);
-		return materialMap.get(DEFAULT_MAT_ID);
+	public static FrameMaterial readFrameMaterial(ItemStack stack){
+		String key = stack.getTagCompound().getString(MaterialKeys.FRAME);
+		if(mats.containsKey(key))
+			return mats.get(key);
+		return null;
 	}
-	public static List<FrameMaterial> getMaterials(){
-		return materials;
+	public static void writeToStack(ItemStack stack, FrameMaterial mat){
+		stack.getTagCompound().setString(MaterialKeys.FRAME, mat.getId());
 	}
 
 }
