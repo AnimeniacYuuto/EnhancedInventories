@@ -95,22 +95,21 @@ item.EnhancedInventories:sizeUpgrade.Ardite.name=阿迪特升级
 item.EnhancedInventories:sizeUpgrade.Manyullyn.name=玛玉灵升级
 
 item.EnhancedInventories:chestConverter.Stone.name=石制箱子转换器
-item.EnhancedInventories:chestConverter.Iron.name=铁箱子转换器
-item.EnhancedInventories:chestConverter.Gold.name=金箱子转换器
+item.EnhancedInventories:chestConverter.Iron.name=铁制箱子转换器
+item.EnhancedInventories:chestConverter.Gold.name=金制箱子转换器
 item.EnhancedInventories:chestConverter.Diamond.name=钻石箱子转换器
 item.EnhancedInventories:chestConverter.Emerald.name=绿宝石箱子转换器
 item.EnhancedInventories:chestConverter.Obsidian.name=黑曜石箱子转换器
 
-item.EnhancedInventories:chestConverter.Copper.name=铜箱子转换器
-item.EnhancedInventories:chestConverter.Tin.name=锡箱子转换器
-item.EnhancedInventories:chestConverter.Silver.name=银箱子转换器
+item.EnhancedInventories:chestConverter.Copper.name=铜制箱子转换器
+item.EnhancedInventories:chestConverter.Tin.name=锡制箱子转换器
+item.EnhancedInventories:chestConverter.Silver.name=银制箱子转换器
 item.EnhancedInventories:chestConverter.Bronze.name=青铜箱子转换器
-item.EnhancedInventories:chestConverter.Bronze.name=青铜箱子转换器
-item.EnhancedInventories:chestConverter.Steel.name=钢箱子转换器
-item.EnhancedInventories:chestConverter.Platinum.name=铂箱子转换器
+item.EnhancedInventories:chestConverter.Steel.name=钢制箱子转换器
+item.EnhancedInventories:chestConverter.Platinum.name=铂制箱子转换器
 
 item.EnhancedInventories:chestConverter.Alumite.name=耐酸铝箱子转换器
-item.EnhancedInventories:chestConverter.Cobalt.name=钴箱子转换器
+item.EnhancedInventories:chestConverter.Cobalt.name=钴制箱子转换器
 item.EnhancedInventories:chestConverter.Ardite.name=阿迪特箱子转换器
 item.EnhancedInventories:chestConverter.Manyullyn.name=玛玉灵箱子转换器
 
