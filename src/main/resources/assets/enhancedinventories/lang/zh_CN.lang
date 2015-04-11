@@ -1,42 +1,42 @@
 itemGroup.EnhancedInventories=存储增强
 
-tile.EnhancedInventories:improvedChest.Stone.name=改良石制箱子
-tile.EnhancedInventories:improvedChest.Iron.name=改良铁箱子
-tile.EnhancedInventories:improvedChest.Gold.name=改良金箱子
-tile.EnhancedInventories:improvedChest.Diamond.name=改良钻石箱子
-tile.EnhancedInventories:improvedChest.Emerald.name=改良绿宝石箱子
-tile.EnhancedInventories:improvedChest.Obsidian.name=改良黑曜石箱子
+tile.EnhancedInventories:improvedChest.Stone.name=改良石制箱
+tile.EnhancedInventories:improvedChest.Iron.name=改良铁制箱
+tile.EnhancedInventories:improvedChest.Gold.name=改良金制箱
+tile.EnhancedInventories:improvedChest.Diamond.name=改良钻石箱
+tile.EnhancedInventories:improvedChest.Emerald.name=改良绿宝石箱
+tile.EnhancedInventories:improvedChest.Obsidian.name=改良黑曜石箱
 
-tile.EnhancedInventories:improvedChest.Copper.name=改良铜箱子
-tile.EnhancedInventories:improvedChest.Tin.name=改良锡箱子
-tile.EnhancedInventories:improvedChest.Silver.name=改良银箱子
-tile.EnhancedInventories:improvedChest.Bronze.name=改良青铜箱子
-tile.EnhancedInventories:improvedChest.Steel.name=改良钢箱子
-tile.EnhancedInventories:improvedChest.Platinum.name=改良铂箱子
+tile.EnhancedInventories:improvedChest.Copper.name=改良铜制箱
+tile.EnhancedInventories:improvedChest.Tin.name=改良锡制箱
+tile.EnhancedInventories:improvedChest.Silver.name=改良银制箱
+tile.EnhancedInventories:improvedChest.Bronze.name=改良青铜箱
+tile.EnhancedInventories:improvedChest.Steel.name=改良钢制箱
+tile.EnhancedInventories:improvedChest.Platinum.name=改良铂制箱
 
-tile.EnhancedInventories:improvedChest.Alumite.name=改良耐酸铝箱子
-tile.EnhancedInventories:improvedChest.Cobalt.name=改良钴箱子
-tile.EnhancedInventories:improvedChest.Ardite.name=改良阿迪特箱子
-tile.EnhancedInventories:improvedChest.Manyullyn.name=改良玛玉灵箱子
+tile.EnhancedInventories:improvedChest.Alumite.name=改良耐酸铝箱
+tile.EnhancedInventories:improvedChest.Cobalt.name=改良钴制箱
+tile.EnhancedInventories:improvedChest.Ardite.name=改良阿迪特箱
+tile.EnhancedInventories:improvedChest.Manyullyn.name=改良玛玉灵箱
 
-tile.EnhancedInventories:improvedSortingChest.Stone.name=改良石制分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Iron.name=改良铁分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Gold.name=改良金分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Diamond.name=改良钻石分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Emerald.name=改良绿宝石分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Obsidian.name=改良黑曜石分拣箱子
+tile.EnhancedInventories:improvedSortingChest.Stone.name=改良石制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Iron.name=改良铁制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Gold.name=改良金制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Diamond.name=改良钻石分拣箱
+tile.EnhancedInventories:improvedSortingChest.Emerald.name=改良绿宝石分拣箱
+tile.EnhancedInventories:improvedSortingChest.Obsidian.name=改良黑曜石分拣箱
 
-tile.EnhancedInventories:improvedSortingChest.Copper.name=改良铜分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Tin.name=改良锡分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Silver.name=改良银分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Bronze.name=改良青铜分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Steel.name=改良钢分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Platinum.name=改良铂分拣箱子
+tile.EnhancedInventories:improvedSortingChest.Copper.name=改良铜制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Tin.name=改良锡制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Silver.name=改良银制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Bronze.name=改良青铜分拣箱
+tile.EnhancedInventories:improvedSortingChest.Steel.name=改良钢制分拣箱
+tile.EnhancedInventories:improvedSortingChest.Platinum.name=改良铂制分拣箱
 
-tile.EnhancedInventories:improvedSortingChest.Alumite.name=改良耐酸铝分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Cobalt.name=改良钴分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Ardite.name=改良阿迪特分拣箱子
-tile.EnhancedInventories:improvedSortingChest.Manyullyn.name=改良玛玉灵分拣箱子
+tile.EnhancedInventories:improvedSortingChest.Alumite.name=改良耐酸铝分拣箱
+tile.EnhancedInventories:improvedSortingChest.Cobalt.name=改良钴分拣箱
+tile.EnhancedInventories:improvedSortingChest.Ardite.name=改良阿迪特分拣箱
+tile.EnhancedInventories:improvedSortingChest.Manyullyn.name=改良玛玉灵分拣箱
 
 tile.EnhancedInventories:locker.Stone.name=石制保险箱
 tile.EnhancedInventories:locker.Iron.name=铁制保险箱
@@ -64,12 +64,12 @@ tile.EnhancedInventories:sortingLocker.Diamond.name=钻石分拣保险箱
 tile.EnhancedInventories:sortingLocker.Emerald.name=绿宝石分拣保险箱
 tile.EnhancedInventories:sortingLocker.Obsidian.name=黑曜石分拣保险箱
 
-tile.EnhancedInventories:sortingLocker.Copper.name=铜分拣保险箱
-tile.EnhancedInventories:sortingLocker.Tin.name=锡分拣保险箱
-tile.EnhancedInventories:sortingLocker.Silver.name=银分拣保险箱
+tile.EnhancedInventories:sortingLocker.Copper.name=铜制分拣保险箱
+tile.EnhancedInventories:sortingLocker.Tin.name=锡制分拣保险箱
+tile.EnhancedInventories:sortingLocker.Silver.name=银制分拣保险箱
 tile.EnhancedInventories:sortingLocker.Bronze.name=青铜分拣保险箱
-tile.EnhancedInventories:sortingLocker.Steel.name=钢分拣保险箱
-tile.EnhancedInventories:sortingLocker.Platinum.name=铂分拣保险箱
+tile.EnhancedInventories:sortingLocker.Steel.name=钢制分拣保险箱
+tile.EnhancedInventories:sortingLocker.Platinum.name=铂制分拣保险箱
 
 tile.EnhancedInventories:sortingLocker.Alumite.name=耐酸铝分拣保险箱
 tile.EnhancedInventories:sortingLocker.Cobalt.name=钴分拣保险箱
@@ -94,24 +94,24 @@ item.EnhancedInventories:sizeUpgrade.Cobalt.name=钴升级
 item.EnhancedInventories:sizeUpgrade.Ardite.name=阿迪特升级
 item.EnhancedInventories:sizeUpgrade.Manyullyn.name=玛玉灵升级
 
-item.EnhancedInventories:chestConverter.Stone.name=石制箱子转换器
-item.EnhancedInventories:chestConverter.Iron.name=铁制箱子转换器
-item.EnhancedInventories:chestConverter.Gold.name=金制箱子转换器
-item.EnhancedInventories:chestConverter.Diamond.name=钻石箱子转换器
-item.EnhancedInventories:chestConverter.Emerald.name=绿宝石箱子转换器
-item.EnhancedInventories:chestConverter.Obsidian.name=黑曜石箱子转换器
+item.EnhancedInventories:chestConverter.Stone.name=石制箱转换器
+item.EnhancedInventories:chestConverter.Iron.name=铁制箱转换器
+item.EnhancedInventories:chestConverter.Gold.name=金制箱转换器
+item.EnhancedInventories:chestConverter.Diamond.name=钻石箱转换器
+item.EnhancedInventories:chestConverter.Emerald.name=绿宝石箱转换器
+item.EnhancedInventories:chestConverter.Obsidian.name=黑曜石箱转换器
 
-item.EnhancedInventories:chestConverter.Copper.name=铜制箱子转换器
-item.EnhancedInventories:chestConverter.Tin.name=锡制箱子转换器
-item.EnhancedInventories:chestConverter.Silver.name=银制箱子转换器
-item.EnhancedInventories:chestConverter.Bronze.name=青铜箱子转换器
-item.EnhancedInventories:chestConverter.Steel.name=钢制箱子转换器
-item.EnhancedInventories:chestConverter.Platinum.name=铂制箱子转换器
+item.EnhancedInventories:chestConverter.Copper.name=铜制箱转换器
+item.EnhancedInventories:chestConverter.Tin.name=锡制箱转换器
+item.EnhancedInventories:chestConverter.Silver.name=银制箱转换器
+item.EnhancedInventories:chestConverter.Bronze.name=青铜箱转换器
+item.EnhancedInventories:chestConverter.Steel.name=钢制箱转换器
+item.EnhancedInventories:chestConverter.Platinum.name=铂制箱转换器
 
-item.EnhancedInventories:chestConverter.Alumite.name=耐酸铝箱子转换器
-item.EnhancedInventories:chestConverter.Cobalt.name=钴制箱子转换器
-item.EnhancedInventories:chestConverter.Ardite.name=阿迪特箱子转换器
-item.EnhancedInventories:chestConverter.Manyullyn.name=玛玉灵箱子转换器
+item.EnhancedInventories:chestConverter.Alumite.name=耐酸铝箱转换器
+item.EnhancedInventories:chestConverter.Cobalt.name=钴制箱转换器
+item.EnhancedInventories:chestConverter.Ardite.name=阿迪特箱转换器
+item.EnhancedInventories:chestConverter.Manyullyn.name=玛玉灵箱转换器
 
 item.EnhancedInventories:functionUpgrade.base.name=基础升级
 item.EnhancedInventories:functionUpgrade.hopper.name=漏斗升级
