@@ -66,7 +66,7 @@ public class ContainerConnectedLarge extends ContainerAlt implements IConnectedC
     @Override
 	public boolean canDragIntoSlot(Slot p_94531_1_)
     {
-        return p_94531_1_.inventory instanceof InventoryPlayer || p_94531_1_.yDisplayPosition > 17 && p_94531_1_.xDisplayPosition <= 124;
+        return p_94531_1_.inventory instanceof InventoryPlayer || p_94531_1_.yDisplayPosition > 17 && p_94531_1_.yDisplayPosition <= 124;
     }
 
 }

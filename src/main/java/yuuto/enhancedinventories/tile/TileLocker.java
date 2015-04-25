@@ -161,13 +161,13 @@ public class TileLocker extends TileConnectiveInventory{
 			return;
 		ISidedInventory inv = InventoryWrapper.getWrapper((IInventory)tile);
 		ISidedInventory tar = InventoryWrapper.getWrapper(this);
-		int[] slots = inv.getAccessibleSlotsFromSide(ForgeDirection.DOWN.ordinal());
+		int[] slots = inv.getAccessibleSlotsFromSide(target.getOpposite().ordinal());
 		for(int i = 0; i < slots.length; i++){
 			if(inv.getStackInSlot(slots[i]) == null || inv.getStackInSlot(slots[i]).stackSize < 1)
 				continue;
-			if(!inv.canExtractItem(slots[i], inv.getStackInSlot(slots[i]), ForgeDirection.DOWN.ordinal()))
+			if(!inv.canExtractItem(slots[i], inv.getStackInSlot(slots[i]), target.getOpposite().ordinal()))
 				continue;
-			if(mergeStack(inv, i,tar)){
+			if(mergeStack(inv, slots[i],tar, target)){
 				inv.markDirty();
 				tar.markDirty();
 				break;
@@ -183,23 +183,26 @@ public class TileLocker extends TileConnectiveInventory{
 		for(int i = 0; i < inv.getSizeInventory(); i++){
 			if(inv.getStackInSlot(i) == null || inv.getStackInSlot(i).stackSize < 1)
 				continue;
-			if(mergeStack(inv, i, tar)){
+			if(mergeStack(inv, i, tar, target.getOpposite())){
 				inv.markDirty();
 				tar.markDirty();
 				break;
 			}
 		}
 	}
-	public boolean mergeStack(ISidedInventory src, int srcSlot, ISidedInventory target){
+	public boolean mergeStack(ISidedInventory src, int srcSlot, ISidedInventory target,
+			ForgeDirection dir){
 		ItemStack stack = src.getStackInSlot(srcSlot);
-		int[] slots = target.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal());
+		int[] slots = target.getAccessibleSlotsFromSide(dir.ordinal());
 		for(int i = 0; i < slots.length; i++){
+			if(!target.canInsertItem(slots[i], stack, dir.ordinal()))
+				continue;
 			ItemStack tStack = target.getStackInSlot(slots[i]);
 			if(tStack != null && 
 					(tStack.stackSize == tStack.getMaxStackSize() || 
 					tStack.stackSize == target.getInventoryStackLimit()))
 				continue;
-			if(tStack == null && target.canInsertItem(slots[i], stack, ForgeDirection.UP.ordinal())){
+			if(tStack == null){
 				target.setInventorySlotContents(slots[i], src.decrStackSize(srcSlot, stack.stackSize));
 				return true;
 			}

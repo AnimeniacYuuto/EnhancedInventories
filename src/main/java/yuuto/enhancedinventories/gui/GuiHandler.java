@@ -13,6 +13,7 @@
 package yuuto.enhancedinventories.gui;
 
 import yuuto.enhancedinventories.client.GuiContainerConnected;
+import yuuto.enhancedinventories.client.GuiContainerConnectedDyn;
 import yuuto.enhancedinventories.client.GuiContainerConnectedLarge;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,10 +31,11 @@ public class GuiHandler implements IGuiHandler{
 			if(!(tile instanceof TileConnectiveInventory))
 				return null;
 			TileConnectiveInventory inv = (TileConnectiveInventory)tile;
-			if(inv.getSizeInventory() <= 54){
+			/*if(inv.getSizeInventory() <= 54){
 				return new ContainerConnected(inv, player);
 			}
-			return new ContainerConnectedLarge(inv, player);
+			return new ContainerConnectedLarge(inv, player);*/
+			return new ContainerConnectedDynamic(inv, player);
 		}
 		return null;
 	}
@@ -46,10 +48,12 @@ public class GuiHandler implements IGuiHandler{
 			if(!(tile instanceof TileConnectiveInventory))
 				return null;
 			TileConnectiveInventory inv = (TileConnectiveInventory)tile;
-			if(inv.getSizeInventory() <= 54){
-				return new GuiContainerConnected(inv, player);
+			/*if(inv.getSizeInventory() <= 54){
+				return new GuiContainerConnectedDyn(inv, player);
+				//return new GuiContainerConnected(inv, player);
 			}
-			return new GuiContainerConnectedLarge(inv, player);
+			return new GuiContainerConnectedLarge(inv, player);*/
+			return new GuiContainerConnectedDyn(inv, player);
 		}
 		return null;
 	}

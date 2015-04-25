@@ -165,7 +165,7 @@ public class TileImprovedChest extends TileConnectiveInventory{
 				continue;
 			if(!inv.canExtractItem(slots[i], inv.getStackInSlot(slots[i]), ForgeDirection.DOWN.ordinal()))
 				continue;
-			if(mergeStack(inv, i,tar)){
+			if(mergeStack(inv, slots[i],tar)){
 				inv.markDirty();
 				tar.markDirty();
 				break;
@@ -192,12 +192,14 @@ public class TileImprovedChest extends TileConnectiveInventory{
 		ItemStack stack = src.getStackInSlot(srcSlot);
 		int[] slots = target.getAccessibleSlotsFromSide(ForgeDirection.UP.ordinal());
 		for(int i = 0; i < slots.length; i++){
+			if(!target.canInsertItem(slots[i], stack, ForgeDirection.UP.ordinal()))
+				continue;
 			ItemStack tStack = target.getStackInSlot(slots[i]);
 			if(tStack != null && 
 					(tStack.stackSize == tStack.getMaxStackSize() || 
 					tStack.stackSize == target.getInventoryStackLimit()))
 				continue;
-			if(tStack == null && target.canInsertItem(slots[i], stack, ForgeDirection.UP.ordinal())){
+			if(tStack == null){
 				target.setInventorySlotContents(slots[i], src.decrStackSize(srcSlot, stack.stackSize));
 				return true;
 			}

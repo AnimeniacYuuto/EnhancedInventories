@@ -13,6 +13,10 @@ public class ConfigHandler {
 	public static boolean extrabiomes;
 	public static boolean biomesOPlenty;
 	
+	public static int ROWS = 9;
+	public static int COLOMNS = 12;
+	public static int MAX_SIZE;
+	
 	public static void init(FMLPreInitializationEvent event){
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
@@ -25,7 +29,11 @@ public class ConfigHandler {
 		thaumcraft = config.get("Modules", "Thaumcraft", true).getBoolean(true);
 		extrabiomes = config.get("Modules", "Extrabiomes", true).getBoolean(true);
 		biomesOPlenty = config.get("Modules", "BiomesOPlenty", true).getBoolean(true);
+		ROWS = config.getInt("MaxRows", "Misc", ROWS, 6, 24, "The maximum number of rows");
+		COLOMNS = config.getInt("MaxColomns", "Misc", COLOMNS, 9, 24, "The maximum number of columns");
 		config.save();
+		
+		MAX_SIZE = ROWS*COLOMNS;
 	}
 
 }

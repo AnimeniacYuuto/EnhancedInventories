@@ -135,14 +135,16 @@ public class RendererImprovedChestItem implements IItemRenderer{
         	mc.renderEngine.bindTexture(singleChestWool);
         	break;
         case 2:
-        	if(mat.hasTexture())
+        	if(mat.hasTexture()){
+        		GL11.glColor4f(1f, 1f, 1f, 1f);
         		mc.renderEngine.bindTexture(mat.getTexture(0));
-        	else{
+        	}else{
         		GL11.glColor4f(mat.r(), mat.g(), mat.b(), 1f);
         		mc.renderEngine.bindTexture(singleChestFrame);
         	}
         	break;
         case 3:
+        	GL11.glColor4f(1f, 1f, 1f, 1f);
         	mc.renderEngine.bindTexture(singleRefinedLocation);
         	break;
         }

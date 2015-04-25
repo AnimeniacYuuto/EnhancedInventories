@@ -158,7 +158,7 @@ public class GuiContainerConnectedLarge extends GuiContainer{
 		super.handleMouseInput();
 		int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
 		int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
-		if(this.getSlot(x, y) != null)
+		if(this.getSlot(x, y) != null && this.getSlot(x, y).getHasStack())
 			return;
 		int i = Mouse.getEventDWheel();
 		//int delta = Math.max( Math.min( -i, 1 ), -1 );
