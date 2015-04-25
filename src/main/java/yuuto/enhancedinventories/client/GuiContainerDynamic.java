@@ -11,12 +11,10 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import yuuto.enhancedinventories.gui.ContainerConnected;
-import yuuto.enhancedinventories.gui.ContainerConnectedDynamic;
-import yuuto.enhancedinventories.gui.ContainerConnectedLarge;
+import yuuto.enhancedinventories.gui.ContainerDynamic;
 import yuuto.enhancedinventories.proxy.ConfigHandler;
 
-public class GuiContainerConnectedDyn extends GuiContainer{
+public class GuiContainerDynamic extends GuiContainer{
 
 	static ResourceLocation topTexture = new ResourceLocation("enhancedinventories","textures/gui/dynamicTop.png");
 	static ResourceLocation bottomTexture1 = new ResourceLocation("enhancedinventories","textures/gui/dynamicBottom1.png");
@@ -37,11 +35,11 @@ public class GuiContainerConnectedDyn extends GuiContainer{
 	boolean scrolling = false;
 	int maxScroll = 105;
 	
-	ContainerConnectedDynamic container;
+	ContainerDynamic container;
 	
-	public GuiContainerConnectedDyn(IInventory tile, EntityPlayer player) {
-		super(new ContainerConnectedDynamic(tile, player));
-		container = (ContainerConnectedDynamic)this.inventorySlots;
+	public GuiContainerDynamic(IInventory tile, EntityPlayer player) {
+		super(new ContainerDynamic(tile, player));
+		container = (ContainerDynamic)this.inventorySlots;
 		if(tile.getSizeInventory() < ConfigHandler.MAX_SIZE){
 			if(tile.getSizeInventory() <= 9){
 				rows = 1;
@@ -229,8 +227,8 @@ public class GuiContainerConnectedDyn extends GuiContainer{
 		int i = Mouse.getEventDWheel();
 		//int delta = Math.max( Math.min( -i, 1 ), -1 );
 		//this.scroll += (delta*0.5f) * (this.maxScroll-this.minScroll);
-		int maxRows = (int)Math.ceil(container.playerInvStart/9d);
-		int scrollSize = (int)Math.ceil((this.maxScroll-this.minScroll)/maxRows);
+		int maxRows = (int)Math.ceil(container.playerInvStart/(float)columns);
+		int scrollSize = (int)Math.ceil((this.maxScroll-minScroll)/maxRows);
 		
 		
 		if(i > 0){
@@ -247,6 +245,7 @@ public class GuiContainerConnectedDyn extends GuiContainer{
 		updateSlots();
     }
 	
+	@SuppressWarnings("unchecked")
 	protected Slot getSlot(int mouseX, int mouseY)
 	{
 		final List<Slot> slots = this.inventorySlots.inventorySlots;

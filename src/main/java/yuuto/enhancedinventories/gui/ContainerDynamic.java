@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import yuuto.enhancedinventories.proxy.ConfigHandler;
 import yuuto.yuutolib.gui.ContainerAlt;
 
-public class ContainerConnectedDynamic extends ContainerAlt implements IConnectedContainer{
+public class ContainerDynamic extends ContainerAlt implements IConnectedContainer{
 
 	static int centerXSize = 162;
 	int maxDragY;
 	
-	public ContainerConnectedDynamic(IInventory inventory,
+	public ContainerDynamic(IInventory inventory,
 			EntityPlayer player) {
 		super(inventory, player.inventory);
 		inventory.openInventory();
@@ -72,7 +72,7 @@ public class ContainerConnectedDynamic extends ContainerAlt implements IConnecte
 	@Override
 	public boolean func_94530_a(ItemStack p_94530_1_, Slot p_94530_2_)
     {
-        return p_94530_2_.yDisplayPosition > 17;
+		return p_94530_2_.yDisplayPosition > 17;
     }
 
     /**
@@ -82,7 +82,7 @@ public class ContainerConnectedDynamic extends ContainerAlt implements IConnecte
     @Override
 	public boolean canDragIntoSlot(Slot p_94531_1_)
     {
-        return p_94531_1_.inventory instanceof InventoryPlayer || p_94531_1_.yDisplayPosition > 17 && p_94531_1_.yDisplayPosition <= maxDragY;
+       return p_94531_1_.inventory instanceof InventoryPlayer || p_94531_1_.yDisplayPosition > 17 && p_94531_1_.yDisplayPosition <= maxDragY;
     }
 
 }

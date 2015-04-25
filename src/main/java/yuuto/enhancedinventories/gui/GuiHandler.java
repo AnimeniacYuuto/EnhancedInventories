@@ -12,9 +12,7 @@
  ******************************************************************************/
 package yuuto.enhancedinventories.gui;
 
-import yuuto.enhancedinventories.client.GuiContainerConnected;
-import yuuto.enhancedinventories.client.GuiContainerConnectedDyn;
-import yuuto.enhancedinventories.client.GuiContainerConnectedLarge;
+import yuuto.enhancedinventories.client.GuiContainerDynamic;
 import yuuto.enhancedinventories.tile.TileConnectiveInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -35,7 +33,7 @@ public class GuiHandler implements IGuiHandler{
 				return new ContainerConnected(inv, player);
 			}
 			return new ContainerConnectedLarge(inv, player);*/
-			return new ContainerConnectedDynamic(inv, player);
+			return new ContainerDynamic(inv, player);
 		}
 		return null;
 	}
@@ -53,7 +51,7 @@ public class GuiHandler implements IGuiHandler{
 				//return new GuiContainerConnected(inv, player);
 			}
 			return new GuiContainerConnectedLarge(inv, player);*/
-			return new GuiContainerConnectedDyn(inv, player);
+			return new GuiContainerDynamic(inv, player);
 		}
 		return null;
 	}
