@@ -1,0 +1,16 @@
+[
+{
+  "modid": "EnhancedInventories",
+  "name": "Enhanced Inventories",
+  "description": "Enhancing your inventories!",
+  "version": "@VERSION@",
+  "mcversion": "@MCVERSION@",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Yuuto"],
+  "credits": "CPW, Doku, Dokucraft Team, CoFH Team, CopyGirl, Chickenbones, Others",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

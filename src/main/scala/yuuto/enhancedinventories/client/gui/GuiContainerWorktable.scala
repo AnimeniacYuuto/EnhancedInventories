@@ -110,6 +110,7 @@ class GuiContainerWorktable(tile:TileWorktable, player:EntityPlayer) extends Gui
     button.id match{
     case 0 => EnhancedInventories.network.sendToServer(new MessageWorktable(0, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
     case 1 => EnhancedInventories.network.sendToServer(new MessageWorktable(1, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
+    case i => super.actionPerformed(button);
     }
   }
 

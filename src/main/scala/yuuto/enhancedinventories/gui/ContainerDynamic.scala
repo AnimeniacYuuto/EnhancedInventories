@@ -3,25 +3,29 @@
  */
 package yuuto.enhancedinventories.gui
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import yuuto.enhancedinventories.config.EIConfiguration;
+import invtweaks.api.container.ChestContainer
+import invtweaks.api.container.ChestContainer.RowSizeCallback
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.InventoryPlayer
+import net.minecraft.inventory.IInventory
+import net.minecraft.inventory.Slot
+import net.minecraft.item.ItemStack
+import yuuto.enhancedinventories.config.EIConfiguration
 import yuuto.yuutolib.block.ContainerAlt;
+
 
 object ContainerDynamic{
   val centerXSize:Int = 162;
 }
+@ChestContainer
 class ContainerDynamic(inventory:IInventory, player:EntityPlayer) extends ContainerAlt(inventory, player.inventory){
   inventory.openInventory();
   var maxDragY:Int=0;
+  var columns:Int=0;
 
   override def bindInventorySlots():Array[Int]={
     //Compute Rows&Columns
-    var rows:Int=0;
-    var columns:Int=0;
+    var rows=0;
     if(inventory.getSizeInventory() < EIConfiguration.MAX_SIZE){
       if(inventory.getSizeInventory() <= 9){
         rows = 1;
@@ -83,5 +87,8 @@ class ContainerDynamic(inventory:IInventory, player:EntityPlayer) extends Contai
   override def canInteractWith(player:EntityPlayer):Boolean={
     return true;
   }
+  
+  @RowSizeCallback
+  def getRowSize():Int=columns;
 
 }

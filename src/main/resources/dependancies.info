@@ -1,0 +1,7 @@
+{
+	"repo": "https://github.com/AnimeniacYuuto/YuutoLib/releases/download/Repo/",
+	"file": "YuutoLib-@MCVERSION@-@YUUTOLIBVERSION@.jar",
+	"dev": "YuutoLib-@MCVERSION@-@YUUTOLIBVERSION@-dev.jar",
+	"class": "yuuto.yuutolib.ref.LibConstants",
+	"coreLib": true
+}
