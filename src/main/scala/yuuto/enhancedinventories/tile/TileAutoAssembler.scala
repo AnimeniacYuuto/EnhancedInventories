@@ -27,6 +27,7 @@ import yuuto.enhancedinventories.tile.traits.TInventorySimple
 import yuuto.enhancedinventories.proxy.ProxyCommon
 import yuuto.yuutolib.inventory.IInventoryExtended
 import yuuto.yuutolib.inventory.InventoryWrapper
+import yuuto.enhancedinventories.config.EIConfiguration
 
 object TileAutoAssembler{
   private val schematicSlot:Int = 9;
@@ -84,7 +85,7 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   }
   
   def getDelay():Int={
-    return 5;
+    return EIConfiguration.autoAssemblerTickRate;
   }
   
   def autoCraft(){
