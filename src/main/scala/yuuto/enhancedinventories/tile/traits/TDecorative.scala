@@ -57,11 +57,12 @@ trait TDecorative extends TileBaseEI{
   }
   
   override def getItemStack(stack:ItemStack):ItemStack={
-    if(!stack.hasTagCompound())
-      stack.setTagCompound(new NBTTagCompound());
-    decor.writeToNBT(stack.getTagCompound());
+    val s:ItemStack = super.getItemStack(stack);
+    if(!s.hasTagCompound())
+      s.setTagCompound(new NBTTagCompound());
+    decor.writeToNBT(s.getTagCompound());
     if(painted)
-      stack.getTagCompound().setBoolean(DecorationHelper.KEY_PAINTED, true);
-    return stack;
+      s.getTagCompound().setBoolean(DecorationHelper.KEY_PAINTED, true);
+    return s;
   }
 }

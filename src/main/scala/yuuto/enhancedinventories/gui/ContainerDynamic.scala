@@ -22,6 +22,7 @@ class ContainerDynamic(inventory:IInventory, player:EntityPlayer) extends Contai
   inventory.openInventory();
   var maxDragY:Int=0;
   var columns:Int=0;
+  init();
 
   override def bindInventorySlots():Array[Int]={
     //Compute Rows&Columns
@@ -61,7 +62,7 @@ class ContainerDynamic(inventory:IInventory, player:EntityPlayer) extends Contai
         if(i >= inventory.getSizeInventory()){
           return ret;
         }
-        this.addSlotToContainer(new Slot(inventory, x+y*columns, 8+x*18, 18+y*18));
+        this.addSlotToContainer(new Slot(inventory, i, 8+x*18, 18+y*18));
       }
     }
     return ret;

@@ -5,7 +5,7 @@ import yuuto.enhancedinventories.ref.ReferenceEI
 
 object LogHelperEI {
 	
-	private val debug = true;
+	private val debug = false;
 	
 	def All(obj:Any){
 		LogSpecial(Level.ALL, obj);

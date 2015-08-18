@@ -20,9 +20,9 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-ext.yuutolibVersion = "1.0.0"
+ext.yuutolibVersion = "1.0.1"
 
-version = "1.7.10-1.1.2"
+version = "1.7.10-1.1.3"
 group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EnhancedInventories"
 
