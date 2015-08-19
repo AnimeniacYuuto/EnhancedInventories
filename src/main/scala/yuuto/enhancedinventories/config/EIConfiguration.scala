@@ -18,6 +18,7 @@ object EIConfiguration {
   private var configFrameDir:File=null;
   
   var moduleRefinedRelocation:Boolean=false;
+  var moduleInventoryTools:Boolean=false;
   var ROWS:Int = 9;
   var COLOMNS:Int = 12;
   var MAX_SIZE:Int=108;
@@ -47,8 +48,7 @@ object EIConfiguration {
     configMain = new Configuration(getMainConfig(event.getModConfigurationDirectory()));
     configRecipeDir=getRecipeConfigDir(event.getModConfigurationDirectory());
     configFrameDir=getFrameConfigDir(event.getModConfigurationDirectory());
-    moduleRefinedRelocation = Loader.isModLoaded("RefinedRelocation");
-    moduleRefinedRelocation = moduleRefinedRelocation  && configMain.get("modules", "Refined Relocation", true).getBoolean(true);
+    loadModules();
     canCraftStoneFrame = configMain.getBoolean("CraftStoneFrame", "Crafting", true, "Are chests with stone frames craftable?");
     canPaintObsidianFrame = configMain.getBoolean("PaintObsidianFrame", "Crafting", true, "Can chests be painted with obsidian frames?");
     canCraftAlts = configMain.getBoolean("CraftAlts", "Crafting", true, "Are alternate chests craftable?");
@@ -65,6 +65,12 @@ object EIConfiguration {
     }
     refreshRecipes.set(false);
     refreshMainConfig();
+  }
+  def loadModules(){
+    moduleRefinedRelocation = Loader.isModLoaded("RefinedRelocation");
+    moduleRefinedRelocation = moduleRefinedRelocation  && configMain.get("modules", "Refined Relocation", true).getBoolean(true);
+    moduleInventoryTools = Loader.isModLoaded("InventoryTools");
+    moduleInventoryTools = moduleInventoryTools  && configMain.get("modules", "Inventory Tools", true).getBoolean(true);
   }
   def refreshMainConfig(){
     LogHelperEI.Info("Refreshing Main Config")

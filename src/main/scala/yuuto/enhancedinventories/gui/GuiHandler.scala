@@ -52,6 +52,7 @@ class GuiHandler extends IGuiHandler{
         return null;
       return new ContainerPainter(tile.asInstanceOf[TilePainter], player);
     }
+    case i=> return null;
     }
     return null;
   }
@@ -90,6 +91,7 @@ class GuiHandler extends IGuiHandler{
         return null;
       return new GuiContainerPainter(tile.asInstanceOf[TilePainter], player);
     }
+    case i=> return null;
     }
     return null;
   }

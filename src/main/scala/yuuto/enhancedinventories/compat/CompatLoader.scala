@@ -5,6 +5,7 @@ import yuuto.enhancedinventories.config.EIConfiguration
 import yuuto.enhancedinventories.config.recipe.RecipeFactory
 import yuuto.enhancedinventories.config.json.JsonRecipeFactory
 import yuuto.enhancedinventories.config.json.JsonFrameFactory
+import yuuto.enhancedinventories.compat.modules.ModuleInventoryTools
 
 object CompatLoader {
   
@@ -28,6 +29,9 @@ object CompatLoader {
     recipefactory.loadRecipes();
     if(EIConfiguration.moduleRefinedRelocation){
       ModuleRefinedRelocation.loadOtherRecipes();
+    }
+    if(EIConfiguration.moduleInventoryTools){
+      ModuleInventoryTools.init();
     }
   }
 

@@ -15,8 +15,8 @@ import net.minecraftforge.common.util.FakePlayerFactory
 import net.minecraftforge.common.util.ForgeDirection
 import yuuto.enhancedinventories.EnhancedInventories
 import yuuto.enhancedinventories.gui.slot.SlotCraftingExtendedAuto
-import yuuto.enhancedinventories.inventory.IInventoryParent
-import yuuto.enhancedinventories.inventory.InventorySimple
+import yuuto.yuutolib.inventory.IInventoryParent
+import yuuto.yuutolib.inventory.InventorySimple
 import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.network.MessageRedstoneControl
 import yuuto.enhancedinventories.tile.base.TileCrafter

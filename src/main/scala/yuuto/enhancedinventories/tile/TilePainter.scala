@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
-import yuuto.enhancedinventories.inventory.IInventoryParent;
-import yuuto.enhancedinventories.inventory.InventorySimple;
+import yuuto.yuutolib.inventory.IInventoryParent;
+import yuuto.yuutolib.inventory.InventorySimple;
 import yuuto.enhancedinventories.materials.PaintHelper;
 
 class TilePainter extends TileEntity with IInventoryParent{
