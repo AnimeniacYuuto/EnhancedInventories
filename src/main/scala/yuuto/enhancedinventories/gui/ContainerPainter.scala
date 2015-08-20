@@ -14,6 +14,7 @@ import yuuto.yuutolib.block.ContainerAlt
 
 class ContainerPainter(painter:TilePainter, player:EntityPlayer) extends ContainerAlt(painter.getInventory(), player.inventory){
   private var result:IInventory=null;
+  init();
   
   override def bindInventorySlots():Array[Int]={
     return Array(8, 84);
