@@ -84,6 +84,15 @@ item.enhancedinventories:upgradeFunction.4.name=Reinfoced Upgrade
 item.enhancedinventories:paintbrush.name=Paintbrush
 item.enhancedinventories:schematic.name=Schematic
 
+info.ei.active=Active
+info.ei.always=Always
+info.ei.never=Never
+info.ei.low=On Low Signal
+info.ei.high=On High Signal
+info.ei.pulse=On Signal Pulse
+info.ei.clear=Clear Grid
+info.ei.save=Save Schematic
+
 string.enhancedinventories:alt=Alternate
 
 color.White=White

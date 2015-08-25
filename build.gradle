@@ -20,9 +20,9 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-ext.yuutolibVersion = "1.0.1"
+ext.yuutolibVersion = "1.0.2"
 
-version = "1.7.10-1.1.4"
+version = "1.7.10-1.1.5"
 group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EnhancedInventories"
 
@@ -42,7 +42,7 @@ dependencies {
 	compile files("libs/NotEnoughItems-1.7.10-1.0.5.111-dev.jar")
 	compile files("libs/RefinedRelocation-1.7.10-1.0.8b-deobf.jar")
 	compile files("libs/InventoryTools-1.7.10-1.0.1-dev.jar")
-	compile files("libs/YuutoLib-1.7.10-1.0.1-dev.jar")
+	compile files("libs/YuutoLib-1.7.10-1.0.2-dev.jar")
 	compile files("libs/InventoryTweaks-deobf-1.60-dev-17.jar")
 	
     // you may put jars on which you depend on in ./libs

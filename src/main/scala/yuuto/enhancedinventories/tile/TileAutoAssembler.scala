@@ -20,14 +20,14 @@ import yuuto.yuutolib.inventory.InventorySimple
 import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.network.MessageRedstoneControl
 import yuuto.enhancedinventories.tile.base.TileCrafter
-import cofh.api.tileentity.IRedstoneControl
-import cofh.api.tileentity.IRedstoneControl.ControlMode
 import scala.collection.mutable.MutableList
 import yuuto.enhancedinventories.tile.traits.TInventorySimple
 import yuuto.enhancedinventories.proxy.ProxyCommon
 import yuuto.yuutolib.inventory.IInventoryExtended
 import yuuto.yuutolib.inventory.InventoryWrapper
 import yuuto.enhancedinventories.config.EIConfiguration
+import yuuto.yuutolib.tile.IRedstoneControl.ControlMode
+import yuuto.yuutolib.tile.IRedstoneControl
 
 object TileAutoAssembler{
   private val schematicSlot:Int = 9;
@@ -44,6 +44,7 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   protected var powered:Boolean=false;
   protected var pulsed:Boolean=false;
   protected var redstoneControl:ControlMode = ControlMode.HIGH;
+  protected var active:Boolean=false;
   resetInventory();
   
   override def initialize(){
@@ -53,6 +54,7 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
       slotCrafting = new SlotCraftingExtendedAuto(this, fakePlayer, craftingMatrix, craftResult, 0, 0, 0);
       this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
     }
+    this.updateRedstoneCache();
   }
   
   override def resetInventory(){
@@ -72,16 +74,24 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
       return;
     super.updateEntity();
     
-    this.setPowered(this.worldObj.getBlockPowerInput(xCoord, yCoord, zCoord) > 0);
-    craftingTicks-=1;
-    if(craftingTicks < 1){
-      if(isActive()){
-        craftingTicks = getDelay();
-        autoCraft();
+    if(craftingTicks > 0)
+      craftingTicks-=1;
+    else if(isActive()){
+      craftingTicks = getDelay();
+      autoCraft();
+      if(getControl().isPulsing()){
         pulsed = false;
+        this.active=false;
       }
     }
     
+  }
+  
+  def updateRedstoneCache(){
+    var power:Int=this.getWorldObj().getStrongestIndirectPower(xCoord, yCoord, zCoord);
+    power=Math.max(this.getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord), power);
+    setPowered(power > 0);
+    this.active=checkActive();
   }
   
   def getDelay():Int={
@@ -189,28 +199,35 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   override def onInventoryChanged(inventorySimple:IInventory)=this.onCraftMatrixChanged(inventorySimple);
 
   override def isPowered():Boolean=powered;
-  def hasPulsed():Boolean=pulsed;
+  override def hasPulsed():Boolean=pulsed;
   override def setPowered(powered:Boolean){
-    if(this.powered == false && powered == true)
+    if(getControl().isPulsing() && this.powered == false && powered == true)
       pulsed = true;
     this.powered = powered;
+    this.active = checkActive();
   }
   override def getControl():ControlMode=this.redstoneControl;
 
   override def setControl(controlMode:ControlMode){
     this.redstoneControl = controlMode;
+    this.active=checkActive();
     if(this.worldObj.isRemote){
       EnhancedInventories.network.sendToServer(new MessageRedstoneControl(redstoneControl.ordinal(), this.getWorldObj().provider.dimensionId, xCoord, yCoord, zCoord));
     }else{
       this.markDirty();
     }
   }
-  protected def isActive():Boolean={
+  protected def isActive():Boolean=active;
+  protected def checkActive():Boolean={
+    if(getControl().isNever())
+      return false;
+    if(getControl().isAlways())
+      return true;
     if(getControl().isHigh() && isPowered())
       return true;
     else if(getControl().isLow() && !isPowered())
       return true;
-    return this.getControl().isDisabled() && hasPulsed();
+    return this.getControl().isPulsing() && hasPulsed();
   }
   
   override def writeToNBTPacket(nbt:NBTTagCompound){

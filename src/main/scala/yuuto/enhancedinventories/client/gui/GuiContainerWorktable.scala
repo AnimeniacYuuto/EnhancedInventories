@@ -20,25 +20,31 @@ import yuuto.enhancedinventories.gui.ContainerWorktable
 import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.network.MessageWorktable
 import yuuto.enhancedinventories.ref.ReferenceEI
-import yuuto.enhancedinventories.tile.TileWorktable;
+import yuuto.enhancedinventories.tile.TileWorktable
 import net.minecraft.client.gui.GuiScreen
+import cofh.core.gui.GuiBaseAdv
+import yuuto.enhancedinventories.client.gui.elements.ButtonSchematic
 
 object GuiContainerWorktable{
   final val texture:ResourceLocation = new ResourceLocation(ReferenceEI.MOD_ID.toLowerCase(), "textures/gui/work_table.png");
 }
-class GuiContainerWorktable(tile:TileWorktable, player:EntityPlayer) extends GuiContainer(new ContainerWorktable(tile, player)){
+class GuiContainerWorktable(tile:TileWorktable, player:EntityPlayer) extends GuiBaseAdv(new ContainerWorktable(tile, player)){
   this.ySize = 224;
+  var saveButton:ButtonSchematic=null;
   
   override def initGui(){
     super.initGui();
     //Adds clear and save buttons
-    this.buttonList.asInstanceOf[List[GuiButton]].add(new GuiButton(0, this.guiLeft+10, this.guiTop+19, 12, 12, ""));
-    this.buttonList.asInstanceOf[List[GuiButton]].add(new GuiButton(1, this.guiLeft+10, this.guiTop+55, 12, 12, ""));
+    this.addElement(new ButtonSchematic(this, 8, 17, 16, 16, 0));
+    saveButton=new ButtonSchematic(this, 8, 53, 16, 16, 1);
+    if(tile.getCraftResult().getStackInSlot(0) == null || tile.isUsingSchematic())
+      saveButton.setEnabled(false);
+    this.addElement(saveButton);
+    //this.buttonList.asInstanceOf[List[GuiButton]].add(new GuiButton(0, this.guiLeft+10, this.guiTop+19, 12, 12, ""));
+    //this.buttonList.asInstanceOf[List[GuiButton]].add(new GuiButton(1, this.guiLeft+10, this.guiTop+55, 12, 12, ""));
   }
   
-  override protected def drawGuiContainerForegroundLayer(mx:Int, my:Int) {
-    
-  }
+  override protected def drawGuiContainerForegroundLayer(mx:Int, my:Int) {}
 
   override protected def drawGuiContainerBackgroundLayer(partialTick:Float, mx:Int, my:Int) {
     
@@ -50,7 +56,14 @@ class GuiContainerWorktable(tile:TileWorktable, player:EntityPlayer) extends Gui
     val l:Int = (this.height - this.ySize) / 2;
     this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
     GL11.glPopMatrix();
-      
+    
+    //Draw cofh gui elements & tabs
+    GL11.glPushMatrix();
+    GL11.glTranslatef(guiLeft, guiTop, 0.0F);
+    drawElements(partialTick, false);
+    drawTabs(partialTick, false);
+    GL11.glPopMatrix();
+    
     drawSchematic();
   }
   def drawSchematic(){
@@ -105,12 +118,27 @@ class GuiContainerWorktable(tile:TileWorktable, player:EntityPlayer) extends Gui
     GL11.glPopMatrix();
   }
   
+  override def updateScreen(){
+    super.updateScreen();
+    saveButton.setEnabled(tile.getCraftResult().getStackInSlot(0) != null && !tile.isUsingSchematic());
+  }
+  
   //Sends packets for clicks
   override protected def actionPerformed(button:GuiButton) {
     button.id match{
     case 0 => EnhancedInventories.network.sendToServer(new MessageWorktable(0, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
     case 1 => EnhancedInventories.network.sendToServer(new MessageWorktable(1, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
     case i => super.actionPerformed(button);
+    }
+  }
+  
+  override def handleElementButtonClick(name:String, button:Int){
+    if(name == null)
+      return;
+    name match{
+      case "buttonCancel"=> EnhancedInventories.network.sendToServer(new MessageWorktable(0, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
+      case "buttonSave"=> EnhancedInventories.network.sendToServer(new MessageWorktable(1, this.tile.getWorldObj().provider.dimensionId, tile.xCoord, tile.yCoord, tile.zCoord));
+      case s=>super.handleElementButtonClick(name, button);
     }
   }
 

@@ -1,17 +1,20 @@
 package yuuto.enhancedinventories.block
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-import yuuto.enhancedinventories.EnhancedInventories;
-import yuuto.enhancedinventories.block.base.BlockBaseEI;
-import yuuto.enhancedinventories.tile.TileAutoAssembler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block
+import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.IIcon
+import net.minecraft.world.World
+import yuuto.enhancedinventories.EnhancedInventories
+import yuuto.enhancedinventories.block.base.BlockBaseEI
+import yuuto.enhancedinventories.tile.TileAutoAssembler
+import cpw.mods.fml.relauncher.Side
+import cpw.mods.fml.relauncher.SideOnly
+import net.minecraft.item.ItemStack
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.world.IBlockAccess
 
 class BlockAutoAssembler(name:String) extends BlockBaseEI(Material.rock, name){
   this.setHardness(2.1f);
@@ -31,6 +34,31 @@ class BlockAutoAssembler(name:String) extends BlockBaseEI(Material.rock, name){
     if(!world.isRemote)
       player.openGui(EnhancedInventories, 3, world, x, y, z);
     return true;
+  }
+  
+  /*====Redstone Updates====*/
+  override def initializeTile(tile:TileEntity, world:World, x:Int, y:Int, z:Int, player:EntityLivingBase, stack:ItemStack){
+    if(tile.isInstanceOf[TileAutoAssembler]){
+      tile.asInstanceOf[TileAutoAssembler].updateRedstoneCache();
+    }
+  }
+  override def onNeighborBlockChange(world:World, x:Int, y:Int, z:Int, cause:Block){
+    val tile:TileEntity=world.getTileEntity(x, y, z);
+    if(tile == null || !tile.isInstanceOf[TileAutoAssembler])
+      return;
+    tile.asInstanceOf[TileAutoAssembler].updateRedstoneCache();
+  }
+  override def onNeighborChange(world:IBlockAccess, x:Int, y:Int, z:Int, tileX:Int, tileY:Int, tileZ:Int){
+    val tile:TileEntity=world.getTileEntity(x, y, z);
+    if(tile == null || !tile.isInstanceOf[TileAutoAssembler])
+      return;
+    tile.asInstanceOf[TileAutoAssembler].updateRedstoneCache();
+  }
+  override def onBlockAdded(world:World, x:Int, y:Int, z:Int){
+    val tile:TileEntity=world.getTileEntity(x, y, z);
+    if(tile == null || !tile.isInstanceOf[TileAutoAssembler])
+      return;
+    tile.asInstanceOf[TileAutoAssembler].updateRedstoneCache();
   }
   
   //Drop the inventory

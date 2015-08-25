@@ -33,8 +33,8 @@ trait TDecorativeInventoryConnective extends TInventoryConnectiveUpgradeable wit
     if(super.addSizeUpgrade(stack, player)){
       if(stack.hasTagCompound() && !this.isPainted()){
         this.decor.frameMaterial = FrameMaterials.Instance.getMaterial(stack.getTagCompound().getString(DecorationHelper.KEY_FRAME_NAME))
-        return true;
       }
+      return true;
     }
     return false;
   }
