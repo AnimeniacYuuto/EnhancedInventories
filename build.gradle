@@ -22,7 +22,7 @@ apply plugin: 'forge'
 
 ext.yuutolibVersion = "1.0.2"
 
-version = "1.7.10-1.1.5"
+version = "1.7.10-1.1.6"
 group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EnhancedInventories"
 
@@ -41,7 +41,7 @@ dependencies {
 	compile files("libs/CoFHCore-[1.7.10]3.0.3B2-297-dev.jar")
 	compile files("libs/NotEnoughItems-1.7.10-1.0.5.111-dev.jar")
 	compile files("libs/RefinedRelocation-1.7.10-1.0.8b-deobf.jar")
-	compile files("libs/InventoryTools-1.7.10-1.0.1-dev.jar")
+	compile files("libs/InventoryTools-1.7.10-1.0.2-dev.jar")
 	compile files("libs/YuutoLib-1.7.10-1.0.2-dev.jar")
 	compile files("libs/InventoryTweaks-deobf-1.60-dev-17.jar")
 	
