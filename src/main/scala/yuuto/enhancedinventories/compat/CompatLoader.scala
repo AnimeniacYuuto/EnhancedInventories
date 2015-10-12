@@ -1,5 +1,7 @@
 package yuuto.enhancedinventories.compat
 
+import cpw.mods.fml.common.Loader
+import yuuto.enhancedinventories.compat.craftguide.{EIRecipeProvider}
 import yuuto.enhancedinventories.compat.modules.ModuleRefinedRelocation
 import yuuto.enhancedinventories.config.EIConfiguration
 import yuuto.enhancedinventories.config.recipe.RecipeFactory
@@ -24,6 +26,9 @@ object CompatLoader {
     recipefactory.init();
     if(EIConfiguration.moduleRefinedRelocation){
       ModuleRefinedRelocation.initRecipes(recipefactory.recipeLoader);
+    }
+    if(Loader.isModLoaded("craftguide")){
+      EIRecipeProvider.init();
     }
     recipefactory.readRecipes();
     recipefactory.loadRecipes();

@@ -19,7 +19,7 @@ class RecipeFactory {
   def init(){
     recipeLoader=new JsonRecipeFactory();
     recipeLoader.init();
-    RecipeSorter.register("Yuuto.EI.decorative", classOf[RecipeDecorative], Category.SHAPED, "after:forge:shapedore before:minecraft:shapeless");
+    RecipeSorter.register("Yuuto.EI.decorative", classOf[RecipeDecorative], Category.SHAPED, "after:minecraft:shaped before:forge:shapedore");
     RecipeSorter.register("Yuuto.EI.alternate", classOf[RecipeAlt], Category.SHAPED, "after:forge:shapelessore");
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.blockImprovedChest, 1, OreDictionary.WILDCARD_VALUE), true);
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.blockLocker, 1, OreDictionary.WILDCARD_VALUE), false);

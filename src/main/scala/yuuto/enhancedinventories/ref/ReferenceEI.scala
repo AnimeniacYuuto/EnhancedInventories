@@ -6,7 +6,7 @@ package yuuto.enhancedinventories.ref
 final object ReferenceEI {
   final val MOD_ID= "EnhancedInventories";
   final val MOD_NAME = "Enhanced Inventories";
-  final val VERSION = "1.7.10-1.1.6";
+  final val VERSION = "1.7.10-1.1.7";
   final val MOD_PACKAGE = "yuuto.enhancedinventories";
   
   final val PROXY_CLIENT = MOD_PACKAGE+".proxy.ProxyClient";
