@@ -11,9 +11,7 @@ import yuuto.enhancedinventories.ref.ReferenceEI
 object ClientEventHandler {
   @SubscribeEvent
   def onTextureStitch(event:TextureStitchEvent.Pre){
-    if(event.map.getTextureType() == 0){
-      
-    }else{
+    if(event.map.getTextureType() == 1){
       IconRegistry.addIcon("IconRepeater", getButtonName("repeater"), event.map);
       IconRegistry.addIcon("IconNever", getButtonName("neverActive"), event.map);
     }

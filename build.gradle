@@ -22,7 +22,7 @@ apply plugin: 'forge'
 
 ext.yuutolibVersion = "1.0.2"
 
-version = "1.7.10-1.1.7"
+version = "1.7.10-1.1.8"
 group= "yuuto.enhancedinventories" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "EnhancedInventories"
 

@@ -1,5 +1,6 @@
 package yuuto.enhancedinventories.tile
 
+import net.minecraft.block.BlockChest
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -8,7 +9,7 @@ import net.minecraft.nbt.NBTTagList
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.Packet
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.tileentity.{TileEntityChest, TileEntity}
 import net.minecraft.world.WorldServer
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.FakePlayerFactory
@@ -45,6 +46,8 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   protected var pulsed:Boolean=false;
   protected var redstoneControl:ControlMode = ControlMode.HIGH;
   protected var active:Boolean=false;
+
+  protected var invCache:Array[IInventoryExtended]=null;
   resetInventory();
   
   override def initialize(){
@@ -92,6 +95,22 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
     power=Math.max(this.getWorldObj().getBlockPowerInput(xCoord, yCoord, zCoord), power);
     setPowered(power > 0);
     this.active=checkActive();
+  }
+  def updateSubInventoriesCache(){
+    val invs:MutableList[IInventoryExtended] = MutableList[IInventoryExtended]();
+    invs+=InventoryWrapper.getWrapper(this.invHandler);
+    for(dir <- ForgeDirection.VALID_DIRECTIONS){
+      val tile:TileEntity = worldObj.getTileEntity(xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
+      if(tile == null || !tile.isInstanceOf[IInventory]){}
+      else if(tile.isInstanceOf[TileEntityChest]){
+        val inv:IInventory=tile.getBlockType.asInstanceOf[BlockChest].func_149951_m(tile.getWorldObj, xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
+        if(inv != null)
+          invs+=InventoryWrapper.getWrapper(inv, dir.getOpposite());
+      } else {
+        invs+=InventoryWrapper.getWrapper(tile.asInstanceOf[IInventory], dir.getOpposite());
+      }
+    }
+    invCache= invs.toArray;
   }
   
   def getDelay():Int={
@@ -152,18 +171,7 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
     return true;
   }
   
-  override def getSubInventories():Array[IInventoryExtended]={
-    val invs:MutableList[IInventoryExtended] = MutableList[IInventoryExtended]();
-    invs+=InventoryWrapper.getWrapper(this.invHandler);
-    for(dir <- ForgeDirection.VALID_DIRECTIONS){
-      val tile:TileEntity = worldObj.getTileEntity(xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
-      if(tile == null || !tile.isInstanceOf[IInventory]){}
-      else {
-        invs+=InventoryWrapper.getWrapper(tile.asInstanceOf[IInventory], dir.getOpposite());
-      }
-    }
-    return invs.toArray;
-  }
+  override def getSubInventories():Array[IInventoryExtended]=invCache;
   
   override def onCraftMatrixChanged(inv:IInventory) {
     if(this.syncronizing)
