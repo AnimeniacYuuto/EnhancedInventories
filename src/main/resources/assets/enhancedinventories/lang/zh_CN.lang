@@ -82,7 +82,16 @@ item.enhancedinventories:upgradeFunction.3.name=安全升级
 item.enhancedinventories:upgradeFunction.4.name=强化升级
 
 item.enhancedinventories:paintbrush.name=漆刷
-item.enhancedinventories:schematic.name=Schematic
+item.enhancedinventories:schematic.name=合成图纸
+
+info.ei.active=激活
+info.ei.always=总是
+info.ei.never=从不
+info.ei.low=红石信号弱
+info.ei.high=红石信号强·
+info.ei.pulse=红石脉冲信号
+info.ei.clear=清除合成栏
+info.ei.save=保存图纸
 
 string.enhancedinventories:alt=间隔
 
