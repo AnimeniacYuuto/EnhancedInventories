@@ -5,8 +5,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
 import net.minecraftforge.common.util.Constants
-import yuuto.enhancedinventories.inventory.IInventoryParent
-import yuuto.enhancedinventories.inventory.InventorySimple
+import yuuto.yuutolib.inventory.IInventoryParent
+import yuuto.yuutolib.inventory.InventorySimple
 import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.tile.base.TileCrafter
 import yuuto.enhancedinventories.proxy.ProxyCommon

@@ -104,34 +104,41 @@ class BlockImprovedChest(name:String) extends BlockBaseEI(Material.wood, name)
   }
   
   override def setBlockBoundsBasedOnState(world:IBlockAccess, x:Int, y:Int, z:Int){
-    val tile:TileImprovedChest = world.getTileEntity(x, y, z).asInstanceOf[TileImprovedChest];
-    if(!tile.isConnected()){
+    val tile:TileEntity=world.getTileEntity(x, y, z);
+    if(tile==null || !tile.isInstanceOf[TileImprovedChest]){
       this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
       return;
     }
-    if(tile.getPartnerDirection() == ForgeDirection.NORTH)
+    val chest:TileImprovedChest = tile.asInstanceOf[TileImprovedChest];
+    if(!chest.isConnected()){
+      this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+      return;
+    }
+    if(chest.getPartnerDirection() == ForgeDirection.NORTH)
       this.setBlockBounds(0.0625F, 0.0F, 0.0F, 0.9375F, 0.875F, 0.9375F);
-    else if(tile.getPartnerDirection() == ForgeDirection.SOUTH)
+    else if(chest.getPartnerDirection() == ForgeDirection.SOUTH)
       this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 1.0F);
-    else if(tile.getPartnerDirection() == ForgeDirection.WEST)
+    else if(chest.getPartnerDirection() == ForgeDirection.WEST)
       this.setBlockBounds(0.0F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
-    else if(tile.getPartnerDirection() == ForgeDirection.EAST)
+    else if(chest.getPartnerDirection() == ForgeDirection.EAST)
       this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 1.0F, 0.875F, 0.9375F);
     else
       this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
   }
   override def getCollisionBoundingBoxFromPool(world:World, x:Int, y:Int, z:Int):AxisAlignedBB={
-    val tile:TileImprovedChest = world.getTileEntity(x, y, z).asInstanceOf[TileImprovedChest];
-    if(tile == null || !tile.isConnected()){
+    val tile:TileEntity = world.getTileEntity(x, y, z);
+    if(tile == null || !tile.isInstanceOf[TileImprovedChest])
       return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0625F, x+0.9375F, y+0.875F,z+ 0.9375F);
-    }
-    if(tile.getPartnerDirection() == ForgeDirection.NORTH)
+    val chest:TileImprovedChest=tile.asInstanceOf[TileImprovedChest];
+    if(!chest.isConnected())
+      return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0625F, x+0.9375F, y+0.875F,z+ 0.9375F);
+    if(chest.getPartnerDirection() == ForgeDirection.NORTH)
       return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0F, x+0.9375F, y+0.875F,z+ 0.9375F);
-    else if(tile.getPartnerDirection() == ForgeDirection.SOUTH)
+    else if(chest.getPartnerDirection() == ForgeDirection.SOUTH)
       return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0625F, x+0.9375F, y+0.875F, z+1.0F);
-    else if(tile.getPartnerDirection() == ForgeDirection.WEST)
+    else if(chest.getPartnerDirection() == ForgeDirection.WEST)
       return AxisAlignedBB.getBoundingBox(x+0.0F, y+0.0F, z+0.0625F, x+0.9375F, y+0.875F, z+0.9375F);
-    else if(tile.getPartnerDirection() == ForgeDirection.EAST)
+    else if(chest.getPartnerDirection() == ForgeDirection.EAST)
       return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0625F, x+1.0F, y+0.875F, z+0.9375F);
     else
       return AxisAlignedBB.getBoundingBox(x+0.0625F, y+0.0F, z+0.0625F, x+0.9375F, y+0.875F, z+0.9375F);

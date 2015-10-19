@@ -3,14 +3,14 @@
  */
 package yuuto.enhancedinventories.network
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import cofh.api.tileentity.IRedstoneControl;
-import cofh.api.tileentity.IRedstoneControl.ControlMode;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.world.World
+import net.minecraftforge.common.DimensionManager
+import cpw.mods.fml.common.network.simpleimpl.IMessage
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import yuuto.yuutolib.tile.IRedstoneControl.ControlMode
+import yuuto.yuutolib.tile.IRedstoneControl
 
 class MessageRedstoneControlHandler extends IMessageHandler[MessageRedstoneControl, IMessage] {
 

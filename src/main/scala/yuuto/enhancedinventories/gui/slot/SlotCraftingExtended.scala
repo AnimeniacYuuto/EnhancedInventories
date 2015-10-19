@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.ShapedOreRecipe
 import net.minecraftforge.oredict.ShapelessOreRecipe
 import yuuto.enhancedinventories.gui.ICraftingTable
-import yuuto.enhancedinventories.inventory.InventorySimple
+import yuuto.yuutolib.inventory.InventorySimple
 import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.util.LogHelperEI
 import yuuto.yuutolib.inventory.InventoryHelper

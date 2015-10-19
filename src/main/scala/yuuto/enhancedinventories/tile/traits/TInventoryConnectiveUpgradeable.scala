@@ -211,8 +211,8 @@ trait TInventoryConnectiveUpgradeable extends TInventoryConnective with TUpgrade
   def addSizeUpgrade(stack:ItemStack, player:EntityPlayer):Boolean={
     if(this.tier != stack.getItemDamage())
         return false;
-      this.getWorldObj().setBlockMetadataWithNotify(xCoord, yCoord, zCoord, stack.getItemDamage()+1, 3);
-      return true;
+    this.getWorldObj().setBlockMetadataWithNotify(xCoord, yCoord, zCoord, stack.getItemDamage()+1, 3);
+    return true;
   }
   override def updateContainingBlockInfo(){
       super.updateContainingBlockInfo();
@@ -252,7 +252,8 @@ trait TInventoryConnectiveUpgradeable extends TInventoryConnective with TUpgrade
   }
   override def getItemStack(stack:ItemStack):ItemStack={
     stack.setItemDamage(tier);
-    DecorationHelper.setAlternate(stack, alternate);
+    if(alternate)
+      DecorationHelper.setAlternate(stack, alternate);
     return super.getItemStack(stack);
   }
   

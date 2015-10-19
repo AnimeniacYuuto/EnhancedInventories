@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import yuuto.enhancedinventories.materials.DecorationHelper
+import yuuto.enhancedinventories.util.LogHelperEI
 
 /**
  * @author Jacob
@@ -29,6 +30,8 @@ trait TBlockInventoryUpgradeable extends BlockBaseEI with TBlockInventory with T
     return tile.getRedstonePower();
   }
   override def isProvidingStrongPower(world:IBlockAccess, x:Int, y:Int, z:Int, meta:Int):Int={
-    return this.isProvidingWeakPower(world, x, y, z, meta);
+    val tile:TInventoryConnectiveUpgradeable = world.getTileEntity(x, y, z).asInstanceOf[TInventoryConnectiveUpgradeable];
+    return tile.getRedstonePower();
+    //return this.isProvidingWeakPower(world, x, y, z, meta);
   }
 }

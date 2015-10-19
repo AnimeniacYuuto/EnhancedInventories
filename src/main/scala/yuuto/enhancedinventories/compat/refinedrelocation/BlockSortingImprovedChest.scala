@@ -26,6 +26,8 @@ class BlockSortingImprovedChest(name:String) extends BlockImprovedChest(name){
     if(!tileEntity.isInstanceOf[TileSortingImprovedChest])
       return false;
     if(tileEntity.asInstanceOf[TileSortingImprovedChest].canPlayerAccess(player)){
+      if(world.isRemote)
+        return true;
       //if sneaking open filter gui
       if(player.isSneaking()){
           APIUtils.openFilteringGUI(player, world, x, y, z);

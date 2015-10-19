@@ -3,6 +3,12 @@
  */
 package yuuto.enhancedinventories.gui
 
+import invtweaks.api.container.ChestContainer
+import invtweaks.api.container.ContainerSection
+import invtweaks.api.container.ContainerSectionCallback
+import java.util.Map
+import java.util.HashMap
+import java.util.List
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
@@ -17,6 +23,7 @@ import yuuto.enhancedinventories.tile.TileAutoAssembler
 import cpw.mods.fml.relauncher.SideOnly
 import cpw.mods.fml.relauncher.Side
 
+@ChestContainer(rowSize=3)
 class ContainerAutoAssembler(val tile:TileAutoAssembler, player:EntityPlayer) extends Container{
   val craftingMatrix:InventoryCrafting=tile.getCraftingMatrix();
   val craftResult:IInventory=tile.getCraftResult();
@@ -25,6 +32,7 @@ class ContainerAutoAssembler(val tile:TileAutoAssembler, player:EntityPlayer) ex
   var craftMatrixStart:Int = 2;
   var chestStart:Int=0;
   var playerStart:Int=0;
+  var slotMap:Map[ContainerSection, List[Slot]]=null;
   init();
   
   def init(){
@@ -147,6 +155,20 @@ class ContainerAutoAssembler(val tile:TileAutoAssembler, player:EntityPlayer) ex
 
   override def func_94530_a(stack:ItemStack, slot:Slot):Boolean={
       return slot.inventory != this.craftResult && super.func_94530_a(stack, slot);
+  }
+  
+  @ContainerSectionCallback
+  def getTweakSections():Map[ContainerSection, List[Slot]]={
+    if(slotMap==null){
+      slotMap=new HashMap[ContainerSection, List[Slot]]();
+      slotMap.put(ContainerSection.CRAFTING_OUT, inventorySlots.asInstanceOf[List[Slot]].subList(1, 2))
+      slotMap.put(ContainerSection.CRAFTING_IN, inventorySlots.asInstanceOf[List[Slot]].subList(craftMatrixStart, chestStart))
+      slotMap.put(ContainerSection.CHEST, inventorySlots.asInstanceOf[List[Slot]].subList(chestStart, playerStart))
+      slotMap.put(ContainerSection.INVENTORY, inventorySlots.asInstanceOf[List[Slot]].subList(playerStart, inventorySlots.size()))
+      slotMap.put(ContainerSection.INVENTORY_NOT_HOTBAR, inventorySlots.asInstanceOf[List[Slot]].subList(playerStart, inventorySlots.size()-9))
+      slotMap.put(ContainerSection.INVENTORY_HOTBAR, inventorySlots.asInstanceOf[List[Slot]].subList(inventorySlots.size()-9, inventorySlots.size()))
+    }
+    return slotMap;
   }
 
 }

@@ -34,6 +34,7 @@ trait TDecorativeInventoryConnective extends TInventoryConnectiveUpgradeable wit
       if(stack.hasTagCompound() && !this.isPainted()){
         this.decor.frameMaterial = FrameMaterials.Instance.getMaterial(stack.getTagCompound().getString(DecorationHelper.KEY_FRAME_NAME))
       }
+      return true;
     }
     return false;
   }

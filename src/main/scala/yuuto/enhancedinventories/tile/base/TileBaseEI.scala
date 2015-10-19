@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound
 /**
  * @author Jacob
  */
-abstract class TileBaseEI extends ModTile{
+class TileBaseEI extends ModTile{
   protected var initialized:Boolean=false;
   protected var synced:Boolean=false;
   
@@ -21,7 +21,7 @@ abstract class TileBaseEI extends ModTile{
   }
   
   def getItemStack(stack:ItemStack):ItemStack=stack;
-  def getItemStack():ItemStack;
+  def getItemStack():ItemStack=null;
   
   override def updateEntity(){
     if(!initialized && !this.isInvalid() && isSynced()){

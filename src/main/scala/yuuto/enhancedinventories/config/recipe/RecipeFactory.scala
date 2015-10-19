@@ -3,29 +3,31 @@
  */
 package yuuto.enhancedinventories.config.recipe
 
-import yuuto.enhancedinventories.config.json.JsonRecipeFactory
-import yuuto.enhancedinventories.materials.ETier
-import yuuto.enhancedinventories.util.LogHelperEI
-import yuuto.enhancedinventories.config.EIConfiguration
 import cpw.mods.fml.common.registry.GameRegistry
-import yuuto.enhancedinventories.proxy.ProxyCommon
 import net.minecraft.item.ItemStack
+import net.minecraftforge.oredict.OreDictionary
 import net.minecraftforge.oredict.RecipeSorter
 import net.minecraftforge.oredict.RecipeSorter.Category
+import yuuto.enhancedinventories.config.EIConfiguration
+import yuuto.enhancedinventories.config.json.JsonRecipeFactory
+import yuuto.enhancedinventories.materials.ETier
 import yuuto.enhancedinventories.materials.PaintHelper
-import net.minecraftforge.oredict.OreDictionary
+import yuuto.enhancedinventories.proxy.ProxyCommon
 
 class RecipeFactory {
   var recipeLoader:JsonRecipeFactory=null;
   def init(){
     recipeLoader=new JsonRecipeFactory();
     recipeLoader.init();
-    RecipeSorter.register("Yuuto.EI.decorative", classOf[RecipeDecorative], Category.SHAPED, "after:forge:shapedore before:minecraft:shapeless");
+    RecipeSorter.register("Yuuto.EI.decorative", classOf[RecipeDecorative], Category.SHAPED, "after:minecraft:shaped before:forge:shapedore");
     RecipeSorter.register("Yuuto.EI.alternate", classOf[RecipeAlt], Category.SHAPED, "after:forge:shapelessore");
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.blockImprovedChest, 1, OreDictionary.WILDCARD_VALUE), true);
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.blockLocker, 1, OreDictionary.WILDCARD_VALUE), false);
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.blockCabinet, 1, OreDictionary.WILDCARD_VALUE), true);
     PaintHelper.addPaintableStack(new ItemStack(ProxyCommon.chestConverter, 1, OreDictionary.WILDCARD_VALUE), true);
+    OreDictionary.registerOre("chestWood", new ItemStack(ProxyCommon.blockImprovedChest, 1, 0));
+    OreDictionary.registerOre("chestWood", new ItemStack(ProxyCommon.blockLocker, 1, 0));
+    OreDictionary.registerOre("chestWood", new ItemStack(ProxyCommon.blockCabinet, 1, 0));
   }
   def readRecipes(){
     recipeLoader.loadRecipes();

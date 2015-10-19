@@ -62,11 +62,14 @@ class ItemChestConverter(name:String) extends ItemBaseEI(name){
     case 0=>{
       if(!stack.hasTagCompound())
         return Blocks.planks.getIcon(2, 0);
-      else{
-        val b:Block = Block.getBlockFromName(stack.getTagCompound().getString(DecorationHelper.KEY_CORE_BLOCK));
-        val meta:Int = stack.getTagCompound().getInteger(DecorationHelper.KEY_CORE_META);
-        return b.getIcon(2, meta);
+      if(stack.getTagCompound().hasKey("woodType"))
+        UpdateHelper.updateInventory(stack);
+      val b:Block = {
+        val b1:Block = Block.getBlockFromName(stack.getTagCompound().getString(DecorationHelper.KEY_CORE_BLOCK));
+        if(b1 != null)b1 else Blocks.planks;
       }
+      val meta:Int = stack.getTagCompound().getInteger(DecorationHelper.KEY_CORE_META);
+      return b.getIcon(2, meta);
     }
     case 1 => {
       if(!stack.hasTagCompound())

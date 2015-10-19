@@ -111,7 +111,7 @@ class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
               val irecipe=itr.next();
               var recipe:CachedEIShapedRecipe = null;
               if (irecipe.isInstanceOf[RecipeDecorative])
-                  recipe = new CachedEIShapedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
+                  recipe = getCachedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
 
               if (recipe == null){}
               else{
@@ -131,9 +131,11 @@ class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
         val irecipe=itr.next();
         if(irecipe.isInstanceOf[RecipeDecorative]){
           if (NEIServerUtils.areStacksSameTypeCrafting(irecipe.getRecipeOutput(), result)) {
-              val recipe:CachedEIShapedRecipe = new CachedEIShapedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
-              recipe.computeVisuals();
-              arecipes.add(recipe);
+              val recipe = getCachedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
+              if(recipe!=null){
+                recipe.computeVisuals();
+                arecipes.add(recipe);
+              }
           }
         }
       }
@@ -146,8 +148,9 @@ class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
       while (itr.hasNext()) {
         val irecipe=itr.next();
         if(irecipe != null && irecipe.isInstanceOf[RecipeDecorative]){
-          val recipe:CachedEIShapedRecipe = new CachedEIShapedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
-          if (!recipe.contains(recipe.ingredients, ingredient.getItem())){}
+          val recipe = getCachedRecipe(irecipe.asInstanceOf[RecipeDecorative]);
+          if(recipe==null){}
+          else if (!recipe.contains(recipe.ingredients, ingredient.getItem())){}
           else{
             recipe.computeVisuals();
             if (recipe.contains(recipe.ingredients, ingredient)) {
@@ -157,6 +160,16 @@ class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
           }
         }
       }
+    }
+    
+    def getCachedRecipe(recipe:RecipeDecorative):CachedEIShapedRecipe={
+      val inputs:Array[Object]=recipe.getInput();
+      for(inpt<-inputs){
+        if(inpt.isInstanceOf[ArrayList[_]] && inpt.asInstanceOf[ArrayList[_]].isEmpty()){
+          return null;
+        }
+      }
+      return new CachedEIShapedRecipe(recipe);
     }
 
     override def getGuiTexture():String="textures/gui/container/crafting_table.png";

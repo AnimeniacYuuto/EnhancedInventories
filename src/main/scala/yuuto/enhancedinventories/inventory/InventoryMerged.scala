@@ -2,6 +2,7 @@ package yuuto.enhancedinventories.inventory
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import yuuto.yuutolib.inventory.InventoryBase
 
 class InventoryMerged(inv:Seq[Array[ItemStack]]) extends InventoryBase{
 	protected var totalLength:Int=0;

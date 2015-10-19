@@ -27,6 +27,8 @@ class BlockSortingCabinet(name:String) extends BlockCabinet(name){
       return false;
     //Make sure the player can interact with this block
     if(tileEntity.asInstanceOf[TileSortingCabinet].canPlayerAccess(player)){
+      if(world.isRemote)
+        return true;
       //if sneaking open filter gui
       if(player.isSneaking()){
           APIUtils.openFilteringGUI(player, world, x, y, z);

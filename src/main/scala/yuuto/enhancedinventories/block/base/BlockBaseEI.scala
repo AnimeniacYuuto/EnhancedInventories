@@ -36,15 +36,15 @@ abstract class BlockBaseEI(mat:Material, name:String) extends ModBlockContainer(
       this.dropBlockAsItem(world, x, y, z, meta, i1);
       harvesters.set(null);
   }
-  override def getDrops(world:World, x:Int, y:Int, z:Int, meta:Int, fortune:Int):ArrayList[ItemStack]={
-      val tile:TileEntity = world.getTileEntity(x, y, z);
-      if(tile != null && tile.isInstanceOf[TileBaseEI]){
-        val item:Item = getItemDropped(meta, world.rand, fortune);
-        if(item != null){
-          return getDrops(world, x, y, z, meta, fortune, new ItemStack(item), tile.asInstanceOf[TileBaseEI]);
-        }
+  override def getDrops(world:World, x:Int, y:Int, z:Int, meta:Int, fortune:Int):ArrayList[ItemStack]={  
+    val tile:TileEntity = world.getTileEntity(x, y, z);
+    if(tile != null && tile.isInstanceOf[TileBaseEI]){
+      val item:Item = getItemDropped(meta, world.rand, fortune);
+      if(item != null){
+        return getDrops(world, x, y, z, meta, fortune, new ItemStack(item), tile.asInstanceOf[TileBaseEI]);
       }
-      return super.getDrops(world, x, y, z, meta, fortune);
+    }
+    return super.getDrops(world, x, y, z, meta, fortune);
   }
   /**
    * gets a list of drops from a tile entity, allows for easy addition of upgrade drops and nbtdata
@@ -58,8 +58,7 @@ abstract class BlockBaseEI(mat:Material, name:String) extends ModBlockContainer(
    * @param tile
    * @return
    */
-  def getDrops(world:World, x:Int, y:Int, z:Int, meta:Int, fortune:Int, blockStack:ItemStack, tile:TileBaseEI):ArrayList[ItemStack]=
-  {
+  def getDrops(world:World, x:Int, y:Int, z:Int, meta:Int, fortune:Int, blockStack:ItemStack, tile:TileBaseEI):ArrayList[ItemStack]={
     val blockStack2 = tile.getItemStack(blockStack);
     blockStack2.stackSize = quantityDropped(meta, fortune, world.rand);
     val ret:ArrayList[ItemStack] = new ArrayList[ItemStack]();

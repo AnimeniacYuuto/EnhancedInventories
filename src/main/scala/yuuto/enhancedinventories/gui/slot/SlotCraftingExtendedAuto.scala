@@ -9,7 +9,7 @@ import yuuto.enhancedinventories.gui.ICraftingTable
 import net.minecraft.item.ItemStack
 import net.minecraft.inventory.InventoryCrafting
 import yuuto.enhancedinventories.item.ItemSchematic
-import yuuto.enhancedinventories.inventory.InventorySimple
+import yuuto.yuutolib.inventory.InventorySimple
 import net.minecraftforge.oredict.OreDictionary
 import yuuto.yuutolib.inventory.InventoryHelper
 import yuuto.yuutolib.inventory.IInventoryExtended

@@ -17,8 +17,8 @@ import yuuto.enhancedinventories.item.ItemSchematic
 import yuuto.enhancedinventories.ref.ReferenceEI
 import yuuto.enhancedinventories.tile.TileAutoAssembler
 import cofh.core.gui.GuiBaseAdv
-import cofh.core.gui.element.TabRedstone;
 import net.minecraft.client.gui.GuiScreen
+import yuuto.enhancedinventories.client.gui.elements.TabRedstone
 
 object GuiContainerAutoAssembler{
   final val texture:ResourceLocation = new ResourceLocation(ReferenceEI.MOD_ID.toLowerCase(), "textures/gui/autoAssembler.png");

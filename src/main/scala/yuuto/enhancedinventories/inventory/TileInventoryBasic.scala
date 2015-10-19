@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack
 import yuuto.enhancedinventories.tile.traits.TInventorySimple
 import net.minecraft.inventory.IInventory
 import net.minecraft.entity.player.EntityPlayer
+import yuuto.yuutolib.inventory.InventoryBase
 
 /**
  * @author Jacob

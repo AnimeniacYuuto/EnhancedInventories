@@ -26,6 +26,8 @@ class BlockSortingLocker(name:String) extends BlockLocker(name:String){
     if(!tileEntity.isInstanceOf[TileSortingLocker])
       return false;
     if(tileEntity.asInstanceOf[TileSortingLocker].canPlayerAccess(player)){
+      if(world.isRemote)
+        return true;
       //if sneaking open filter gui
       if(player.isSneaking()){
           APIUtils.openFilteringGUI(player, world, x, y, z);
