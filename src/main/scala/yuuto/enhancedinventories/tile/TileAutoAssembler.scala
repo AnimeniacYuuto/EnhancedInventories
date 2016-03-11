@@ -52,10 +52,13 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   
   override def initialize(){
     super.initialize();
-    if(this.fakePlayer == null){
-      fakePlayer = FakePlayerFactory.getMinecraft(this.getWorldObj().asInstanceOf[WorldServer]);
-      slotCrafting = new SlotCraftingExtendedAuto(this, fakePlayer, craftingMatrix, craftResult, 0, 0, 0);
-      this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
+    if(!this.getWorldObj.isRemote){
+      if(this.fakePlayer == null) {
+        fakePlayer = FakePlayerFactory.getMinecraft(this.getWorldObj().asInstanceOf[WorldServer]);
+        slotCrafting = new SlotCraftingExtendedAuto(this, fakePlayer, craftingMatrix, craftResult, 0, 0, 0);
+        this.worldObj.func_147479_m(xCoord, yCoord, zCoord);
+      }
+      this.updateSubInventoriesCache();
     }
     this.updateRedstoneCache();
   }
@@ -67,10 +70,8 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   override def setInventory(){
     invHandler = new InventorySimple(this.inv, this);
   }
-  override def getArraySize():Int={
-    return 10;
-  }
-  override def getSizeInventory():Int=getInventory.getSizeInventory()-1;
+  override def getArraySize():Int=10;
+  override def getSizeInventory():Int=getInventory().getSizeInventory()-1;
   
   override def updateEntity(){
     super.updateEntity();
