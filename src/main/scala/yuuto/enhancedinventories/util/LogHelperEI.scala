@@ -5,15 +5,16 @@ import yuuto.enhancedinventories.ref.ReferenceEI
 
 object LogHelperEI {
 	
-	private val debug = false;
+	var debug = false;
 	
 	def All(obj:Any){
 		LogSpecial(Level.ALL, obj);
 	}
 	def Debug(obj:Any){
-		if(debug)
+		if(debug) {
 			Info(obj);
-		LogSpecial(Level.DEBUG, obj);
+			LogSpecial(Level.DEBUG, obj);
+		}
 	}
 	def Error(obj:Any){
 		LogSpecial(Level.ERROR, obj);

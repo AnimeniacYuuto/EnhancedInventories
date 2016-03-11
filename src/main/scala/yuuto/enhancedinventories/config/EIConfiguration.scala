@@ -49,6 +49,7 @@ object EIConfiguration {
     configRecipeDir=getRecipeConfigDir(event.getModConfigurationDirectory());
     configFrameDir=getFrameConfigDir(event.getModConfigurationDirectory());
     loadModules();
+    LogHelperEI.debug = configMain.getBoolean("DebugLogging", "General", false, "Used for additional debugging info, mainly for use by mod and pack devs");
     canCraftStoneFrame = configMain.getBoolean("CraftStoneFrame", "Crafting", true, "Are chests with stone frames craftable?");
     canPaintObsidianFrame = configMain.getBoolean("PaintObsidianFrame", "Crafting", true, "Can chests be painted with obsidian frames?");
     canCraftAlts = configMain.getBoolean("CraftAlts", "Crafting", true, "Are alternate chests craftable?");

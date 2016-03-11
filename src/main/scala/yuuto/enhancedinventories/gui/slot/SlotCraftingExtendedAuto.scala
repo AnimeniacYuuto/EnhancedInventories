@@ -33,7 +33,7 @@ class SlotCraftingExtendedAuto(craftingTable:ICraftingTable, player:EntityPlayer
     if(subInventories == null || subInventories.length < 1)
       return false;
     val copyInvs:Array[IInventory] = new Array[IInventory](subInventories.length);
-    for(i <-0 until subInventories.length){
+    for(i <-0 until subInventories.length if subInventories(i) != null){
       val invOrg:IInventory = subInventories(i);
       val copy:IInventory = new InventorySimple(invOrg.getSizeInventory());
       for(j <-0 until copy.getSizeInventory() if(invOrg.getStackInSlot(j) != null)){

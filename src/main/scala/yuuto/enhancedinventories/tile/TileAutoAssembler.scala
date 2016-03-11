@@ -73,9 +73,9 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
   override def getSizeInventory():Int=getInventory.getSizeInventory()-1;
   
   override def updateEntity(){
+    super.updateEntity();
     if(this.getWorldObj().isRemote)
       return;
-    super.updateEntity();
     
     if(craftingTicks > 0)
       craftingTicks-=1;
@@ -101,11 +101,14 @@ class TileAutoAssembler extends TileCrafter with IInventoryParent with TInventor
     invs+=InventoryWrapper.getWrapper(this.invHandler);
     for(dir <- ForgeDirection.VALID_DIRECTIONS){
       val tile:TileEntity = worldObj.getTileEntity(xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
-      if(tile == null || !tile.isInstanceOf[IInventory]){}
+      if(tile == null || tile.isInvalid() || !tile.isInstanceOf[IInventory]){}
       else if(tile.isInstanceOf[TileEntityChest]){
-        val inv:IInventory=tile.getBlockType.asInstanceOf[BlockChest].func_149951_m(tile.getWorldObj, xCoord+dir.offsetX, yCoord+dir.offsetY, zCoord+dir.offsetZ);
-        if(inv != null)
-          invs+=InventoryWrapper.getWrapper(inv, dir.getOpposite());
+        val block = tile.getBlockType;
+        if(block.isInstanceOf[BlockChest]) {
+          val inv: IInventory = tile.getBlockType.asInstanceOf[BlockChest].func_149951_m(tile.getWorldObj, xCoord + dir.offsetX, yCoord + dir.offsetY, zCoord + dir.offsetZ);
+          if (inv != null)
+            invs += InventoryWrapper.getWrapper(inv, dir.getOpposite());
+        }
       } else {
         invs+=InventoryWrapper.getWrapper(tile.asInstanceOf[IInventory], dir.getOpposite());
       }
