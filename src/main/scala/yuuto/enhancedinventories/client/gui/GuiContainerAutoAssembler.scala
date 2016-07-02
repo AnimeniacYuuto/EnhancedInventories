@@ -51,6 +51,8 @@ class GuiContainerAutoAssembler(tile:TileAutoAssembler, player:EntityPlayer) ext
     this.drawSchematic();
   }
   def drawSchematic(){
+    if(!tile.isUsingSchematic())
+      return;
     val schematic:ItemStack = tile.getSchematic();
     if(schematic == null)
       return;

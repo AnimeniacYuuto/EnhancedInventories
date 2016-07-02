@@ -5,7 +5,7 @@ import com.mojang.authlib.GameProfile
 import cofh.api.tileentity.ISecurable
 import cofh.api.tileentity.ISecurable.AccessMode
 import cofh.lib.util.helpers.SecurityHelper
-import cofh.core.util.SocialRegistry
+import cofh.core.RegistrySocial;
 import net.minecraft.entity.player.EntityPlayer
 import yuuto.enhancedinventories.tile.base.TileBaseEI
 import yuuto.enhancedinventories.EnhancedInventories
@@ -34,7 +34,7 @@ trait TSecurable extends TileBaseEI with ISecurable{
     val p2:UUID = SecurityHelper.getID(player);
     if(p1.equals(p2))
       return true;
-    return accessMode.isRestricted() && SocialRegistry.playerHasAccess(player.getCommandSenderName(), owner);
+    return accessMode.isRestricted() && RegistrySocial.playerHasAccess(player.getCommandSenderName(), owner);
   }
   
   override def getAccess():AccessMode={
@@ -45,7 +45,10 @@ trait TSecurable extends TileBaseEI with ISecurable{
     if(owner != null)
       return owner;
     if(ownerId != null && ownerName != null && !ownerName.trim().isEmpty()){
-      owner = SecurityHelper.getProfile(ownerId, ownerName);
+      if(getWorldObj.isRemote)
+        owner = new GameProfile(ownerId, ownerName);
+      else
+        owner = SecurityHelper.getProfile(ownerId, ownerName);
     }
     return owner;
   }

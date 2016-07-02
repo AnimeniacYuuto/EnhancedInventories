@@ -70,13 +70,13 @@ class SlotCraftingExtended(val craftingTable:ICraftingTable, player:EntityPlayer
         var stack2:ItemStack=null;
         var invIndex= -1;
         for(j <-0 until invs.length if(!found)){
-          stack2=pullFromInventory(stack1, ores, invs(j), invs2(j));
-          if(stack2 != null && stack2.stackSize > 0){
-             found = true;
-             invIndex=j;
-             if(stack2.getItem().hasContainerItem(stack2)){
-               containerItem=stack2.getItem.getContainerItem(stack2);
-             }
+          stack2 = pullFromInventory(stack1, ores, invs(j), invs2(j));
+          if (stack2 != null && stack2.stackSize > 0) {
+            found = true;
+            invIndex = j;
+            if (stack2.getItem().hasContainerItem(stack2)) {
+              containerItem = stack2.getItem.getContainerItem(stack2);
+            }
           }
         }
         if(!found && useMatrix){
@@ -116,6 +116,8 @@ class SlotCraftingExtended(val craftingTable:ICraftingTable, player:EntityPlayer
     return craftMatrix.decrStackSize(index, 1);
   }
   def pullFromInventory(stack1:ItemStack, ores:ArrayList[ItemStack], inv:IInventory, inv2:IInventoryExtended):ItemStack={
+    if(inv == null || inv2 == null)
+      return null;
     var found:Boolean=false;
     for(sl <- 0 until inv.getSizeInventory() if(inv.getStackInSlot(sl)!=null && inv2.canExtractItem(sl, inv.getStackInSlot(sl)))){
       val stack2:ItemStack = inv.getStackInSlot(sl);

@@ -85,11 +85,6 @@ class GuiContainerDynamic(tile:TileEntity, inv:IInventory, player:EntityPlayer) 
     }
   }
 
-  override def drawGuiContainerForegroundLayer(mx:Int, my:Int) {
-    //GuiContainerManager.getManager().renderObjects(mX, mY);
-    
-  }
-
   override protected def drawGuiContainerBackgroundLayer(partialTick:Float, mX:Int, mY:Int){
     //draw your Gui here, only thing you need to change is the path
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

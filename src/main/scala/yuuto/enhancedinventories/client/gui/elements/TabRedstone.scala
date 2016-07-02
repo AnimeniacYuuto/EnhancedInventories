@@ -18,10 +18,21 @@ class TabRedstone(gui:GuiBase, side:Int, val myContainer:IRedstoneControl) exten
   this.backgroundColor=CofhTabRedstone.defaultBackgroundColor;
   this.maxHeight=112;
   this.maxWidth=112;
-  
+
   def this(gui:GuiBase, container:IRedstoneControl)=this(gui, 0, container);
 
-  override def draw(){
+  override protected def drawBackground() {
+    super.drawBackground();
+    if(this.isFullyOpened()) {
+      val var1:Float = (this.backgroundColor >> 16 & 255).toFloat / 255.0F * 0.6F;
+      val var2:Float = (this.backgroundColor >> 8 & 255).toFloat / 255.0F * 0.6F;
+      val var3:Float = (this.backgroundColor & 255).toFloat / 255.0F * 0.6F;
+      GL11.glColor4f(var1, var2, var3, 1.0F);
+      this.gui.drawTexturedModalRect(this.posX() + 24, this.posY + 16, 16, 20, 64, 44);
+      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+  }
+  override def drawForeground(){
 
     drawBackground();
     drawTabIcon("IconRedstone");
@@ -109,7 +120,7 @@ class TabRedstone(gui:GuiBase, side:Int, val myContainer:IRedstoneControl) exten
     if(side == TabBase.LEFT) {
       x+=currentWidth;
     }
-    x -= currentShiftY; 
+    x -= currentShiftY;
     val y:Int = gui.getMouseY() - currentShiftY;
     if (28 <= x && x < 44 && 20 <= y && y < 36) {
       list.add(StringHelper.localize("info.ei.always"));
@@ -167,22 +178,6 @@ class TabRedstone(gui:GuiBase, side:Int, val myContainer:IRedstoneControl) exten
       }
     }
     return true;
-  }
-
-  protected override def drawBackground() {
-
-    super.drawBackground();
-
-    if (!isFullyOpened()) {
-      return;
-    }
-    val colorR:Float = (backgroundColor >> 16 & 255) / 255.0F * 0.6F;
-    val colorG:Float = (backgroundColor >> 8 & 255) / 255.0F * 0.6F;
-    val colorB:Float = (backgroundColor & 255) / 255.0F * 0.6F;
-    GL11.glColor4f(colorR, colorG, colorB, 1.0F);
-    gui.drawTexturedModalRect(posX() + 24, posY + 16, 16, 20, 64, 44);
-    //gui.drawTexturedModalRect(posX() + 24, posY + 16, 16, 20, 64, 24);
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
   }
 
 }

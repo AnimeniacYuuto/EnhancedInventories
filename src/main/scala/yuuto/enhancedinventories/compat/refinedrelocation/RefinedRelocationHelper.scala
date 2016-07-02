@@ -21,12 +21,12 @@ import yuuto.enhancedinventories.ref.ReferenceEI
 
 object RefinedRelocationHelper {
 
-  def isFilterEmpty(filter:IFilterGUI):Boolean={
+  /*def isFilterEmpty(filter:IFilterGUI):Boolean={
     for(i <-0 until filter.getSize() if(filter.getValue(i))){
         return false;
     }
     return filter.getUserFilter() == null || filter.getUserFilter().trim().isEmpty();
-  }
+  }*/
   def isSortingUpgrade(stack:ItemStack):Boolean={
     return stack.getItem() == ModObjects.sortingUpgrade.getItem();
   }
