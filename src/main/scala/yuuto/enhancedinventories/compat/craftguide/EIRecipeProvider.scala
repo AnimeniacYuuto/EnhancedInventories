@@ -25,9 +25,15 @@ object EIRecipeProvider extends CraftGuideAPIObject with RecipeProvider{
       if(rTest.isInstanceOf[RecipeDecorative]) {
         val r:RecipeDecorative=rTest.asInstanceOf[RecipeDecorative];
         if (r.width < 3 && r.height < 3) {
-          generator.addRecipe(slotCraftingSmall, UtilEI.getSmallShapedRecipe(r.width, r.height, r.getInput(), r.getRecipeOutput()));
+          val v = UtilEI.getSmallShapedRecipe(r.width, r.height, r.getInput(), r.getRecipeOutput());
+          if(v != null) {
+            generator.addRecipe(slotCraftingSmall, v);
+          }
         } else {
-          generator.addRecipe(slotCrafting, UtilEI.getCraftingShapedRecipe(r.width, r.height, r.getInput(), r.getRecipeOutput()));
+          val v = UtilEI.getCraftingShapedRecipe(r.width, r.height, r.getInput(), r.getRecipeOutput());
+          if(v != null) {
+            generator.addRecipe(slotCrafting, v);
+          }
         }
       }
     }

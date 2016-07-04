@@ -25,7 +25,10 @@ object UtilEI {
           var x: Int = 0
           while (x < width) {
             {
-              output(y * 2 + x) = items(y * width + x)
+              val item = items(y * width + x)
+              if(item.isInstanceOf[util.ArrayList[Object]] && item.asInstanceOf[util.ArrayList[Object]].size < 1)
+                return null;
+              output(y * 2 + x) = item
             }
             {
               x += 1; x - 1
@@ -47,7 +50,10 @@ object UtilEI {
     var i: Int = 0
     while (i < items.size) {
       {
-        output(i) = items.get(i)
+        val item = items.get(i)
+        if(item.isInstanceOf[util.ArrayList[Object]] && item.asInstanceOf[util.ArrayList[Object]].size < 1)
+          return null;
+        output(i) = item
       }
       {
         i += 1; i - 1
@@ -66,7 +72,10 @@ object UtilEI {
           var x: Int = 0
           while (x < width) {
             {
-              output(y * 3 + x) = items(y * width + x)
+              val item = items(y * width + x);
+              if(item.isInstanceOf[util.ArrayList[Object]] && item.asInstanceOf[util.ArrayList[Object]].size < 1)
+                return null;
+              output(y * 3 + x) = item
             }
             {
               x += 1;

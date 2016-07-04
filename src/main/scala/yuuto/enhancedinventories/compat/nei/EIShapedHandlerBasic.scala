@@ -11,9 +11,10 @@ import yuuto.enhancedinventories.config.recipe.RecipeDecorative
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraftforge.oredict.ShapedOreRecipe
 import codechicken.nei.recipe.TemplateRecipeHandler
-import net.minecraft.inventory.Container
+import net.minecraft.inventory.{InventoryCrafting, Container}
 import yuuto.enhancedinventories.compat.nei.positionstacks.ParentPositionStack
 import yuuto.enhancedinventories.compat.nei.positionstacks.ChildPositionStack
+import yuuto.enhancedinventories.gui.ContainerCraftingDummy;
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
 import java.awt.Rectangle
 import net.minecraft.client.gui.inventory.GuiCrafting
@@ -30,51 +31,57 @@ import codechicken.nei.api.IStackPositioner
 
 class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
     class CachedEIShapedRecipe(recipe:RecipeDecorative) extends CachedRecipe{
-        val ingredients:ArrayList[PositionedStack]=new ArrayList[PositionedStack]();
-        val result:PositionedStack=new PositionedStack(recipe.getRecipeOutput(), 119, 24);
-        var core:ParentPositionStack=null;
-        var color:ParentPositionStack=null;
-        setIngredients(recipe);
+      val ingredients:ArrayList[PositionedStack]=new ArrayList[PositionedStack]();
+      val uniIngredients:ArrayList[PositionedStack]=new ArrayList[PositionedStack]();
+      val result:PositionedStack=new PositionedStack(recipe.getRecipeOutput(), 119, 24);
+      var core:ParentPositionStack=null;
+      var color:ParentPositionStack=null;
+      setIngredients(recipe);
+      val dummyContainer:ContainerCraftingDummy = new ContainerCraftingDummy(null);
+      val craftMatix:InventoryCrafting = dummyContainer.craftingMatrix;
 
-        /**
-         * @param width
-         * @param height
-         * @param items  an ItemStack[] or ItemStack[][]
-         */
-        def setIngredients(recipe:RecipeDecorative) {
-            for (x <-0 until recipe.width) {
-                for (y <-0 until recipe.height) {
-                  val i:Int=y * recipe.width + x
-                  if (recipe.getInput()(i) == null){}
-                  else{
-                    if(recipe.cores.contains(i)){
-                      var stack:PositionedStack=null;
-                      if(core==null){
-                        core=new ParentPositionStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
-                        stack=core;
-                      }else{
-                        stack=new ChildPositionStack(core, 25 + x * 18, 6 + y * 18);
-                      }
-                      stack.setMaxSize(1);
-                      ingredients.add(stack);
-                    }else if(recipe.colors.contains(i)){
-                      var stack:PositionedStack=null;
-                      if(color==null){
-                        color=new ParentPositionStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
-                        stack=color;
-                      }else{
-                        stack=new ChildPositionStack(color, 25 + x * 18, 6 + y * 18);
-                      }
-                      stack.setMaxSize(1);
-                      ingredients.add(stack);
+      /**
+       * @param width
+       * @param height
+       * @param items  an ItemStack[] or ItemStack[][]
+       */
+      def setIngredients(recipe:RecipeDecorative) {
+          for (x <-0 until recipe.width) {
+              for (y <-0 until recipe.height) {
+                val i:Int=y * recipe.width + x
+                if (recipe.getInput()(i) == null){}
+                else{
+                  if(recipe.cores.contains(i)){
+                    var stack:PositionedStack=null;
+                    if(core==null){
+                      core=new ParentPositionStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
+                      stack=core;
+                      uniIngredients.add(stack);
                     }else{
-                      val stack:PositionedStack = new PositionedStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
-                      stack.setMaxSize(1);
-                      ingredients.add(stack);
+                      stack=new ChildPositionStack(core, 25 + x * 18, 6 + y * 18);
                     }
+                    stack.setMaxSize(1);
+                    ingredients.add(stack);
+                  }else if(recipe.colors.contains(i)){
+                    var stack:PositionedStack=null;
+                    if(color==null){
+                      color=new ParentPositionStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
+                      stack=color;
+                      uniIngredients.add(stack);
+                    }else{
+                      stack=new ChildPositionStack(color, 25 + x * 18, 6 + y * 18);
+                    }
+                    stack.setMaxSize(1);
+                    ingredients.add(stack);
+                  }else{
+                    val stack:PositionedStack = new PositionedStack(recipe.getInput()(i), 25 + x * 18, 6 + y * 18, false);
+                    stack.setMaxSize(1);
+                    ingredients.add(stack);
+                    uniIngredients.add(stack);
                   }
                 }
-            }
+              }
+          }
         }
 
         override def getIngredients():List[PositionedStack]={
@@ -89,10 +96,14 @@ class EIShapedHandlerBasic extends EIRecipeHandlerTemplate{
         def getResult():PositionedStack=result;
 
         def computeVisuals() {
-          val itr=ingredients.iterator();
+          val itr=uniIngredients.iterator();
           while(itr.hasNext()){
             itr.next().generatePermutations();
           }
+          for(i <-0 until ingredients.size()){
+            craftMatix.setInventorySlotContents(i, ingredients.get(i).item);
+          }
+          result.item=recipe.getCraftingResult(craftMatix)
         }
     }
 
