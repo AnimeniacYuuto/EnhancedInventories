@@ -53,7 +53,7 @@ class TileImprovedChestRenderer extends TileEntitySpecialRenderer{
   
   override def renderTileEntityAt(tile:TileEntity, x:Double,
       y:Double, z:Double, partialTick:Float) {
-    if(tile == null || !tile.isInstanceOf[TileImprovedChest])
+    if(tile == null || tile.isInvalid() || !tile.isInstanceOf[TileImprovedChest])
       return;
     val chest:TileImprovedChest = tile.asInstanceOf[TileImprovedChest];
     if(chest.decor == null)

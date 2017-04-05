@@ -44,7 +44,7 @@ class TileRendererCabinet extends TileEntitySpecialRenderer{
   
   override def renderTileEntityAt(tile:TileEntity, x:Double,
       y:Double, z:Double, partialTick:Float) {
-    if(!tile.isInstanceOf[TileCabinet])
+    if(tile == null || tile.isInvalid() || !tile.isInstanceOf[TileCabinet])
       return;
     val locker:TileCabinet = tile.asInstanceOf[TileCabinet];
     

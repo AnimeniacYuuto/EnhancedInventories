@@ -52,7 +52,7 @@ class TileRendererLocker extends TileEntitySpecialRenderer{
   
   override def renderTileEntityAt(tile:TileEntity, x:Double,
       y:Double, z:Double, partialTick:Float) {
-    if(!tile.isInstanceOf[TileLocker])
+    if(tile == null || tile.isInvalid || !tile.isInstanceOf[TileLocker])
       return;
     val locker:TileLocker = tile.asInstanceOf[TileLocker];
     
